@@ -175,7 +175,7 @@ diff -NurpP --minimal linux-2.6.10/Documentation/vserver/debug.txt linux-2.6.10-
 +
 diff -NurpP --minimal linux-2.6.10/Makefile linux-2.6.10-vs1.9.3.16/Makefile
 --- linux-2.6.10/Makefile	2004-12-25 01:54:42.000000000 +0100
-+++ linux-2.6.10-vs1.9.3.16/Makefile	2005-01-03 01:12:54.000000000 +0100
++++ linux-2.6.10-vs1.9.3.16/Makefile	2005-01-03 01:39:06.000000000 +0100
 @@ -1,7 +1,7 @@
  VERSION = 2
  PATCHLEVEL = 6
@@ -6359,15 +6359,13 @@ diff -NurpP --minimal linux-2.6.10/include/linux/vs_base.h linux-2.6.10-vs1.9.3.
 +#endif
 diff -NurpP --minimal linux-2.6.10/include/linux/vs_context.h linux-2.6.10-vs1.9.3.16/include/linux/vs_context.h
 --- linux-2.6.10/include/linux/vs_context.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.10-vs1.9.3.16/include/linux/vs_context.h	2005-01-02 18:26:09.000000000 +0100
-@@ -0,0 +1,122 @@
++++ linux-2.6.10-vs1.9.3.16/include/linux/vs_context.h	2005-01-03 01:34:47.000000000 +0100
+@@ -0,0 +1,120 @@
 +#ifndef _VX_VS_CONTEXT_H
 +#define _VX_VS_CONTEXT_H
 +
 +
 +#include <linux/kernel.h>
-+#include <linux/rcupdate.h>
-+
 +#include "vserver/debug.h"
 +
 +
@@ -7037,17 +7035,14 @@ diff -NurpP --minimal linux-2.6.10/include/linux/vs_memory.h linux-2.6.10-vs1.9.
 +#endif
 diff -NurpP --minimal linux-2.6.10/include/linux/vs_network.h linux-2.6.10-vs1.9.3.16/include/linux/vs_network.h
 --- linux-2.6.10/include/linux/vs_network.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.10-vs1.9.3.16/include/linux/vs_network.h	2005-01-02 18:34:04.000000000 +0100
-@@ -0,0 +1,157 @@
++++ linux-2.6.10-vs1.9.3.16/include/linux/vs_network.h	2005-01-03 01:24:39.000000000 +0100
+@@ -0,0 +1,154 @@
 +#ifndef _NX_VS_NETWORK_H
 +#define _NX_VS_NETWORK_H
 +
 +
 +#include "vserver/network.h"
 +#include "vserver/debug.h"
-+
-+
-+// extern int proc_pid_nx_info(struct task_struct *, char *);
 +
 +
 +#define get_nx_info(i)	__get_nx_info(i,__FILE__,__LINE__)
@@ -9313,7 +9308,7 @@ diff -NurpP --minimal linux-2.6.10/kernel/exit.c linux-2.6.10-vs1.9.3.16/kernel/
  		if (reaper == father) {
 diff -NurpP --minimal linux-2.6.10/kernel/fork.c linux-2.6.10-vs1.9.3.16/kernel/fork.c
 --- linux-2.6.10/kernel/fork.c	2004-12-25 01:55:30.000000000 +0100
-+++ linux-2.6.10-vs1.9.3.16/kernel/fork.c	2004-12-26 19:40:35.000000000 +0100
++++ linux-2.6.10-vs1.9.3.16/kernel/fork.c	2005-01-03 01:23:16.000000000 +0100
 @@ -39,6 +39,9 @@
  #include <linux/audit.h>
  #include <linux/profile.h>
