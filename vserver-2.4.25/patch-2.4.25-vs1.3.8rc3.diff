@@ -21,7 +21,7 @@ diff -NurpP --minimal linux-2.4.25/Makefile linux-2.4.25-vs1.3.8/Makefile
  PATCHLEVEL = 4
  SUBLEVEL = 25
 -EXTRAVERSION =
-+EXTRAVERSION = -vs1.3.7
++EXTRAVERSION = -vs1.3.8
  
  KERNELRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
  
@@ -6593,7 +6593,7 @@ diff -NurpP --minimal linux-2.4.25/kernel/vserver/switch.c linux-2.4.25-vs1.3.8/
 +#include <linux/vserver/inode.h>
 +#include <linux/vserver/signal.h>
 +
-+extern asmlinkage int
++extern asmlinkage long
 +sys_vserver(uint32_t cmd, uint32_t id, void *data)
 +{
 +	int ret = -ENOTSUP;
