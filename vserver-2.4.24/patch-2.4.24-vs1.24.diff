@@ -1,6 +1,6 @@
-diff -NurpP --minimal linux-2.4.24/Documentation/Configure.help linux-2.4.24-vs1.23-rev03/Documentation/Configure.help
+diff -NurpP --minimal linux-2.4.24/Documentation/Configure.help linux-2.4.24-vs1.24/Documentation/Configure.help
 --- linux-2.4.24/Documentation/Configure.help	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/Documentation/Configure.help	Fri Jan 16 03:11:25 2004
++++ linux-2.4.24-vs1.24/Documentation/Configure.help	Sat Jan 17 05:27:23 2004
 @@ -538,6 +538,11 @@ CONFIG_BLK_DEV_LOOP
  
    Most users will answer N here.
@@ -13,21 +13,21 @@ diff -NurpP --minimal linux-2.4.24/Documentation/Configure.help linux-2.4.24-vs1
  Micro Memory MM5415 Battery Backed RAM support (EXPERIMENTAL)
  CONFIG_BLK_DEV_UMEM
    Saying Y here will include support for the MM5415 family of
-diff -NurpP --minimal linux-2.4.24/Makefile linux-2.4.24-vs1.23-rev03/Makefile
+diff -NurpP --minimal linux-2.4.24/Makefile linux-2.4.24-vs1.24/Makefile
 --- linux-2.4.24/Makefile	Mon Jan  5 14:53:56 2004
-+++ linux-2.4.24-vs1.23-rev03/Makefile	Fri Jan 16 03:08:29 2004
++++ linux-2.4.24-vs1.24/Makefile	Sat Jan 17 05:27:22 2004
 @@ -1,7 +1,7 @@
  VERSION = 2
  PATCHLEVEL = 4
  SUBLEVEL = 24
 -EXTRAVERSION =
-+EXTRAVERSION = -vs1.23-rev3
++EXTRAVERSION = -vs1.24
  
  KERNELRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
  
-diff -NurpP --minimal linux-2.4.24/arch/alpha/kernel/entry.S linux-2.4.24-vs1.23-rev03/arch/alpha/kernel/entry.S
+diff -NurpP --minimal linux-2.4.24/arch/alpha/kernel/entry.S linux-2.4.24-vs1.24/arch/alpha/kernel/entry.S
 --- linux-2.4.24/arch/alpha/kernel/entry.S	Fri Jun 13 16:51:29 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/alpha/kernel/entry.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/alpha/kernel/entry.S	Sat Jan 17 05:27:22 2004
 @@ -1044,7 +1044,7 @@ sys_call_table:
  	.quad alpha_ni_syscall			/* 270 */
  	.quad alpha_ni_syscall
@@ -37,9 +37,9 @@ diff -NurpP --minimal linux-2.4.24/arch/alpha/kernel/entry.S linux-2.4.24-vs1.23
  	.quad alpha_ni_syscall
  	.quad alpha_ni_syscall			/* 275 */
  	.quad alpha_ni_syscall
-diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/entry.S linux-2.4.24-vs1.23-rev03/arch/i386/kernel/entry.S
+diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/entry.S linux-2.4.24-vs1.24/arch/i386/kernel/entry.S
 --- linux-2.4.24/arch/i386/kernel/entry.S	Fri Jun 13 16:51:29 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/i386/kernel/entry.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/i386/kernel/entry.S	Sat Jan 17 05:27:22 2004
 @@ -659,10 +659,25 @@ ENTRY(sys_call_table)
  	.long SYMBOL_NAME(sys_ni_syscall)	/* sys_exit_group */
  	.long SYMBOL_NAME(sys_ni_syscall)	/* sys_lookup_dcookie */
@@ -67,9 +67,9 @@ diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/entry.S linux-2.4.24-vs1.23-
  
  	.rept NR_syscalls-(.-sys_call_table)/4
  		.long SYMBOL_NAME(sys_ni_syscall)
-diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/ptrace.c linux-2.4.24-vs1.23-rev03/arch/i386/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/ptrace.c linux-2.4.24-vs1.24/arch/i386/kernel/ptrace.c
 --- linux-2.4.24/arch/i386/kernel/ptrace.c	Sat Aug  3 02:39:42 2002
-+++ linux-2.4.24-vs1.23-rev03/arch/i386/kernel/ptrace.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/i386/kernel/ptrace.c	Sat Jan 17 05:27:22 2004
 @@ -170,7 +170,7 @@ asmlinkage int sys_ptrace(long request, 
  	if (child)
  		get_task_struct(child);
@@ -79,9 +79,9 @@ diff -NurpP --minimal linux-2.4.24/arch/i386/kernel/ptrace.c linux-2.4.24-vs1.23
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.24/arch/parisc/kernel/syscall.S linux-2.4.24-vs1.23-rev03/arch/parisc/kernel/syscall.S
+diff -NurpP --minimal linux-2.4.24/arch/parisc/kernel/syscall.S linux-2.4.24-vs1.24/arch/parisc/kernel/syscall.S
 --- linux-2.4.24/arch/parisc/kernel/syscall.S	Fri Jun 13 16:51:31 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/parisc/kernel/syscall.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/parisc/kernel/syscall.S	Sat Jan 17 05:27:22 2004
 @@ -605,6 +605,71 @@ sys_call_table:
  	ENTRY_SAME(gettid)             
  	ENTRY_SAME(readahead)          
@@ -154,9 +154,9 @@ diff -NurpP --minimal linux-2.4.24/arch/parisc/kernel/syscall.S linux-2.4.24-vs1
  
  .end
  
-diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/misc.S linux-2.4.24-vs1.23-rev03/arch/ppc/kernel/misc.S
+diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/misc.S linux-2.4.24-vs1.24/arch/ppc/kernel/misc.S
 --- linux-2.4.24/arch/ppc/kernel/misc.S	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/ppc/kernel/misc.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/ppc/kernel/misc.S	Sat Jan 17 05:27:22 2004
 @@ -1298,6 +1298,30 @@ _GLOBAL(sys_call_table)
  	.long sys_ni_syscall	/*	reserved for sys_clock_getres */
  	.long sys_ni_syscall	/*	reserved for sys_clock_nanosleep */
@@ -188,9 +188,9 @@ diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/misc.S linux-2.4.24-vs1.23-re
  
  	.rept NR_syscalls-(.-sys_call_table)/4
  		.long sys_ni_syscall
-diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/ptrace.c linux-2.4.24-vs1.23-rev03/arch/ppc/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/ptrace.c linux-2.4.24-vs1.24/arch/ppc/kernel/ptrace.c
 --- linux-2.4.24/arch/ppc/kernel/ptrace.c	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/ppc/kernel/ptrace.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/ppc/kernel/ptrace.c	Sat Jan 17 05:27:22 2004
 @@ -188,7 +188,7 @@ int sys_ptrace(long request, long pid, l
  	if (child)
  		get_task_struct(child);
@@ -200,9 +200,9 @@ diff -NurpP --minimal linux-2.4.24/arch/ppc/kernel/ptrace.c linux-2.4.24-vs1.23-
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/misc.S linux-2.4.24-vs1.23-rev03/arch/ppc64/kernel/misc.S
+diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/misc.S linux-2.4.24-vs1.24/arch/ppc64/kernel/misc.S
 --- linux-2.4.24/arch/ppc64/kernel/misc.S	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/ppc64/kernel/misc.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/ppc64/kernel/misc.S	Sat Jan 17 05:27:22 2004
 @@ -803,24 +803,74 @@ _GLOBAL(sys_call_table32)
  	.llong .sys_madvise		/* 205 */
  	.llong .sys_mincore		/* 206 */
@@ -388,9 +388,9 @@ diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/misc.S linux-2.4.24-vs1.23-
 +	.rept NR_syscalls-273
  	.llong .sys_ni_syscall
  	.endr
-diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/ptrace.c linux-2.4.24-vs1.23-rev03/arch/ppc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/ptrace.c linux-2.4.24-vs1.24/arch/ppc64/kernel/ptrace.c
 --- linux-2.4.24/arch/ppc64/kernel/ptrace.c	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/ppc64/kernel/ptrace.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/ppc64/kernel/ptrace.c	Sat Jan 17 05:27:22 2004
 @@ -115,7 +115,7 @@ int sys_ptrace(long request, long pid, l
  	if (child)
  		get_task_struct(child);
@@ -400,9 +400,9 @@ diff -NurpP --minimal linux-2.4.24/arch/ppc64/kernel/ptrace.c linux-2.4.24-vs1.2
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.24/arch/sparc/kernel/systbls.S linux-2.4.24-vs1.23-rev03/arch/sparc/kernel/systbls.S
+diff -NurpP --minimal linux-2.4.24/arch/sparc/kernel/systbls.S linux-2.4.24-vs1.24/arch/sparc/kernel/systbls.S
 --- linux-2.4.24/arch/sparc/kernel/systbls.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/sparc/kernel/systbls.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/sparc/kernel/systbls.S	Sat Jan 17 05:27:22 2004
 @@ -70,7 +70,10 @@ sys_call_table:
  /*240*/	.long sys_munlockall, sys_sched_setparam, sys_sched_getparam, sys_sched_setscheduler, sys_sched_getscheduler
  /*245*/	.long sys_sched_yield, sys_sched_get_priority_max, sys_sched_get_priority_min, sys_sched_rr_get_interval, sys_nanosleep
@@ -415,9 +415,9 @@ diff -NurpP --minimal linux-2.4.24/arch/sparc/kernel/systbls.S linux-2.4.24-vs1.
  
  #ifdef CONFIG_SUNOS_EMUL
  	/* Now the SunOS syscall table. */
-diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/entry.S linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/entry.S
+diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/entry.S linux-2.4.24-vs1.24/arch/sparc64/kernel/entry.S
 --- linux-2.4.24/arch/sparc64/kernel/entry.S	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/entry.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/sparc64/kernel/entry.S	Sat Jan 17 05:27:22 2004
 @@ -26,7 +26,7 @@
  
  #define curptr      g6
@@ -427,9 +427,9 @@ diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/entry.S linux-2.4.24-vs1.
  
  	.text
  	.align		32
-diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/ptrace.c linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/ptrace.c linux-2.4.24-vs1.24/arch/sparc64/kernel/ptrace.c
 --- linux-2.4.24/arch/sparc64/kernel/ptrace.c	Fri Nov 29 00:53:12 2002
-+++ linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/ptrace.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/sparc64/kernel/ptrace.c	Sat Jan 17 05:27:22 2004
 @@ -156,7 +156,7 @@ asmlinkage void do_ptrace(struct pt_regs
  		get_task_struct(child);
  	read_unlock(&tasklist_lock);
@@ -439,9 +439,9 @@ diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/ptrace.c linux-2.4.24-vs1
  		pt_error_return(regs, ESRCH);
  		goto out;
  	}
-diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/systbls.S linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/systbls.S
+diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/systbls.S linux-2.4.24-vs1.24/arch/sparc64/kernel/systbls.S
 --- linux-2.4.24/arch/sparc64/kernel/systbls.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/sparc64/kernel/systbls.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/sparc64/kernel/systbls.S	Sat Jan 17 05:27:22 2004
 @@ -70,7 +70,10 @@ sys_call_table32:
  /*240*/	.word sys_munlockall, sys_sched_setparam, sys_sched_getparam, sys_sched_setscheduler, sys_sched_getscheduler
  	.word sys_sched_yield, sys_sched_get_priority_max, sys_sched_get_priority_min, sys32_sched_rr_get_interval, sys32_nanosleep
@@ -479,9 +479,9 @@ diff -NurpP --minimal linux-2.4.24/arch/sparc64/kernel/systbls.S linux-2.4.24-vs
 +	.word sunos_nosys
  
  #endif
-diff -NurpP --minimal linux-2.4.24/arch/x86_64/ia32/ia32entry.S linux-2.4.24-vs1.23-rev03/arch/x86_64/ia32/ia32entry.S
+diff -NurpP --minimal linux-2.4.24/arch/x86_64/ia32/ia32entry.S linux-2.4.24-vs1.24/arch/x86_64/ia32/ia32entry.S
 --- linux-2.4.24/arch/x86_64/ia32/ia32entry.S	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/x86_64/ia32/ia32entry.S	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/x86_64/ia32/ia32entry.S	Sat Jan 17 05:27:22 2004
 @@ -369,9 +369,41 @@ ia32_sys_call_table:
  	.quad quiet_ni_syscall  /* fremovexattr - 237 */
  	.quad sys_tkill
@@ -525,9 +525,9 @@ diff -NurpP --minimal linux-2.4.24/arch/x86_64/ia32/ia32entry.S linux-2.4.24-vs1
  ia32_syscall_end:		
  	.rept IA32_NR_syscalls-(ia32_syscall_end-ia32_sys_call_table)/8
  		.quad ni_syscall
-diff -NurpP --minimal linux-2.4.24/arch/x86_64/kernel/sys_x86_64.c linux-2.4.24-vs1.23-rev03/arch/x86_64/kernel/sys_x86_64.c
+diff -NurpP --minimal linux-2.4.24/arch/x86_64/kernel/sys_x86_64.c linux-2.4.24-vs1.24/arch/x86_64/kernel/sys_x86_64.c
 --- linux-2.4.24/arch/x86_64/kernel/sys_x86_64.c	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/arch/x86_64/kernel/sys_x86_64.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/arch/x86_64/kernel/sys_x86_64.c	Sat Jan 17 05:27:22 2004
 @@ -108,8 +108,18 @@ unsigned long arch_get_unmapped_area(str
  asmlinkage long sys_uname(struct new_utsname * name)
  {
@@ -548,9 +548,9 @@ diff -NurpP --minimal linux-2.4.24/arch/x86_64/kernel/sys_x86_64.c linux-2.4.24-
  	up_read(&uts_sem);
  	if (personality(current->personality) == PER_LINUX32)
  		err = copy_to_user(name->machine, "i686", 5);
-diff -NurpP --minimal linux-2.4.24/drivers/block/Config.in linux-2.4.24-vs1.23-rev03/drivers/block/Config.in
+diff -NurpP --minimal linux-2.4.24/drivers/block/Config.in linux-2.4.24-vs1.24/drivers/block/Config.in
 --- linux-2.4.24/drivers/block/Config.in	Fri Nov 28 19:26:19 2003
-+++ linux-2.4.24-vs1.23-rev03/drivers/block/Config.in	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/drivers/block/Config.in	Sat Jan 17 05:27:23 2004
 @@ -41,6 +41,7 @@ dep_tristate 'Mylex DAC960/DAC1100 PCI R
  dep_tristate 'Micro Memory MM5415 Battery Backed RAM support (EXPERIMENTAL)' CONFIG_BLK_DEV_UMEM $CONFIG_PCI $CONFIG_EXPERIMENTAL
  
@@ -559,9 +559,9 @@ diff -NurpP --minimal linux-2.4.24/drivers/block/Config.in linux-2.4.24-vs1.23-r
  dep_tristate 'Network block device support' CONFIG_BLK_DEV_NBD $CONFIG_NET
  
  tristate 'RAM disk support' CONFIG_BLK_DEV_RAM
-diff -NurpP --minimal linux-2.4.24/drivers/block/Makefile linux-2.4.24-vs1.23-rev03/drivers/block/Makefile
+diff -NurpP --minimal linux-2.4.24/drivers/block/Makefile linux-2.4.24-vs1.24/drivers/block/Makefile
 --- linux-2.4.24/drivers/block/Makefile	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.24-vs1.23-rev03/drivers/block/Makefile	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/drivers/block/Makefile	Sat Jan 17 05:27:23 2004
 @@ -31,6 +31,7 @@ obj-$(CONFIG_BLK_CPQ_CISS_DA)  += cciss.
  obj-$(CONFIG_BLK_DEV_DAC960)	+= DAC960.o
  obj-$(CONFIG_BLK_DEV_UMEM)	+= umem.o
@@ -570,9 +570,9 @@ diff -NurpP --minimal linux-2.4.24/drivers/block/Makefile linux-2.4.24-vs1.23-re
  
  subdir-$(CONFIG_PARIDE) += paride
  
-diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.c linux-2.4.24-vs1.23-rev03/drivers/block/vroot.c
+diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.c linux-2.4.24-vs1.24/drivers/block/vroot.c
 --- linux-2.4.24/drivers/block/vroot.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/drivers/block/vroot.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/drivers/block/vroot.c	Sat Jan 17 05:27:23 2004
 @@ -0,0 +1,329 @@
 +/*
 + *  linux/drivers/block/vroot.c
@@ -903,9 +903,9 @@ diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.c linux-2.4.24-vs1.23-rev
 +__setup("max_vroot=", max_vroot_setup);
 +
 +#endif
-diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.h linux-2.4.24-vs1.23-rev03/drivers/block/vroot.h
+diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.h linux-2.4.24-vs1.24/drivers/block/vroot.h
 --- linux-2.4.24/drivers/block/vroot.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/drivers/block/vroot.h	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/drivers/block/vroot.h	Sat Jan 17 05:27:23 2004
 @@ -0,0 +1,46 @@
 +#ifndef _LINUX_VROOT_H
 +#define _LINUX_VROOT_H
@@ -953,9 +953,9 @@ diff -NurpP --minimal linux-2.4.24/drivers/block/vroot.h linux-2.4.24-vs1.23-rev
 +#define VROOT_CLR_DEV		0x5601
 +
 +#endif
-diff -NurpP --minimal linux-2.4.24/fs/Makefile linux-2.4.24-vs1.23-rev03/fs/Makefile
+diff -NurpP --minimal linux-2.4.24/fs/Makefile linux-2.4.24-vs1.24/fs/Makefile
 --- linux-2.4.24/fs/Makefile	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/Makefile	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/fs/Makefile	Sat Jan 17 05:27:23 2004
 @@ -7,7 +7,7 @@
  
  O_TARGET := fs.o
@@ -965,9 +965,9 @@ diff -NurpP --minimal linux-2.4.24/fs/Makefile linux-2.4.24-vs1.23-rev03/fs/Make
  mod-subdirs :=	nls
  
  obj-y :=	open.o read_write.o devices.o file_table.o buffer.o \
-diff -NurpP --minimal linux-2.4.24/fs/devpts/inode.c linux-2.4.24-vs1.23-rev03/fs/devpts/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/devpts/inode.c linux-2.4.24-vs1.24/fs/devpts/inode.c
 --- linux-2.4.24/fs/devpts/inode.c	Thu Oct 25 09:02:26 2001
-+++ linux-2.4.24-vs1.23-rev03/fs/devpts/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/devpts/inode.c	Sat Jan 17 05:27:22 2004
 @@ -22,6 +22,7 @@
  #include <linux/slab.h>
  #include <linux/stat.h>
@@ -1004,9 +1004,9 @@ diff -NurpP --minimal linux-2.4.24/fs/devpts/inode.c linux-2.4.24-vs1.23-rev03/f
  	init_special_inode(inode, S_IFCHR|sbi->mode, kdev_t_to_nr(device));
  
  	if ( sbi->inodes[number] ) {
-diff -NurpP --minimal linux-2.4.24/fs/devpts/root.c linux-2.4.24-vs1.23-rev03/fs/devpts/root.c
+diff -NurpP --minimal linux-2.4.24/fs/devpts/root.c linux-2.4.24-vs1.24/fs/devpts/root.c
 --- linux-2.4.24/fs/devpts/root.c	Fri Dec 21 18:41:55 2001
-+++ linux-2.4.24-vs1.23-rev03/fs/devpts/root.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/devpts/root.c	Sat Jan 17 05:27:22 2004
 @@ -14,6 +14,7 @@
  #include <linux/stat.h>
  #include <linux/param.h>
@@ -1053,9 +1053,9 @@ diff -NurpP --minimal linux-2.4.24/fs/devpts/root.c linux-2.4.24-vs1.23-rev03/fs
  }
 +
 +
-diff -NurpP --minimal linux-2.4.24/fs/exec.c linux-2.4.24-vs1.23-rev03/fs/exec.c
+diff -NurpP --minimal linux-2.4.24/fs/exec.c linux-2.4.24-vs1.24/fs/exec.c
 --- linux-2.4.24/fs/exec.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/exec.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/exec.c	Sat Jan 17 05:27:22 2004
 @@ -729,7 +729,7 @@ void compute_creds(struct linux_binprm *
  	kernel_cap_t new_permitted, working;
  	int do_unlock = 0;
@@ -1065,9 +1065,9 @@ diff -NurpP --minimal linux-2.4.24/fs/exec.c linux-2.4.24-vs1.23-rev03/fs/exec.c
  	working = cap_intersect(bprm->cap_inheritable,
  				current->cap_inheritable);
  	new_permitted = cap_combine(new_permitted, working);
-diff -NurpP --minimal linux-2.4.24/fs/ext2/ialloc.c linux-2.4.24-vs1.23-rev03/fs/ext2/ialloc.c
+diff -NurpP --minimal linux-2.4.24/fs/ext2/ialloc.c linux-2.4.24-vs1.24/fs/ext2/ialloc.c
 --- linux-2.4.24/fs/ext2/ialloc.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext2/ialloc.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext2/ialloc.c	Sat Jan 17 05:27:22 2004
 @@ -388,7 +388,7 @@ repeat:
  	inode->u.ext2_i.i_new_inode = 1;
  	inode->u.ext2_i.i_flags = dir->u.ext2_i.i_flags & ~EXT2_BTREE_FL;
@@ -1077,9 +1077,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext2/ialloc.c linux-2.4.24-vs1.23-rev03/fs
  	inode->u.ext2_i.i_block_group = group;
  	ext2_set_inode_flags(inode);
  	insert_inode_hash(inode);
-diff -NurpP --minimal linux-2.4.24/fs/ext2/inode.c linux-2.4.24-vs1.23-rev03/fs/ext2/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/ext2/inode.c linux-2.4.24-vs1.24/fs/ext2/inode.c
 --- linux-2.4.24/fs/ext2/inode.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext2/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext2/inode.c	Sat Jan 17 05:27:22 2004
 @@ -46,6 +46,8 @@ void ext2_put_inode (struct inode * inod
  	ext2_discard_prealloc (inode);
  }
@@ -1146,9 +1146,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext2/inode.c linux-2.4.24-vs1.23-rev03/fs/
  	if (flags & EXT2_NOATIME_FL)
  		inode->i_flags |= S_NOATIME;
  }
-diff -NurpP --minimal linux-2.4.24/fs/ext2/ioctl.c linux-2.4.24-vs1.23-rev03/fs/ext2/ioctl.c
+diff -NurpP --minimal linux-2.4.24/fs/ext2/ioctl.c linux-2.4.24-vs1.24/fs/ext2/ioctl.c
 --- linux-2.4.24/fs/ext2/ioctl.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext2/ioctl.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext2/ioctl.c	Sat Jan 17 05:27:22 2004
 @@ -39,12 +39,12 @@ int ext2_ioctl (struct inode * inode, st
  		oldflags = inode->u.ext2_i.i_flags;
  
@@ -1165,9 +1165,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext2/ioctl.c linux-2.4.24-vs1.23-rev03/fs/
  			if (!capable(CAP_LINUX_IMMUTABLE))
  				return -EPERM;
  		}
-diff -NurpP --minimal linux-2.4.24/fs/ext3/ialloc.c linux-2.4.24-vs1.23-rev03/fs/ext3/ialloc.c
+diff -NurpP --minimal linux-2.4.24/fs/ext3/ialloc.c linux-2.4.24-vs1.24/fs/ext3/ialloc.c
 --- linux-2.4.24/fs/ext3/ialloc.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext3/ialloc.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext3/ialloc.c	Sat Jan 17 05:27:22 2004
 @@ -485,7 +485,7 @@ repeat:
  	inode->i_mtime = inode->i_atime = inode->i_ctime = CURRENT_TIME;
  	inode->u.ext3_i.i_flags = dir->u.ext3_i.i_flags & ~EXT3_INDEX_FL;
@@ -1177,9 +1177,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext3/ialloc.c linux-2.4.24-vs1.23-rev03/fs
  #ifdef EXT3_FRAGMENTS
  	inode->u.ext3_i.i_faddr = 0;
  	inode->u.ext3_i.i_frag_no = 0;
-diff -NurpP --minimal linux-2.4.24/fs/ext3/inode.c linux-2.4.24-vs1.23-rev03/fs/ext3/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/ext3/inode.c linux-2.4.24-vs1.24/fs/ext3/inode.c
 --- linux-2.4.24/fs/ext3/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext3/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext3/inode.c	Sat Jan 17 05:27:22 2004
 @@ -172,6 +172,7 @@ void ext3_put_inode (struct inode * inod
  	ext3_discard_prealloc (inode);
  }
@@ -1248,9 +1248,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext3/inode.c linux-2.4.24-vs1.23-rev03/fs/
  	if (flags & EXT3_NOATIME_FL)
  		inode->i_flags |= S_NOATIME;
  }
-diff -NurpP --minimal linux-2.4.24/fs/ext3/ioctl.c linux-2.4.24-vs1.23-rev03/fs/ext3/ioctl.c
+diff -NurpP --minimal linux-2.4.24/fs/ext3/ioctl.c linux-2.4.24-vs1.24/fs/ext3/ioctl.c
 --- linux-2.4.24/fs/ext3/ioctl.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ext3/ioctl.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ext3/ioctl.c	Sat Jan 17 05:27:22 2004
 @@ -48,12 +48,12 @@ int ext3_ioctl (struct inode * inode, st
  		jflag = flags & EXT3_JOURNAL_DATA_FL;
  
@@ -1267,9 +1267,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ext3/ioctl.c linux-2.4.24-vs1.23-rev03/fs/
  			if (!capable(CAP_LINUX_IMMUTABLE))
  				return -EPERM;
  		}
-diff -NurpP --minimal linux-2.4.24/fs/fat/file.c linux-2.4.24-vs1.23-rev03/fs/fat/file.c
+diff -NurpP --minimal linux-2.4.24/fs/fat/file.c linux-2.4.24-vs1.24/fs/fat/file.c
 --- linux-2.4.24/fs/fat/file.c	Sun Aug 12 19:56:56 2001
-+++ linux-2.4.24-vs1.23-rev03/fs/fat/file.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/fat/file.c	Sat Jan 17 05:27:22 2004
 @@ -119,7 +119,7 @@ void fat_truncate(struct inode *inode)
  	/* Why no return value?  Surely the disk could fail... */
  	if (IS_RDONLY (inode))
@@ -1279,9 +1279,9 @@ diff -NurpP --minimal linux-2.4.24/fs/fat/file.c linux-2.4.24-vs1.23-rev03/fs/fa
  		return /* -EPERM */;
  	cluster = 1 << sbi->cluster_bits;
  	/* 
-diff -NurpP --minimal linux-2.4.24/fs/fat/inode.c linux-2.4.24-vs1.23-rev03/fs/fat/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/fat/inode.c linux-2.4.24-vs1.24/fs/fat/inode.c
 --- linux-2.4.24/fs/fat/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/fat/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/fat/inode.c	Sat Jan 17 05:27:22 2004
 @@ -950,7 +950,7 @@ static void fat_fill_inode(struct inode 
  	}
  	if(de->attr & ATTR_SYS)
@@ -1291,9 +1291,9 @@ diff -NurpP --minimal linux-2.4.24/fs/fat/inode.c linux-2.4.24-vs1.23-rev03/fs/f
  	MSDOS_I(inode)->i_attrs = de->attr & ATTR_UNUSED;
  	/* this is as close to the truth as we can get ... */
  	inode->i_blksize = 1 << sbi->cluster_bits;
-diff -NurpP --minimal linux-2.4.24/fs/hpfs/file.c linux-2.4.24-vs1.23-rev03/fs/hpfs/file.c
+diff -NurpP --minimal linux-2.4.24/fs/hpfs/file.c linux-2.4.24-vs1.24/fs/hpfs/file.c
 --- linux-2.4.24/fs/hpfs/file.c	Mon Aug 13 02:37:53 2001
-+++ linux-2.4.24-vs1.23-rev03/fs/hpfs/file.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/hpfs/file.c	Sat Jan 17 05:27:22 2004
 @@ -60,7 +60,7 @@ secno hpfs_bmap(struct inode *inode, uns
  
  void hpfs_truncate(struct inode *i)
@@ -1303,9 +1303,9 @@ diff -NurpP --minimal linux-2.4.24/fs/hpfs/file.c linux-2.4.24-vs1.23-rev03/fs/h
  	i->i_hpfs_n_secs = 0;
  	i->i_blocks = 1 + ((i->i_size + 511) >> 9);
  	i->u.hpfs_i.mmu_private = i->i_size;
-diff -NurpP --minimal linux-2.4.24/fs/intermezzo/vfs.c linux-2.4.24-vs1.23-rev03/fs/intermezzo/vfs.c
+diff -NurpP --minimal linux-2.4.24/fs/intermezzo/vfs.c linux-2.4.24-vs1.24/fs/intermezzo/vfs.c
 --- linux-2.4.24/fs/intermezzo/vfs.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/intermezzo/vfs.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/intermezzo/vfs.c	Sat Jan 17 05:27:22 2004
 @@ -140,7 +140,7 @@ static inline int may_delete(struct inod
          if (IS_APPEND(dir))
                  return -EPERM;
@@ -1351,9 +1351,9 @@ diff -NurpP --minimal linux-2.4.24/fs/intermezzo/vfs.c linux-2.4.24-vs1.23-rev03
                  EXIT;
                  return -EPERM;
          }
-diff -NurpP --minimal linux-2.4.24/fs/ioctl.c linux-2.4.24-vs1.23-rev03/fs/ioctl.c
+diff -NurpP --minimal linux-2.4.24/fs/ioctl.c linux-2.4.24-vs1.24/fs/ioctl.c
 --- linux-2.4.24/fs/ioctl.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/ioctl.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ioctl.c	Sat Jan 17 05:27:22 2004
 @@ -7,10 +7,14 @@
  #include <linux/mm.h>
  #include <linux/smp_lock.h>
@@ -1382,9 +1382,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ioctl.c linux-2.4.24-vs1.23-rev03/fs/ioctl
  			break;
  		default:
  			error = -ENOTTY;
-diff -NurpP --minimal linux-2.4.24/fs/jfs/xattr.c linux-2.4.24-vs1.23-rev03/fs/jfs/xattr.c
+diff -NurpP --minimal linux-2.4.24/fs/jfs/xattr.c linux-2.4.24-vs1.24/fs/jfs/xattr.c
 --- linux-2.4.24/fs/jfs/xattr.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/jfs/xattr.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/jfs/xattr.c	Sat Jan 17 05:27:22 2004
 @@ -653,7 +653,7 @@ static int can_set_xattr(struct inode *i
  	if (IS_RDONLY(inode))
  		return -EROFS;
@@ -1394,9 +1394,9 @@ diff -NurpP --minimal linux-2.4.24/fs/jfs/xattr.c linux-2.4.24-vs1.23-rev03/fs/j
  		return -EPERM;
  
  	if((strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN) != 0) &&
-diff -NurpP --minimal linux-2.4.24/fs/namei.c linux-2.4.24-vs1.23-rev03/fs/namei.c
+diff -NurpP --minimal linux-2.4.24/fs/namei.c linux-2.4.24-vs1.24/fs/namei.c
 --- linux-2.4.24/fs/namei.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/namei.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/namei.c	Sat Jan 17 05:27:22 2004
 @@ -22,6 +22,7 @@
  #include <linux/dnotify.h>
  #include <linux/smp_lock.h>
@@ -1449,9 +1449,9 @@ diff -NurpP --minimal linux-2.4.24/fs/namei.c linux-2.4.24-vs1.23-rev03/fs/namei
  		goto exit_lock;
  	if (!dir->i_op || !dir->i_op->link)
  		goto exit_lock;
-diff -NurpP --minimal linux-2.4.24/fs/nfsd/vfs.c linux-2.4.24-vs1.23-rev03/fs/nfsd/vfs.c
+diff -NurpP --minimal linux-2.4.24/fs/nfsd/vfs.c linux-2.4.24-vs1.24/fs/nfsd/vfs.c
 --- linux-2.4.24/fs/nfsd/vfs.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/nfsd/vfs.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/nfsd/vfs.c	Sat Jan 17 05:27:22 2004
 @@ -1480,7 +1480,7 @@ nfsd_permission(struct svc_export *exp, 
  	if (acc == MAY_NOP)
  		return 0;
@@ -1480,9 +1480,9 @@ diff -NurpP --minimal linux-2.4.24/fs/nfsd/vfs.c linux-2.4.24-vs1.23-rev03/fs/nf
  			return nfserr_perm;
  	}
  	if ((acc & MAY_TRUNC) && IS_APPEND(inode))
-diff -NurpP --minimal linux-2.4.24/fs/open.c linux-2.4.24-vs1.23-rev03/fs/open.c
+diff -NurpP --minimal linux-2.4.24/fs/open.c linux-2.4.24-vs1.24/fs/open.c
 --- linux-2.4.24/fs/open.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/open.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/open.c	Sat Jan 17 05:27:22 2004
 @@ -148,7 +148,7 @@ static inline long do_sys_truncate(const
  		goto dput_and_out;
  
@@ -1519,9 +1519,9 @@ diff -NurpP --minimal linux-2.4.24/fs/open.c linux-2.4.24-vs1.23-rev03/fs/open.c
  		goto out;
  	if (user == (uid_t) -1)
  		user = inode->i_uid;
-diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.23-rev03/fs/proc/array.c
+diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.24/fs/proc/array.c
 --- linux-2.4.24/fs/proc/array.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/proc/array.c	Fri Jan 16 03:08:18 2004
++++ linux-2.4.24-vs1.24/fs/proc/array.c	Sat Jan 17 05:27:22 2004
 @@ -76,6 +76,7 @@
  #include <asm/pgtable.h>
  #include <asm/io.h>
@@ -1568,7 +1568,7 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.23-rev03/fs/
 +			    cap_t(p->cap_bset));
  }
  
-+extern spinlock_t ctx_ref_lock;
++extern rwlock_t ctx_ref_lock;
  
  int proc_pid_status(struct task_struct *task, char * buffer)
  {
@@ -1576,7 +1576,7 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.23-rev03/fs/
  	}
  	buffer = task_sig(task, buffer);
  	buffer = task_cap(task, buffer);
-+	spin_lock(&ctx_ref_lock);
++	read_lock(&ctx_ref_lock);
 +	if (task->s_info) {
 +		int i;
 +
@@ -1622,7 +1622,7 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.23-rev03/fs/
 +		buffer += sprintf (buffer,"ipv4root: 0\n");
 +		buffer += sprintf (buffer,"ipv4root_bcast: 0\n");
 +	}
-+	spin_unlock(&ctx_ref_lock);
++	read_unlock(&ctx_ref_lock);
  #if defined(CONFIG_ARCH_S390)
  	buffer = task_show_regs(task, buffer);
  #endif
@@ -1635,9 +1635,9 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/array.c linux-2.4.24-vs1.23-rev03/fs/
  	read_unlock(&tasklist_lock);
  	res = sprintf(buffer,"%d (%s) %c %d %d %d %d %d %lu %lu \
  %lu %lu %lu %lu %lu %ld %ld %ld %ld %ld %ld %lu %lu %ld %lu %lu %lu %lu %lu \
-diff -NurpP --minimal linux-2.4.24/fs/proc/base.c linux-2.4.24-vs1.23-rev03/fs/proc/base.c
+diff -NurpP --minimal linux-2.4.24/fs/proc/base.c linux-2.4.24-vs1.24/fs/proc/base.c
 --- linux-2.4.24/fs/proc/base.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/proc/base.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/proc/base.c	Sat Jan 17 05:27:22 2004
 @@ -1078,6 +1078,10 @@ struct dentry *proc_pid_lookup(struct in
  	if (!task)
  		goto out;
@@ -1677,9 +1677,9 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/base.c linux-2.4.24-vs1.23-rev03/fs/p
  			continue;
  		if (--index >= 0)
  			continue;
-diff -NurpP --minimal linux-2.4.24/fs/proc/generic.c linux-2.4.24-vs1.23-rev03/fs/proc/generic.c
+diff -NurpP --minimal linux-2.4.24/fs/proc/generic.c linux-2.4.24-vs1.24/fs/proc/generic.c
 --- linux-2.4.24/fs/proc/generic.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/proc/generic.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/proc/generic.c	Sat Jan 17 05:27:22 2004
 @@ -16,6 +16,7 @@
  #include <linux/stat.h>
  #define __NO_VERSION__
@@ -1728,9 +1728,9 @@ diff -NurpP --minimal linux-2.4.24/fs/proc/generic.c linux-2.4.24-vs1.23-rev03/f
  		} else {
  			kfree(ent);
  			ent = NULL;
-diff -NurpP --minimal linux-2.4.24/fs/quota.c linux-2.4.24-vs1.23-rev03/fs/quota.c
+diff -NurpP --minimal linux-2.4.24/fs/quota.c linux-2.4.24-vs1.24/fs/quota.c
 --- linux-2.4.24/fs/quota.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/quota.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/fs/quota.c	Sat Jan 17 05:27:23 2004
 @@ -14,6 +14,10 @@
  #include <linux/quotaops.h>
  #include <linux/quotacompat.h>
@@ -1841,9 +1841,9 @@ diff -NurpP --minimal linux-2.4.24/fs/quota.c linux-2.4.24-vs1.23-rev03/fs/quota
  			return -EPERM;
  	return 0;
  }
-diff -NurpP --minimal linux-2.4.24/fs/reiserfs/inode.c linux-2.4.24-vs1.23-rev03/fs/reiserfs/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/reiserfs/inode.c linux-2.4.24-vs1.24/fs/reiserfs/inode.c
 --- linux-2.4.24/fs/reiserfs/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/reiserfs/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/reiserfs/inode.c	Sat Jan 17 05:27:22 2004
 @@ -1574,7 +1574,7 @@ int reiserfs_new_inode (struct reiserfs_
  
      /* symlink cannot be immutable or append only, right? */
@@ -1889,9 +1889,9 @@ diff -NurpP --minimal linux-2.4.24/fs/reiserfs/inode.c linux-2.4.24-vs1.23-rev03
  		if( inode -> i_flags & S_SYNC )
  			*sd_attrs |= REISERFS_SYNC_FL;
  		else
-diff -NurpP --minimal linux-2.4.24/fs/reiserfs/ioctl.c linux-2.4.24-vs1.23-rev03/fs/reiserfs/ioctl.c
+diff -NurpP --minimal linux-2.4.24/fs/reiserfs/ioctl.c linux-2.4.24-vs1.24/fs/reiserfs/ioctl.c
 --- linux-2.4.24/fs/reiserfs/ioctl.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/fs/reiserfs/ioctl.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/reiserfs/ioctl.c	Sat Jan 17 05:27:22 2004
 @@ -51,7 +51,8 @@ int reiserfs_ioctl (struct inode * inode
  		if (get_user(flags, (int *) arg))
  			return -EFAULT;
@@ -1902,9 +1902,9 @@ diff -NurpP --minimal linux-2.4.24/fs/reiserfs/ioctl.c linux-2.4.24-vs1.23-rev03
  		     !capable( CAP_LINUX_IMMUTABLE ) )
  			return -EPERM;
  			
-diff -NurpP --minimal linux-2.4.24/fs/udf/inode.c linux-2.4.24-vs1.23-rev03/fs/udf/inode.c
+diff -NurpP --minimal linux-2.4.24/fs/udf/inode.c linux-2.4.24-vs1.24/fs/udf/inode.c
 --- linux-2.4.24/fs/udf/inode.c	Sat Aug  3 02:39:45 2002
-+++ linux-2.4.24-vs1.23-rev03/fs/udf/inode.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/udf/inode.c	Sat Jan 17 05:27:22 2004
 @@ -860,7 +860,7 @@ void udf_truncate(struct inode * inode)
  	if (!(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
  			S_ISLNK(inode->i_mode)))
@@ -1914,9 +1914,9 @@ diff -NurpP --minimal linux-2.4.24/fs/udf/inode.c linux-2.4.24-vs1.23-rev03/fs/u
  		return;
  
  	if (UDF_I_ALLOCTYPE(inode) == ICBTAG_FLAG_AD_IN_ICB)
-diff -NurpP --minimal linux-2.4.24/fs/ufs/truncate.c linux-2.4.24-vs1.23-rev03/fs/ufs/truncate.c
+diff -NurpP --minimal linux-2.4.24/fs/ufs/truncate.c linux-2.4.24-vs1.24/fs/ufs/truncate.c
 --- linux-2.4.24/fs/ufs/truncate.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.24-vs1.23-rev03/fs/ufs/truncate.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/fs/ufs/truncate.c	Sat Jan 17 05:27:22 2004
 @@ -434,7 +434,7 @@ void ufs_truncate (struct inode * inode)
  
  	if (!(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) || S_ISLNK(inode->i_mode)))
@@ -1926,9 +1926,9 @@ diff -NurpP --minimal linux-2.4.24/fs/ufs/truncate.c linux-2.4.24-vs1.23-rev03/f
  		return;
  	while (1) {
  		retry = ufs_trunc_direct(inode);
-diff -NurpP --minimal linux-2.4.24/include/asm-alpha/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-alpha/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-alpha/unistd.h linux-2.4.24-vs1.24/include/asm-alpha/unistd.h
 --- linux-2.4.24/include/asm-alpha/unistd.h	Sat Aug  3 02:39:45 2002
-+++ linux-2.4.24-vs1.23-rev03/include/asm-alpha/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-alpha/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -233,6 +233,7 @@
  #define __NR_osf_memcntl	260	/* not implemented */
  #define __NR_osf_fdatasync	261	/* not implemented */
@@ -1937,9 +1937,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-alpha/unistd.h linux-2.4.24-vs1.2
  
  /*
   * Linux-specific system calls begin at 300
-diff -NurpP --minimal linux-2.4.24/include/asm-i386/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-i386/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-i386/unistd.h linux-2.4.24-vs1.24/include/asm-i386/unistd.h
 --- linux-2.4.24/include/asm-i386/unistd.h	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.24-vs1.23-rev03/include/asm-i386/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-i386/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -258,6 +258,8 @@
  #define __NR_free_hugepages	251
  #define __NR_exit_group		252
@@ -1949,9 +1949,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-i386/unistd.h linux-2.4.24-vs1.23
  /* user-visible error numbers are in the range -1 - -124: see <asm-i386/errno.h> */
  
  #define __syscall_return(type, res) \
-diff -NurpP --minimal linux-2.4.24/include/asm-parisc/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-parisc/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-parisc/unistd.h linux-2.4.24-vs1.24/include/asm-parisc/unistd.h
 --- linux-2.4.24/include/asm-parisc/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-parisc/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-parisc/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -702,7 +702,9 @@
  #define __NR_readahead          (__NR_Linux + 207)
  #define __NR_tkill              (__NR_Linux + 208)
@@ -1963,9 +1963,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-parisc/unistd.h linux-2.4.24-vs1.
  
  #define HPUX_GATEWAY_ADDR       0xC0000004
  #define LINUX_GATEWAY_ADDR      0x100
-diff -NurpP --minimal linux-2.4.24/include/asm-ppc/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-ppc/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-ppc/unistd.h linux-2.4.24-vs1.24/include/asm-ppc/unistd.h
 --- linux-2.4.24/include/asm-ppc/unistd.h	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-ppc/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-ppc/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -257,6 +257,8 @@
  #endif
  #define __NR_swapcontext	249
@@ -1975,9 +1975,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-ppc/unistd.h linux-2.4.24-vs1.23-
  #define __NR(n)	#n
  
  /* On powerpc a system call basically clobbers the same registers like a
-diff -NurpP --minimal linux-2.4.24/include/asm-ppc64/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-ppc64/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-ppc64/unistd.h linux-2.4.24-vs1.24/include/asm-ppc64/unistd.h
 --- linux-2.4.24/include/asm-ppc64/unistd.h	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-ppc64/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-ppc64/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -244,6 +244,7 @@
  #define __NR_alloc_hugepages	232
  #define __NR_free_hugepages	233
@@ -1986,9 +1986,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-ppc64/unistd.h linux-2.4.24-vs1.2
  
  /* On powerpc a system call basically clobbers the same registers like a
   * function call, with the exception of LR (which is needed for the
-diff -NurpP --minimal linux-2.4.24/include/asm-sparc/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-sparc/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-sparc/unistd.h linux-2.4.24-vs1.24/include/asm-sparc/unistd.h
 --- linux-2.4.24/include/asm-sparc/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-sparc/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-sparc/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -272,6 +272,8 @@
  #define __NR_nfsservctl         254
  #define __NR_aplib              255
@@ -1998,9 +1998,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-sparc/unistd.h linux-2.4.24-vs1.2
  #define _syscall0(type,name) \
  type name(void) \
  { \
-diff -NurpP --minimal linux-2.4.24/include/asm-sparc64/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-sparc64/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-sparc64/unistd.h linux-2.4.24-vs1.24/include/asm-sparc64/unistd.h
 --- linux-2.4.24/include/asm-sparc64/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-sparc64/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-sparc64/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -274,6 +274,8 @@
  #define __NR_nfsservctl         254
  #define __NR_aplib              255
@@ -2010,9 +2010,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-sparc64/unistd.h linux-2.4.24-vs1
  #define _syscall0(type,name) \
  type name(void) \
  { \
-diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/ia32_unistd.h linux-2.4.24-vs1.23-rev03/include/asm-x86_64/ia32_unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/ia32_unistd.h linux-2.4.24-vs1.24/include/asm-x86_64/ia32_unistd.h
 --- linux-2.4.24/include/asm-x86_64/ia32_unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-x86_64/ia32_unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-x86_64/ia32_unistd.h	Sat Jan 17 05:27:22 2004
 @@ -250,6 +250,8 @@
  #define __NR_ia32_sched_setaffinity	241
  #define __NR_ia32_sched_getaffinity	242
@@ -2023,9 +2023,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/ia32_unistd.h linux-2.4.24
 +#define IA32_NR_syscalls 274
  
  #endif /* _ASM_X86_64_IA32_UNISTD_H_ */
-diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/unistd.h linux-2.4.24-vs1.23-rev03/include/asm-x86_64/unistd.h
+diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/unistd.h linux-2.4.24-vs1.24/include/asm-x86_64/unistd.h
 --- linux-2.4.24/include/asm-x86_64/unistd.h	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/include/asm-x86_64/unistd.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/asm-x86_64/unistd.h	Sat Jan 17 05:27:22 2004
 @@ -500,7 +500,10 @@ __SYSCALL(__NR_restart_syscall, sys_ni_s
  #define __NR_semtimedop		220
  __SYSCALL(__NR_semtimedop, sys_semtimedop)
@@ -2038,9 +2038,9 @@ diff -NurpP --minimal linux-2.4.24/include/asm-x86_64/unistd.h linux-2.4.24-vs1.
  
  #ifndef __NO_STUBS
  
-diff -NurpP --minimal linux-2.4.24/include/linux/capability.h linux-2.4.24-vs1.23-rev03/include/linux/capability.h
+diff -NurpP --minimal linux-2.4.24/include/linux/capability.h linux-2.4.24-vs1.24/include/linux/capability.h
 --- linux-2.4.24/include/linux/capability.h	Wed Jan 14 01:29:50 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/capability.h	Thu Jan 15 22:22:10 2004
++++ linux-2.4.24-vs1.24/include/linux/capability.h	Sat Jan 17 05:27:22 2004
 @@ -130,7 +130,8 @@ typedef __u32 kernel_cap_t;
  
  #define CAP_SETPCAP          8
@@ -2075,17 +2075,17 @@ diff -NurpP --minimal linux-2.4.24/include/linux/capability.h linux-2.4.24-vs1.2
  
  #ifdef __KERNEL__
  /* 
-diff -NurpP --minimal linux-2.4.24/include/linux/devpts_fs_info.h linux-2.4.24-vs1.23-rev03/include/linux/devpts_fs_info.h
+diff -NurpP --minimal linux-2.4.24/include/linux/devpts_fs_info.h linux-2.4.24-vs1.24/include/linux/devpts_fs_info.h
 --- linux-2.4.24/include/linux/devpts_fs_info.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/include/linux/devpts_fs_info.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/linux/devpts_fs_info.h	Sat Jan 17 05:27:22 2004
 @@ -0,0 +1,4 @@
 +struct devpts_inode_info {
 +	int vx_id;
 +};
 +
-diff -NurpP --minimal linux-2.4.24/include/linux/ext2_fs.h linux-2.4.24-vs1.23-rev03/include/linux/ext2_fs.h
+diff -NurpP --minimal linux-2.4.24/include/linux/ext2_fs.h linux-2.4.24-vs1.24/include/linux/ext2_fs.h
 --- linux-2.4.24/include/linux/ext2_fs.h	Wed Jan 14 01:29:51 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/ext2_fs.h	Thu Jan 15 22:22:12 2004
++++ linux-2.4.24-vs1.24/include/linux/ext2_fs.h	Sat Jan 17 05:27:22 2004
 @@ -187,7 +187,7 @@ struct ext2_group_desc
  #define	EXT2_UNRM_FL			0x00000002 /* Undelete */
  #define	EXT2_COMPR_FL			0x00000004 /* Compress file */
@@ -2109,9 +2109,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/ext2_fs.h linux-2.4.24-vs1.23-r
  
  /*
   * ioctl commands
-diff -NurpP --minimal linux-2.4.24/include/linux/ext3_fs.h linux-2.4.24-vs1.23-rev03/include/linux/ext3_fs.h
+diff -NurpP --minimal linux-2.4.24/include/linux/ext3_fs.h linux-2.4.24-vs1.24/include/linux/ext3_fs.h
 --- linux-2.4.24/include/linux/ext3_fs.h	Sat Jan 10 15:48:59 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/ext3_fs.h	Thu Jan 15 22:23:34 2004
++++ linux-2.4.24-vs1.24/include/linux/ext3_fs.h	Sat Jan 17 05:27:22 2004
 @@ -190,7 +190,7 @@ struct ext3_group_desc
  #define	EXT3_UNRM_FL			0x00000002 /* Undelete */
  #define	EXT3_COMPR_FL			0x00000004 /* Compress file */
@@ -2135,9 +2135,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/ext3_fs.h linux-2.4.24-vs1.23-r
  
  /*
   * Inode dynamic state flags
-diff -NurpP --minimal linux-2.4.24/include/linux/fs.h linux-2.4.24-vs1.23-rev03/include/linux/fs.h
+diff -NurpP --minimal linux-2.4.24/include/linux/fs.h linux-2.4.24-vs1.24/include/linux/fs.h
 --- linux-2.4.24/include/linux/fs.h	Sat Jan 10 15:46:51 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/fs.h	Thu Jan 15 22:22:10 2004
++++ linux-2.4.24-vs1.24/include/linux/fs.h	Sat Jan 17 05:27:22 2004
 @@ -132,9 +132,10 @@ extern int leases_enable, dir_notify_ena
  #define S_NOATIME	2	/* Do not update access times */
  #define S_QUOTA		4	/* Quota initialized for file */
@@ -2187,9 +2187,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/fs.h linux-2.4.24-vs1.23-rev03/
  		void				*generic_ip;
  	} u;
  };
-diff -NurpP --minimal linux-2.4.24/include/linux/major.h linux-2.4.24-vs1.23-rev03/include/linux/major.h
+diff -NurpP --minimal linux-2.4.24/include/linux/major.h linux-2.4.24-vs1.24/include/linux/major.h
 --- linux-2.4.24/include/linux/major.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.24-vs1.23-rev03/include/linux/major.h	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/include/linux/major.h	Sat Jan 17 05:27:23 2004
 @@ -24,6 +24,7 @@
  #define PTY_SLAVE_MAJOR 3
  #define HD_MAJOR	IDE0_MAJOR
@@ -2198,9 +2198,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/major.h linux-2.4.24-vs1.23-rev
  #define TTYAUX_MAJOR	5
  #define LP_MAJOR	6
  #define VCS_MAJOR	7
-diff -NurpP --minimal linux-2.4.24/include/linux/proc_fs.h linux-2.4.24-vs1.23-rev03/include/linux/proc_fs.h
+diff -NurpP --minimal linux-2.4.24/include/linux/proc_fs.h linux-2.4.24-vs1.24/include/linux/proc_fs.h
 --- linux-2.4.24/include/linux/proc_fs.h	Wed Jan 14 01:29:50 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/proc_fs.h	Thu Jan 15 22:22:10 2004
++++ linux-2.4.24-vs1.24/include/linux/proc_fs.h	Sat Jan 17 05:27:22 2004
 @@ -58,6 +58,7 @@ struct proc_dir_entry {
  	nlink_t nlink;
  	uid_t uid;
@@ -2209,9 +2209,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/proc_fs.h linux-2.4.24-vs1.23-r
  	unsigned long size;
  	struct inode_operations * proc_iops;
  	struct file_operations * proc_fops;
-diff -NurpP --minimal linux-2.4.24/include/linux/reiserfs_fs.h linux-2.4.24-vs1.23-rev03/include/linux/reiserfs_fs.h
+diff -NurpP --minimal linux-2.4.24/include/linux/reiserfs_fs.h linux-2.4.24-vs1.24/include/linux/reiserfs_fs.h
 --- linux-2.4.24/include/linux/reiserfs_fs.h	Sat Jan 10 15:54:14 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/reiserfs_fs.h	Thu Jan 15 22:24:36 2004
++++ linux-2.4.24-vs1.24/include/linux/reiserfs_fs.h	Sat Jan 17 05:27:22 2004
 @@ -866,7 +866,8 @@ struct stat_data_v1
  
  /* we want common flags to have the same values as in ext2,
@@ -2232,9 +2232,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/reiserfs_fs.h linux-2.4.24-vs1.
  				REISERFS_SYNC_FL |	\
  				REISERFS_NOATIME_FL |	\
  				REISERFS_NODUMP_FL |	\
-diff -NurpP --minimal linux-2.4.24/include/linux/sched.h linux-2.4.24-vs1.23-rev03/include/linux/sched.h
+diff -NurpP --minimal linux-2.4.24/include/linux/sched.h linux-2.4.24-vs1.24/include/linux/sched.h
 --- linux-2.4.24/include/linux/sched.h	Sat Jan 10 15:46:51 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/sched.h	Thu Jan 15 22:22:10 2004
++++ linux-2.4.24-vs1.24/include/linux/sched.h	Sat Jan 17 05:27:22 2004
 @@ -85,6 +85,7 @@ extern int last_pid;
  #endif
  
@@ -2291,9 +2291,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/sched.h linux-2.4.24-vs1.23-rev
  extern void free_uid(struct user_struct *);
  extern void switch_uid(struct user_struct *);
  
-diff -NurpP --minimal linux-2.4.24/include/linux/sys.h linux-2.4.24-vs1.23-rev03/include/linux/sys.h
+diff -NurpP --minimal linux-2.4.24/include/linux/sys.h linux-2.4.24-vs1.24/include/linux/sys.h
 --- linux-2.4.24/include/linux/sys.h	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.24-vs1.23-rev03/include/linux/sys.h	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/include/linux/sys.h	Sat Jan 17 05:27:22 2004
 @@ -4,7 +4,7 @@
  /*
   * system call entry points ... but not all are defined
@@ -2303,9 +2303,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/sys.h linux-2.4.24-vs1.23-rev03
  
  /*
   * These are system calls that will be removed at some time
-diff -NurpP --minimal linux-2.4.24/include/linux/sysctl.h linux-2.4.24-vs1.23-rev03/include/linux/sysctl.h
+diff -NurpP --minimal linux-2.4.24/include/linux/sysctl.h linux-2.4.24-vs1.24/include/linux/sysctl.h
 --- linux-2.4.24/include/linux/sysctl.h	Sat Jan 10 15:46:53 2004
-+++ linux-2.4.24-vs1.23-rev03/include/linux/sysctl.h	Thu Jan 15 22:22:16 2004
++++ linux-2.4.24-vs1.24/include/linux/sysctl.h	Sat Jan 17 05:27:23 2004
 @@ -128,6 +128,7 @@ enum
  	KERN_PPC_L3CR=57,       /* l3cr register on PPC */
  	KERN_EXCEPTION_TRACE=58, /* boolean: exception trace */
@@ -2314,9 +2314,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/sysctl.h linux-2.4.24-vs1.23-re
  };
  
  
-diff -NurpP --minimal linux-2.4.24/include/linux/vcontext.h linux-2.4.24-vs1.23-rev03/include/linux/vcontext.h
+diff -NurpP --minimal linux-2.4.24/include/linux/vcontext.h linux-2.4.24-vs1.24/include/linux/vcontext.h
 --- linux-2.4.24/include/linux/vcontext.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/include/linux/vcontext.h	Thu Jan 15 22:22:10 2004
++++ linux-2.4.24-vs1.24/include/linux/vcontext.h	Sat Jan 17 05:27:22 2004
 @@ -0,0 +1,121 @@
 +#ifndef _VX_CONTEXT_H
 +#define _VX_CONTEXT_H
@@ -2439,9 +2439,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/vcontext.h linux-2.4.24-vs1.23-
 +#define	FIOC_SETXFLG	_IOW('x', 6, long)
 +
 +#endif
-diff -NurpP --minimal linux-2.4.24/include/linux/vswitch.h linux-2.4.24-vs1.23-rev03/include/linux/vswitch.h
+diff -NurpP --minimal linux-2.4.24/include/linux/vswitch.h linux-2.4.24-vs1.24/include/linux/vswitch.h
 --- linux-2.4.24/include/linux/vswitch.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/include/linux/vswitch.h	Thu Jan 15 22:22:25 2004
++++ linux-2.4.24-vs1.24/include/linux/vswitch.h	Sat Jan 17 05:27:22 2004
 @@ -0,0 +1,122 @@
 +#ifndef _LINUX_VIRTUAL_H
 +#define _LINUX_VIRTUAL_H
@@ -2565,9 +2565,9 @@ diff -NurpP --minimal linux-2.4.24/include/linux/vswitch.h linux-2.4.24-vs1.23-r
 +
 +
 +#endif /* _LINUX_VIRTUAL_H */
-diff -NurpP --minimal linux-2.4.24/include/net/ip.h linux-2.4.24-vs1.23-rev03/include/net/ip.h
+diff -NurpP --minimal linux-2.4.24/include/net/ip.h linux-2.4.24-vs1.24/include/net/ip.h
 --- linux-2.4.24/include/net/ip.h	Wed Jan 14 02:09:13 2004
-+++ linux-2.4.24-vs1.23-rev03/include/net/ip.h	Thu Jan 15 22:24:26 2004
++++ linux-2.4.24-vs1.24/include/net/ip.h	Sat Jan 17 05:27:22 2004
 @@ -29,6 +29,7 @@
  #include <linux/netdevice.h>
  #include <linux/inetdevice.h>
@@ -2576,9 +2576,9 @@ diff -NurpP --minimal linux-2.4.24/include/net/ip.h linux-2.4.24-vs1.23-rev03/in
  #include <net/route.h>
  #include <net/arp.h>
  
-diff -NurpP --minimal linux-2.4.24/include/net/route.h linux-2.4.24-vs1.23-rev03/include/net/route.h
+diff -NurpP --minimal linux-2.4.24/include/net/route.h linux-2.4.24-vs1.24/include/net/route.h
 --- linux-2.4.24/include/net/route.h	Sat Jan 10 15:47:59 2004
-+++ linux-2.4.24-vs1.23-rev03/include/net/route.h	Thu Jan 15 22:24:26 2004
++++ linux-2.4.24-vs1.24/include/net/route.h	Sat Jan 17 05:27:23 2004
 @@ -32,6 +32,7 @@
  #include <linux/route.h>
  #include <linux/ip.h>
@@ -2632,9 +2632,9 @@ diff -NurpP --minimal linux-2.4.24/include/net/route.h linux-2.4.24-vs1.23-rev03
  	err = ip_route_output(rp, dst, src, tos, oif);
  	if (err || (dst && src))
  		return err;
-diff -NurpP --minimal linux-2.4.24/include/net/sock.h linux-2.4.24-vs1.23-rev03/include/net/sock.h
+diff -NurpP --minimal linux-2.4.24/include/net/sock.h linux-2.4.24-vs1.24/include/net/sock.h
 --- linux-2.4.24/include/net/sock.h	Sat Jan 10 15:47:59 2004
-+++ linux-2.4.24-vs1.23-rev03/include/net/sock.h	Thu Jan 15 22:23:04 2004
++++ linux-2.4.24-vs1.24/include/net/sock.h	Sat Jan 17 05:27:23 2004
 @@ -501,6 +501,7 @@ do {	spin_lock_init(&((__sk)->lock.slock
  } while(0)
  
@@ -2670,9 +2670,9 @@ diff -NurpP --minimal linux-2.4.24/include/net/sock.h linux-2.4.24-vs1.23-rev03/
  	/* Callbacks */
  	void			(*state_change)(struct sock *sk);
  	void			(*data_ready)(struct sock *sk,int bytes);
-diff -NurpP --minimal linux-2.4.24/include/net/tcp.h linux-2.4.24-vs1.23-rev03/include/net/tcp.h
+diff -NurpP --minimal linux-2.4.24/include/net/tcp.h linux-2.4.24-vs1.24/include/net/tcp.h
 --- linux-2.4.24/include/net/tcp.h	Sat Jan 10 15:50:19 2004
-+++ linux-2.4.24-vs1.23-rev03/include/net/tcp.h	Thu Jan 15 22:25:28 2004
++++ linux-2.4.24-vs1.24/include/net/tcp.h	Sat Jan 17 05:27:23 2004
 @@ -173,6 +173,7 @@ struct tcp_tw_bucket {
  	unsigned char		reuse,
  				rcv_wscale; /* It is also TW bucket specific */
@@ -2689,9 +2689,9 @@ diff -NurpP --minimal linux-2.4.24/include/net/tcp.h linux-2.4.24-vs1.23-rev03/i
  };
  
  extern kmem_cache_t *tcp_timewait_cachep;
-diff -NurpP --minimal linux-2.4.24/ipc/util.c linux-2.4.24-vs1.23-rev03/ipc/util.c
+diff -NurpP --minimal linux-2.4.24/ipc/util.c linux-2.4.24-vs1.24/ipc/util.c
 --- linux-2.4.24/ipc/util.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.24-vs1.23-rev03/ipc/util.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/ipc/util.c	Sat Jan 17 05:27:23 2004
 @@ -93,6 +93,8 @@ int ipc_findkey(struct ipc_ids* ids, key
  	struct kern_ipc_perm* p;
  
@@ -2709,9 +2709,9 @@ diff -NurpP --minimal linux-2.4.24/ipc/util.c linux-2.4.24-vs1.23-rev03/ipc/util
  	return id;
  }
  
-diff -NurpP --minimal linux-2.4.24/ipc/util.h linux-2.4.24-vs1.23-rev03/ipc/util.h
+diff -NurpP --minimal linux-2.4.24/ipc/util.h linux-2.4.24-vs1.24/ipc/util.h
 --- linux-2.4.24/ipc/util.h	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.24-vs1.23-rev03/ipc/util.h	Thu Jan 15 22:26:49 2004
++++ linux-2.4.24-vs1.24/ipc/util.h	Sat Jan 17 05:27:22 2004
 @@ -5,6 +5,8 @@
   * ipc helper functions (c) 1999 Manfred Spraul <manfreds@colorfullife.com>
   */
@@ -2742,9 +2742,9 @@ diff -NurpP --minimal linux-2.4.24/ipc/util.h linux-2.4.24-vs1.23-rev03/ipc/util
  	return out;
  }
  
-diff -NurpP --minimal linux-2.4.24/kernel/Makefile linux-2.4.24-vs1.23-rev03/kernel/Makefile
+diff -NurpP --minimal linux-2.4.24/kernel/Makefile linux-2.4.24-vs1.24/kernel/Makefile
 --- linux-2.4.24/kernel/Makefile	Mon Sep 17 06:22:40 2001
-+++ linux-2.4.24-vs1.23-rev03/kernel/Makefile	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/Makefile	Sat Jan 17 05:27:22 2004
 @@ -14,7 +14,7 @@ export-objs = signal.o sys.o kmod.o cont
  obj-y     = sched.o dma.o fork.o exec_domain.o panic.o printk.o \
  	    module.o exit.o itimer.o info.o time.o softirq.o resource.o \
@@ -2754,9 +2754,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/Makefile linux-2.4.24-vs1.23-rev03/ker
  
  obj-$(CONFIG_UID16) += uid16.o
  obj-$(CONFIG_MODULES) += ksyms.o
-diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.23-rev03/kernel/exit.c
+diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.24/kernel/exit.c
 --- linux-2.4.24/kernel/exit.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.24-vs1.23-rev03/kernel/exit.c	Fri Jan 16 03:08:18 2004
++++ linux-2.4.24-vs1.24/kernel/exit.c	Sat Jan 17 05:27:22 2004
 @@ -16,6 +16,7 @@
  #ifdef CONFIG_BSD_PROCESS_ACCT
  #include <linux/acct.h>
@@ -2769,7 +2769,7 @@ diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.23-rev03/kerne
  
  extern void sem_exit (void);
  extern struct task_struct *child_reaper;
-+extern spinlock_t ctx_ref_lock;
++extern rwlock_t ctx_ref_lock;
  
  int getrusage(struct task_struct *, int, struct rusage *);
  
@@ -2789,7 +2789,7 @@ diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.23-rev03/kerne
 +	struct task_struct *vchild_reaper = child_reaper;
  
  	read_lock(&tasklist_lock);
-+	spin_lock(&ctx_ref_lock);
++	read_lock(&ctx_ref_lock);
 +	if (father->s_info) {
 +		pid_t initpid = father->s_info->initpid;
 +		if ((initpid != 0) && (father->pid != initpid)) {
@@ -2799,7 +2799,7 @@ diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.23-rev03/kerne
 +				vchild_reaper = r;
 +		}
 +	}
-+	spin_unlock(&ctx_ref_lock);
++	read_unlock(&ctx_ref_lock);
  
  	for_each_task(p) {
  		if (p->p_opptr == father) {
@@ -2812,9 +2812,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/exit.c linux-2.4.24-vs1.23-rev03/kerne
  
  			if (p->pdeath_signal) send_sig(p->pdeath_signal, p, 0);
  		}
-diff -NurpP --minimal linux-2.4.24/kernel/fork.c linux-2.4.24-vs1.23-rev03/kernel/fork.c
+diff -NurpP --minimal linux-2.4.24/kernel/fork.c linux-2.4.24-vs1.24/kernel/fork.c
 --- linux-2.4.24/kernel/fork.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/fork.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/fork.c	Sat Jan 17 05:27:22 2004
 @@ -22,6 +22,7 @@
  #include <linux/namespace.h>
  #include <linux/personality.h>
@@ -2848,9 +2848,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/fork.c linux-2.4.24-vs1.23-rev03/kerne
  
  	atomic_inc(&p->user->__count);
  	atomic_inc(&p->user->processes);
-diff -NurpP --minimal linux-2.4.24/kernel/printk.c linux-2.4.24-vs1.23-rev03/kernel/printk.c
+diff -NurpP --minimal linux-2.4.24/kernel/printk.c linux-2.4.24-vs1.24/kernel/printk.c
 --- linux-2.4.24/kernel/printk.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/printk.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/printk.c	Sat Jan 17 05:27:22 2004
 @@ -26,6 +26,7 @@
  #include <linux/module.h>
  #include <linux/interrupt.h>			/* For in_interrupt() */
@@ -2869,9 +2869,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/printk.c linux-2.4.24-vs1.23-rev03/ker
  
  	switch (type) {
  	case 0:		/* Close log */
-diff -NurpP --minimal linux-2.4.24/kernel/sched.c linux-2.4.24-vs1.23-rev03/kernel/sched.c
+diff -NurpP --minimal linux-2.4.24/kernel/sched.c linux-2.4.24-vs1.24/kernel/sched.c
 --- linux-2.4.24/kernel/sched.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/sched.c	Fri Jan 16 03:08:18 2004
++++ linux-2.4.24-vs1.24/kernel/sched.c	Sat Jan 17 05:27:22 2004
 @@ -29,6 +29,7 @@
  #include <linux/completion.h>
  #include <linux/prefetch.h>
@@ -2880,31 +2880,21 @@ diff -NurpP --minimal linux-2.4.24/kernel/sched.c linux-2.4.24-vs1.23-rev03/kern
  
  #include <asm/uaccess.h>
  #include <asm/mmu_context.h>
-@@ -111,6 +112,7 @@ static union {
- 
- struct kernel_stat kstat;
- extern struct task_struct *child_reaper;
-+extern spinlock_t ctx_ref_lock;
- 
- #ifdef CONFIG_SMP
- 
-@@ -165,7 +167,14 @@ static inline int goodness(struct task_s
+@@ -165,7 +166,12 @@ static inline int goodness(struct task_s
  		 * Don't do any other calculations if the time slice is
  		 * over..
  		 */
 -		weight = p->counter;
-+		spin_lock(&ctx_ref_lock);
 +		if (p->s_info && (p->s_info->flags & VX_INFO_SCHED)) {
 +			weight = atomic_read(&p->s_info->ticks) /
 +				atomic_read(&p->s_info->refcount);
 +			weight = (weight+p->counter) >> 1;
 +		} else
 +			weight = p->counter;
-+		spin_unlock(&ctx_ref_lock);
  		if (!weight)
  			goto out;
  			
-@@ -618,8 +627,21 @@ repeat_schedule:
+@@ -618,8 +624,19 @@ repeat_schedule:
  
  		spin_unlock_irq(&runqueue_lock);
  		read_lock(&tasklist_lock);
@@ -2913,7 +2903,6 @@ diff -NurpP --minimal linux-2.4.24/kernel/sched.c linux-2.4.24-vs1.23-rev03/kern
 +			Reset the s_info->ticks to the sum off all
 +			member processes p->counter
 +		*/
-+		spin_lock(&ctx_ref_lock);
 +		for_each_task(p) {
 +			if (p->s_info && (p->s_info->flags & VX_INFO_SCHED))
 +				atomic_set(&p->s_info->ticks, 0);
@@ -2923,13 +2912,12 @@ diff -NurpP --minimal linux-2.4.24/kernel/sched.c linux-2.4.24-vs1.23-rev03/kern
 +			if (p->s_info && (p->s_info->flags & VX_INFO_SCHED))
 +				atomic_add(p->counter, &p->s_info->ticks);
 +		}
-+		spin_unlock(&ctx_ref_lock);
  		read_unlock(&tasklist_lock);
  		spin_lock_irq(&runqueue_lock);
  		goto repeat_schedule;
-diff -NurpP --minimal linux-2.4.24/kernel/signal.c linux-2.4.24-vs1.23-rev03/kernel/signal.c
+diff -NurpP --minimal linux-2.4.24/kernel/signal.c linux-2.4.24-vs1.24/kernel/signal.c
 --- linux-2.4.24/kernel/signal.c	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/signal.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/signal.c	Sat Jan 17 05:27:22 2004
 @@ -13,6 +13,7 @@
  #include <linux/smp_lock.h>
  #include <linux/init.h>
@@ -2982,9 +2970,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/signal.c linux-2.4.24-vs1.23-rev03/ker
  				int err = send_sig_info(sig, info, p);
  				++count;
  				if (err != -EPERM)
-diff -NurpP --minimal linux-2.4.24/kernel/sys.c linux-2.4.24-vs1.23-rev03/kernel/sys.c
+diff -NurpP --minimal linux-2.4.24/kernel/sys.c linux-2.4.24-vs1.24/kernel/sys.c
 --- linux-2.4.24/kernel/sys.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/sys.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/kernel/sys.c	Sat Jan 17 05:27:23 2004
 @@ -6,14 +6,17 @@
  
  #include <linux/module.h>
@@ -3179,9 +3167,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/sys.c linux-2.4.24-vs1.23-rev03/kernel
  		errno = 0;
  	}
  	up_write(&uts_sem);
-diff -NurpP --minimal linux-2.4.24/kernel/sysctl.c linux-2.4.24-vs1.23-rev03/kernel/sysctl.c
+diff -NurpP --minimal linux-2.4.24/kernel/sysctl.c linux-2.4.24-vs1.24/kernel/sysctl.c
 --- linux-2.4.24/kernel/sysctl.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/sysctl.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/kernel/sysctl.c	Sat Jan 17 05:27:23 2004
 @@ -31,6 +31,7 @@
  #include <linux/sysrq.h>
  #include <linux/highuid.h>
@@ -3235,9 +3223,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/sysctl.c linux-2.4.24-vs1.23-rev03/ker
  	if (!write) {
  		down_read(&uts_sem);
  		r=proc_dostring(table,0,filp,buffer,lenp);
-diff -NurpP --minimal linux-2.4.24/kernel/timer.c linux-2.4.24-vs1.23-rev03/kernel/timer.c
+diff -NurpP --minimal linux-2.4.24/kernel/timer.c linux-2.4.24-vs1.24/kernel/timer.c
 --- linux-2.4.24/kernel/timer.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.24-vs1.23-rev03/kernel/timer.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/timer.c	Sat Jan 17 05:27:22 2004
 @@ -22,6 +22,7 @@
  #include <linux/smp_lock.h>
  #include <linux/interrupt.h>
@@ -3277,9 +3265,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/timer.c linux-2.4.24-vs1.23-rev03/kern
  	return pid;
  }
  
-diff -NurpP --minimal linux-2.4.24/kernel/user.c linux-2.4.24-vs1.23-rev03/kernel/user.c
+diff -NurpP --minimal linux-2.4.24/kernel/user.c linux-2.4.24-vs1.24/kernel/user.c
 --- linux-2.4.24/kernel/user.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/kernel/user.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/user.c	Sat Jan 17 05:27:22 2004
 @@ -6,6 +6,19 @@
   * We have a per-user structure to keep track of how many
   * processes, files etc the user has claimed, in order to be
@@ -3351,9 +3339,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/user.c linux-2.4.24-vs1.23-rev03/kerne
  		if (up) {
  			kmem_cache_free(uid_cachep, new);
  		} else {
-diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.23-rev03/kernel/vcontext.c
+diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.24/kernel/vcontext.c
 --- linux-2.4.24/kernel/vcontext.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/kernel/vcontext.c	Fri Jan 16 02:44:24 2004
++++ linux-2.4.24-vs1.24/kernel/vcontext.c	Sat Jan 17 05:27:22 2004
 @@ -0,0 +1,477 @@
 +/*
 + *  linux/kernel/vcontext.c
@@ -3509,17 +3497,17 @@ diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.23-rev03/k
 +	}
 +}
 +
-+static spinlock_t ctx_ref_lock = SPIN_LOCK_UNLOCKED;
++rwlock_t ctx_ref_lock = RW_LOCK_UNLOCKED;
 +
 +/*
 + *	Increase the reference count on the context_info member of a task
 + */
 +void vx_assign_info (struct task_struct *p)
 +{
-+	spin_lock (&ctx_ref_lock);
++	read_lock(&ctx_ref_lock);
 +	if (p->s_info)
 +		atomic_inc(&p->s_info->refcount);
-+	spin_unlock (&ctx_ref_lock);
++	read_unlock(&ctx_ref_lock);
 +}
 +
 +/*
@@ -3528,7 +3516,7 @@ diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.23-rev03/k
 + */
 +void vx_release_info (struct task_struct *p)
 +{
-+	spin_lock(&ctx_ref_lock);
++	write_lock(&ctx_ref_lock);
 +	if (p->s_info) {
 +		if (atomic_dec_and_test(&p->s_info->refcount)) {
 +			struct context_info *s_info;
@@ -3538,7 +3526,7 @@ diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.23-rev03/k
 +			kfree(s_info);
 +		}
 +	}
-+	spin_unlock(&ctx_ref_lock);
++	write_unlock(&ctx_ref_lock);
 +}
 +
 +/*
@@ -3832,9 +3820,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/vcontext.c linux-2.4.24-vs1.23-rev03/k
 +	return error;
 +}
 +
-diff -NurpP --minimal linux-2.4.24/kernel/vswitch.c linux-2.4.24-vs1.23-rev03/kernel/vswitch.c
+diff -NurpP --minimal linux-2.4.24/kernel/vswitch.c linux-2.4.24-vs1.24/kernel/vswitch.c
 --- linux-2.4.24/kernel/vswitch.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.24-vs1.23-rev03/kernel/vswitch.c	Mon Jan 12 05:03:14 2004
++++ linux-2.4.24-vs1.24/kernel/vswitch.c	Sat Jan 17 05:27:22 2004
 @@ -0,0 +1,71 @@
 +/*
 + *  linux/kernel/vswitch.c
@@ -3907,9 +3895,9 @@ diff -NurpP --minimal linux-2.4.24/kernel/vswitch.c linux-2.4.24-vs1.23-rev03/ke
 +	return ret;
 +}
 +
-diff -NurpP --minimal linux-2.4.24/net/ipv4/af_inet.c linux-2.4.24-vs1.23-rev03/net/ipv4/af_inet.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/af_inet.c linux-2.4.24-vs1.24/net/ipv4/af_inet.c
 --- linux-2.4.24/net/ipv4/af_inet.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/af_inet.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/af_inet.c	Sat Jan 17 05:27:23 2004
 @@ -177,6 +177,8 @@ void inet_sock_destruct(struct sock *sk)
  
  	if (sk->protinfo.af_inet.opt)
@@ -4010,9 +3998,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/af_inet.c linux-2.4.24-vs1.23-rev03/
  		err = -EADDRINUSE;
  		goto out;
  	}
-diff -NurpP --minimal linux-2.4.24/net/ipv4/devinet.c linux-2.4.24-vs1.23-rev03/net/ipv4/devinet.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/devinet.c linux-2.4.24-vs1.24/net/ipv4/devinet.c
 --- linux-2.4.24/net/ipv4/devinet.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/devinet.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/devinet.c	Sat Jan 17 05:27:23 2004
 @@ -455,6 +455,33 @@ static __inline__ int inet_abc_len(u32 a
    	return -1;
  }
@@ -4078,9 +4066,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/devinet.c linux-2.4.24-vs1.23-rev03/
  			if (ip_idx < s_ip_idx)
  				continue;
  			if (inet_fill_ifaddr(skb, ifa, NETLINK_CB(cb->skb).pid,
-diff -NurpP --minimal linux-2.4.24/net/ipv4/raw.c linux-2.4.24-vs1.23-rev03/net/ipv4/raw.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/raw.c linux-2.4.24-vs1.24/net/ipv4/raw.c
 --- linux-2.4.24/net/ipv4/raw.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/raw.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/raw.c	Sat Jan 17 05:27:23 2004
 @@ -96,16 +96,47 @@ static void raw_v4_unhash(struct sock *s
  	write_unlock_bh(&raw_v4_lock);
  }
@@ -4141,9 +4129,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/raw.c linux-2.4.24-vs1.23-rev03/net/
  				continue;
  			pos += 128;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_ipv4.c linux-2.4.24-vs1.23-rev03/net/ipv4/tcp_ipv4.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_ipv4.c linux-2.4.24-vs1.24/net/ipv4/tcp_ipv4.c
 --- linux-2.4.24/net/ipv4/tcp_ipv4.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/tcp_ipv4.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/tcp_ipv4.c	Sat Jan 17 05:27:23 2004
 @@ -180,6 +180,49 @@ static inline void tcp_bind_hash(struct 
  	sk->prev = (struct sock *) tb;
  }
@@ -4295,9 +4283,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_ipv4.c linux-2.4.24-vs1.23-rev03
  				continue;
  			pos += TMPSZ;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_minisocks.c linux-2.4.24-vs1.23-rev03/net/ipv4/tcp_minisocks.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_minisocks.c linux-2.4.24-vs1.24/net/ipv4/tcp_minisocks.c
 --- linux-2.4.24/net/ipv4/tcp_minisocks.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/tcp_minisocks.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/tcp_minisocks.c	Sat Jan 17 05:27:23 2004
 @@ -380,6 +380,9 @@ void tcp_time_wait(struct sock *sk, int 
  		tw->ts_recent_stamp= tp->ts_recent_stamp;
  		tw->pprev_death = NULL;
@@ -4316,9 +4304,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/tcp_minisocks.c linux-2.4.24-vs1.23-
  		newsk->state = TCP_SYN_RECV;
  
  		/* SANITY */
-diff -NurpP --minimal linux-2.4.24/net/ipv4/udp.c linux-2.4.24-vs1.23-rev03/net/ipv4/udp.c
+diff -NurpP --minimal linux-2.4.24/net/ipv4/udp.c linux-2.4.24-vs1.24/net/ipv4/udp.c
 --- linux-2.4.24/net/ipv4/udp.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv4/udp.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv4/udp.c	Sat Jan 17 05:27:23 2004
 @@ -110,6 +110,9 @@ rwlock_t udp_hash_lock = RW_LOCK_UNLOCKE
  /* Shared by v4/v6 udp. */
  int udp_port_rover;
@@ -4408,9 +4396,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv4/udp.c linux-2.4.24-vs1.23-rev03/net/
  				continue;
  			pos += 128;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/ipv6/raw.c linux-2.4.24-vs1.23-rev03/net/ipv6/raw.c
+diff -NurpP --minimal linux-2.4.24/net/ipv6/raw.c linux-2.4.24-vs1.24/net/ipv6/raw.c
 --- linux-2.4.24/net/ipv6/raw.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv6/raw.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv6/raw.c	Sat Jan 17 05:27:23 2004
 @@ -880,7 +880,8 @@ int raw6_get_info(char *buffer, char **s
  		struct sock *sk;
  
@@ -4421,9 +4409,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv6/raw.c linux-2.4.24-vs1.23-rev03/net/
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/ipv6/tcp_ipv6.c linux-2.4.24-vs1.23-rev03/net/ipv6/tcp_ipv6.c
+diff -NurpP --minimal linux-2.4.24/net/ipv6/tcp_ipv6.c linux-2.4.24-vs1.24/net/ipv6/tcp_ipv6.c
 --- linux-2.4.24/net/ipv6/tcp_ipv6.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv6/tcp_ipv6.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv6/tcp_ipv6.c	Sat Jan 17 05:27:23 2004
 @@ -2029,7 +2029,8 @@ int tcp6_get_info(char *buffer, char **s
  			int uid;
  			struct tcp_opt *tp = &(sk->tp_pinfo.af_tcp);
@@ -4454,9 +4442,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv6/tcp_ipv6.c linux-2.4.24-vs1.23-rev03
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/ipv6/udp.c linux-2.4.24-vs1.23-rev03/net/ipv6/udp.c
+diff -NurpP --minimal linux-2.4.24/net/ipv6/udp.c linux-2.4.24-vs1.24/net/ipv6/udp.c
 --- linux-2.4.24/net/ipv6/udp.c	Fri Nov 28 19:26:21 2003
-+++ linux-2.4.24-vs1.23-rev03/net/ipv6/udp.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/ipv6/udp.c	Sat Jan 17 05:27:23 2004
 @@ -981,7 +981,8 @@ int udp6_get_info(char *buffer, char **s
  		struct sock *sk;
  
@@ -4467,9 +4455,9 @@ diff -NurpP --minimal linux-2.4.24/net/ipv6/udp.c linux-2.4.24-vs1.23-rev03/net/
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.24/net/unix/af_unix.c linux-2.4.24-vs1.23-rev03/net/unix/af_unix.c
+diff -NurpP --minimal linux-2.4.24/net/unix/af_unix.c linux-2.4.24-vs1.24/net/unix/af_unix.c
 --- linux-2.4.24/net/unix/af_unix.c	Fri Nov 29 00:53:16 2002
-+++ linux-2.4.24-vs1.23-rev03/net/unix/af_unix.c	Mon Jan 12 05:03:15 2004
++++ linux-2.4.24-vs1.24/net/unix/af_unix.c	Sat Jan 17 05:27:23 2004
 @@ -479,6 +479,8 @@ static struct sock * unix_create1(struct
  
  	sk->write_space		=	unix_write_space;
