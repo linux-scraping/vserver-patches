@@ -1,6 +1,6 @@
-diff -NurpP --minimal linux-2.4.22/Documentation/Configure.help linux-2.4.22-vs1.3.0/Documentation/Configure.help
+diff -NurpP --minimal linux-2.4.22/Documentation/Configure.help linux-2.4.22-vs1.22/Documentation/Configure.help
 --- linux-2.4.22/Documentation/Configure.help	Mon Aug 25 13:44:39 2003
-+++ linux-2.4.22-vs1.3.0/Documentation/Configure.help	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/Documentation/Configure.help	Sat Dec 13 18:32:37 2003
 @@ -529,6 +529,11 @@ CONFIG_BLK_DEV_LOOP
  
    Most users will answer N here.
@@ -13,21 +13,21 @@ diff -NurpP --minimal linux-2.4.22/Documentation/Configure.help linux-2.4.22-vs1
  Micro Memory MM5415 Battery Backed RAM support (EXPERIMENTAL)
  CONFIG_BLK_DEV_UMEM
    Saying Y here will include support for the MM5415 family of
-diff -NurpP --minimal linux-2.4.22/Makefile linux-2.4.22-vs1.3.0/Makefile
+diff -NurpP --minimal linux-2.4.22/Makefile linux-2.4.22-vs1.22/Makefile
 --- linux-2.4.22/Makefile	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/Makefile	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/Makefile	Sat Dec 13 18:32:37 2003
 @@ -1,7 +1,7 @@
  VERSION = 2
  PATCHLEVEL = 4
  SUBLEVEL = 22
 -EXTRAVERSION =
-+EXTRAVERSION = -vs1.3.0
++EXTRAVERSION = -vs1.22
  
  KERNELRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
  
-diff -NurpP --minimal linux-2.4.22/arch/alpha/kernel/entry.S linux-2.4.22-vs1.3.0/arch/alpha/kernel/entry.S
+diff -NurpP --minimal linux-2.4.22/arch/alpha/kernel/entry.S linux-2.4.22-vs1.22/arch/alpha/kernel/entry.S
 --- linux-2.4.22/arch/alpha/kernel/entry.S	Fri Jun 13 16:51:29 2003
-+++ linux-2.4.22-vs1.3.0/arch/alpha/kernel/entry.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/alpha/kernel/entry.S	Sat Dec 13 18:32:37 2003
 @@ -1044,7 +1044,7 @@ sys_call_table:
  	.quad alpha_ni_syscall			/* 270 */
  	.quad alpha_ni_syscall
@@ -37,21 +37,9 @@ diff -NurpP --minimal linux-2.4.22/arch/alpha/kernel/entry.S linux-2.4.22-vs1.3.
  	.quad alpha_ni_syscall
  	.quad alpha_ni_syscall			/* 275 */
  	.quad alpha_ni_syscall
-diff -NurpP --minimal linux-2.4.22/arch/alpha/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/alpha/kernel/ptrace.c
---- linux-2.4.22/arch/alpha/kernel/ptrace.c	Fri Jun 13 16:51:29 2003
-+++ linux-2.4.22-vs1.3.0/arch/alpha/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -273,7 +273,7 @@ sys_ptrace(long request, long pid, long 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out_notsk;
- 	if (request == PTRACE_ATTACH) {
- 		ret = ptrace_attach(child);
-diff -NurpP --minimal linux-2.4.22/arch/i386/kernel/entry.S linux-2.4.22-vs1.3.0/arch/i386/kernel/entry.S
+diff -NurpP --minimal linux-2.4.22/arch/i386/kernel/entry.S linux-2.4.22-vs1.22/arch/i386/kernel/entry.S
 --- linux-2.4.22/arch/i386/kernel/entry.S	Fri Jun 13 16:51:29 2003
-+++ linux-2.4.22-vs1.3.0/arch/i386/kernel/entry.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/i386/kernel/entry.S	Sat Dec 13 18:32:37 2003
 @@ -659,10 +659,25 @@ ENTRY(sys_call_table)
  	.long SYMBOL_NAME(sys_ni_syscall)	/* sys_exit_group */
  	.long SYMBOL_NAME(sys_ni_syscall)	/* sys_lookup_dcookie */
@@ -79,106 +67,21 @@ diff -NurpP --minimal linux-2.4.22/arch/i386/kernel/entry.S linux-2.4.22-vs1.3.0
  
  	.rept NR_syscalls-(.-sys_call_table)/4
  		.long SYMBOL_NAME(sys_ni_syscall)
-diff -NurpP --minimal linux-2.4.22/arch/i386/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/i386/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.22/arch/i386/kernel/ptrace.c linux-2.4.22-vs1.22/arch/i386/kernel/ptrace.c
 --- linux-2.4.22/arch/i386/kernel/ptrace.c	Sat Aug  3 02:39:42 2002
-+++ linux-2.4.22-vs1.3.0/arch/i386/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/arch/i386/kernel/ptrace.c	Sat Dec 13 18:32:37 2003
 @@ -170,7 +170,7 @@ asmlinkage int sys_ptrace(long request, 
  	if (child)
  		get_task_struct(child);
  	read_unlock(&tasklist_lock);
 -	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
++	if (!child || !vx_check(child->vx_id, VX_WATCH|VX_IDENT))
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/ia64/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/ia64/kernel/ptrace.c
---- linux-2.4.22/arch/ia64/kernel/ptrace.c	Mon Aug 25 13:44:39 2003
-+++ linux-2.4.22-vs1.3.0/arch/ia64/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -1207,7 +1207,7 @@ sys_ptrace (long request, pid_t pid, uns
- 			get_task_struct(child);
- 	}
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 	ret = -EPERM;
- 	if (pid == 1)		/* no messing around with init! */
-diff -NurpP --minimal linux-2.4.22/arch/m68k/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/m68k/kernel/ptrace.c
---- linux-2.4.22/arch/m68k/kernel/ptrace.c	Sat Aug  3 02:39:43 2002
-+++ linux-2.4.22-vs1.3.0/arch/m68k/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -122,7 +122,7 @@ asmlinkage int sys_ptrace(long request, 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 
- 	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/mips/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/mips/kernel/ptrace.c
---- linux-2.4.22/arch/mips/kernel/ptrace.c	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.22-vs1.3.0/arch/mips/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -67,7 +67,7 @@ asmlinkage int sys_ptrace(long request, 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 
- 	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/mips64/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/mips64/kernel/ptrace.c
---- linux-2.4.22/arch/mips64/kernel/ptrace.c	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.22-vs1.3.0/arch/mips64/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -311,7 +311,7 @@ asmlinkage int sys_ptrace(long request, 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 
- 	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/parisc/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/parisc/kernel/ptrace.c
---- linux-2.4.22/arch/parisc/kernel/ptrace.c	Fri Nov 29 00:53:10 2002
-+++ linux-2.4.22-vs1.3.0/arch/parisc/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -113,7 +113,7 @@ long sys_ptrace(long request, pid_t pid,
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 	ret = -EPERM;
- 	if (pid == 1)		/* no messing around with init! */
-diff -NurpP --minimal linux-2.4.22/arch/parisc/kernel/sys_parisc32.c linux-2.4.22-vs1.3.0/arch/parisc/kernel/sys_parisc32.c
---- linux-2.4.22/arch/parisc/kernel/sys_parisc32.c	Fri Jun 13 16:51:31 2003
-+++ linux-2.4.22-vs1.3.0/arch/parisc/kernel/sys_parisc32.c	Wed Dec 10 01:38:50 2003
-@@ -3046,13 +3046,18 @@ asmlinkage int sys32_sysinfo(struct sysi
- 	 */
- 
- 	cli();
--	val.uptime = jiffies / HZ;
-+	if (vx_check(0, VX_ADMIN|VX_WATCH)) {
-+		val.uptime = jiffies / HZ;
-+		val.procs = nr_threads-1;
-+	} else {
-+		struct vx_info *vxi = current->vx_info;
-+		val.uptime = (jiffies - vxi->bias_jiffies) / HZ;
-+		val.procs = vxi->nr_threads;
-+	}
- 
- 	val.loads[0] = avenrun[0] << (SI_LOAD_SHIFT - FSHIFT);
- 	val.loads[1] = avenrun[1] << (SI_LOAD_SHIFT - FSHIFT);
- 	val.loads[2] = avenrun[2] << (SI_LOAD_SHIFT - FSHIFT);
--
--	val.procs = nr_threads-1;
- 	sti();
- 
- 	si_meminfo(&val);
-diff -NurpP --minimal linux-2.4.22/arch/parisc/kernel/syscall.S linux-2.4.22-vs1.3.0/arch/parisc/kernel/syscall.S
+diff -NurpP --minimal linux-2.4.22/arch/parisc/kernel/syscall.S linux-2.4.22-vs1.22/arch/parisc/kernel/syscall.S
 --- linux-2.4.22/arch/parisc/kernel/syscall.S	Fri Jun 13 16:51:31 2003
-+++ linux-2.4.22-vs1.3.0/arch/parisc/kernel/syscall.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/parisc/kernel/syscall.S	Sat Dec 13 18:32:37 2003
 @@ -605,6 +605,71 @@ sys_call_table:
  	ENTRY_SAME(gettid)             
  	ENTRY_SAME(readahead)          
@@ -251,9 +154,9 @@ diff -NurpP --minimal linux-2.4.22/arch/parisc/kernel/syscall.S linux-2.4.22-vs1
  
  .end
  
-diff -NurpP --minimal linux-2.4.22/arch/ppc/kernel/misc.S linux-2.4.22-vs1.3.0/arch/ppc/kernel/misc.S
+diff -NurpP --minimal linux-2.4.22/arch/ppc/kernel/misc.S linux-2.4.22-vs1.22/arch/ppc/kernel/misc.S
 --- linux-2.4.22/arch/ppc/kernel/misc.S	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.22-vs1.3.0/arch/ppc/kernel/misc.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/ppc/kernel/misc.S	Sat Dec 13 18:32:37 2003
 @@ -1243,6 +1243,48 @@ _GLOBAL(sys_call_table)
  	.long sys_ni_syscall 	/*	reserved for sys_io_getevents */
  	.long sys_ni_syscall 	/* 230	reserved for sys_io_submit */
@@ -303,21 +206,21 @@ diff -NurpP --minimal linux-2.4.22/arch/ppc/kernel/misc.S linux-2.4.22-vs1.3.0/a
  
  	.rept NR_syscalls-(.-sys_call_table)/4
  		.long sys_ni_syscall
-diff -NurpP --minimal linux-2.4.22/arch/ppc/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/ppc/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.22/arch/ppc/kernel/ptrace.c linux-2.4.22-vs1.22/arch/ppc/kernel/ptrace.c
 --- linux-2.4.22/arch/ppc/kernel/ptrace.c	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.22-vs1.3.0/arch/ppc/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/arch/ppc/kernel/ptrace.c	Sat Dec 13 18:32:37 2003
 @@ -188,7 +188,7 @@ int sys_ptrace(long request, long pid, l
  	if (child)
  		get_task_struct(child);
  	read_unlock(&tasklist_lock);
 -	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
++	if (!child || !vx_check(child->vx_id, VX_WATCH|VX_IDENT))
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/ppc64/kernel/misc.S linux-2.4.22-vs1.3.0/arch/ppc64/kernel/misc.S
+diff -NurpP --minimal linux-2.4.22/arch/ppc64/kernel/misc.S linux-2.4.22-vs1.22/arch/ppc64/kernel/misc.S
 --- linux-2.4.22/arch/ppc64/kernel/misc.S	Mon Aug 25 13:44:40 2003
-+++ linux-2.4.22-vs1.3.0/arch/ppc64/kernel/misc.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/ppc64/kernel/misc.S	Sat Dec 13 18:32:37 2003
 @@ -803,24 +803,74 @@ _GLOBAL(sys_call_table32)
  	.llong .sys_madvise		/* 205 */
  	.llong .sys_mincore		/* 206 */
@@ -503,45 +406,21 @@ diff -NurpP --minimal linux-2.4.22/arch/ppc64/kernel/misc.S linux-2.4.22-vs1.3.0
 +	.rept NR_syscalls-273
  	.llong .sys_ni_syscall
  	.endr
-diff -NurpP --minimal linux-2.4.22/arch/ppc64/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/ppc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.22/arch/ppc64/kernel/ptrace.c linux-2.4.22-vs1.22/arch/ppc64/kernel/ptrace.c
 --- linux-2.4.22/arch/ppc64/kernel/ptrace.c	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/ppc64/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/arch/ppc64/kernel/ptrace.c	Sat Dec 13 18:32:37 2003
 @@ -115,7 +115,7 @@ int sys_ptrace(long request, long pid, l
  	if (child)
  		get_task_struct(child);
  	read_unlock(&tasklist_lock);
 -	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
++	if (!child || !vx_check(child->vx_id, VX_WATCH|VX_IDENT))
  		goto out;
  
  	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/s390/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/s390/kernel/ptrace.c
---- linux-2.4.22/arch/s390/kernel/ptrace.c	Fri Nov 29 00:53:11 2002
-+++ linux-2.4.22-vs1.3.0/arch/s390/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -239,7 +239,7 @@ asmlinkage int sys_ptrace(long request, 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 	ret = -EPERM;
- 	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.4.22/arch/s390x/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/s390x/kernel/ptrace.c
---- linux-2.4.22/arch/s390x/kernel/ptrace.c	Fri Nov 29 00:53:11 2002
-+++ linux-2.4.22-vs1.3.0/arch/s390x/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -448,7 +448,7 @@ asmlinkage int sys_ptrace(long request, 
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 	ret = -EPERM;
- 	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.4.22/arch/sparc/kernel/systbls.S linux-2.4.22-vs1.3.0/arch/sparc/kernel/systbls.S
+diff -NurpP --minimal linux-2.4.22/arch/sparc/kernel/systbls.S linux-2.4.22-vs1.22/arch/sparc/kernel/systbls.S
 --- linux-2.4.22/arch/sparc/kernel/systbls.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/sparc/kernel/systbls.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/sparc/kernel/systbls.S	Sat Dec 13 18:32:37 2003
 @@ -70,7 +70,10 @@ sys_call_table:
  /*240*/	.long sys_munlockall, sys_sched_setparam, sys_sched_getparam, sys_sched_setscheduler, sys_sched_getscheduler
  /*245*/	.long sys_sched_yield, sys_sched_get_priority_max, sys_sched_get_priority_min, sys_sched_rr_get_interval, sys_nanosleep
@@ -554,9 +433,9 @@ diff -NurpP --minimal linux-2.4.22/arch/sparc/kernel/systbls.S linux-2.4.22-vs1.
  
  #ifdef CONFIG_SUNOS_EMUL
  	/* Now the SunOS syscall table. */
-diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/entry.S linux-2.4.22-vs1.3.0/arch/sparc64/kernel/entry.S
+diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/entry.S linux-2.4.22-vs1.22/arch/sparc64/kernel/entry.S
 --- linux-2.4.22/arch/sparc64/kernel/entry.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/sparc64/kernel/entry.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/sparc64/kernel/entry.S	Sat Dec 13 18:32:37 2003
 @@ -26,7 +26,7 @@
  
  #define curptr      g6
@@ -566,21 +445,21 @@ diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/entry.S linux-2.4.22-vs1.
  
  	.text
  	.align		32
-diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/sparc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/ptrace.c linux-2.4.22-vs1.22/arch/sparc64/kernel/ptrace.c
 --- linux-2.4.22/arch/sparc64/kernel/ptrace.c	Fri Nov 29 00:53:12 2002
-+++ linux-2.4.22-vs1.3.0/arch/sparc64/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/arch/sparc64/kernel/ptrace.c	Sat Dec 13 18:32:37 2003
 @@ -156,7 +156,7 @@ asmlinkage void do_ptrace(struct pt_regs
  		get_task_struct(child);
  	read_unlock(&tasklist_lock);
  
 -	if (!child) {
-+	if (!child || !vx_check_id(child->vx_id, VX_WATCH|VX_SAME)) {
++	if (!child || !vx_check(child->vx_id, VX_WATCH|VX_IDENT)) {
  		pt_error_return(regs, ESRCH);
  		goto out;
  	}
-diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/systbls.S linux-2.4.22-vs1.3.0/arch/sparc64/kernel/systbls.S
+diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/systbls.S linux-2.4.22-vs1.22/arch/sparc64/kernel/systbls.S
 --- linux-2.4.22/arch/sparc64/kernel/systbls.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/sparc64/kernel/systbls.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/sparc64/kernel/systbls.S	Sat Dec 13 18:32:37 2003
 @@ -70,7 +70,10 @@ sys_call_table32:
  /*240*/	.word sys_munlockall, sys_sched_setparam, sys_sched_getparam, sys_sched_setscheduler, sys_sched_getscheduler
  	.word sys_sched_yield, sys_sched_get_priority_max, sys_sched_get_priority_min, sys32_sched_rr_get_interval, sys32_nanosleep
@@ -618,9 +497,9 @@ diff -NurpP --minimal linux-2.4.22/arch/sparc64/kernel/systbls.S linux-2.4.22-vs
 +	.word sunos_nosys
  
  #endif
-diff -NurpP --minimal linux-2.4.22/arch/x86_64/ia32/ia32entry.S linux-2.4.22-vs1.3.0/arch/x86_64/ia32/ia32entry.S
+diff -NurpP --minimal linux-2.4.22/arch/x86_64/ia32/ia32entry.S linux-2.4.22-vs1.22/arch/x86_64/ia32/ia32entry.S
 --- linux-2.4.22/arch/x86_64/ia32/ia32entry.S	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/x86_64/ia32/ia32entry.S	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/arch/x86_64/ia32/ia32entry.S	Sat Dec 13 18:32:37 2003
 @@ -369,9 +369,41 @@ ia32_sys_call_table:
  	.quad quiet_ni_syscall  /* fremovexattr - 237 */
  	.quad sys_tkill
@@ -664,22 +543,10 @@ diff -NurpP --minimal linux-2.4.22/arch/x86_64/ia32/ia32entry.S linux-2.4.22-vs1
  ia32_syscall_end:		
  	.rept IA32_NR_syscalls-(ia32_syscall_end-ia32_sys_call_table)/8
  		.quad ni_syscall
-diff -NurpP --minimal linux-2.4.22/arch/x86_64/kernel/ptrace.c linux-2.4.22-vs1.3.0/arch/x86_64/kernel/ptrace.c
---- linux-2.4.22/arch/x86_64/kernel/ptrace.c	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/x86_64/kernel/ptrace.c	Wed Dec 10 01:38:49 2003
-@@ -194,7 +194,7 @@ asmlinkage long sys_ptrace(long request,
- 	if (child)
- 		get_task_struct(child);
- 	read_unlock(&tasklist_lock);
--	if (!child)
-+	if (!child || !vx_check(child->vx_info, VX_WATCH|VX_IDENT))
- 		goto out;
- 
- 	ret = -EPERM;
-diff -NurpP --minimal linux-2.4.22/arch/x86_64/kernel/sys_x86_64.c linux-2.4.22-vs1.3.0/arch/x86_64/kernel/sys_x86_64.c
+diff -NurpP --minimal linux-2.4.22/arch/x86_64/kernel/sys_x86_64.c linux-2.4.22-vs1.22/arch/x86_64/kernel/sys_x86_64.c
 --- linux-2.4.22/arch/x86_64/kernel/sys_x86_64.c	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/arch/x86_64/kernel/sys_x86_64.c	Wed Dec 10 01:38:49 2003
-@@ -108,8 +108,16 @@ unsigned long arch_get_unmapped_area(str
++++ linux-2.4.22-vs1.22/arch/x86_64/kernel/sys_x86_64.c	Sat Dec 13 18:32:37 2003
+@@ -108,8 +108,18 @@ unsigned long arch_get_unmapped_area(str
  asmlinkage long sys_uname(struct new_utsname * name)
  {
  	int err;
@@ -687,8 +554,10 @@ diff -NurpP --minimal linux-2.4.22/arch/x86_64/kernel/sys_x86_64.c linux-2.4.22-
 +
  	down_read(&uts_sem);
 -	err=copy_to_user(name, &system_utsname, sizeof (*name));
-+	if (current->vx_info) {
-+		tmp = current->vx_info.virt.utsname;
++	if (current->s_info) {
++		tmp = system_utsname;
++		strcpy (tmp.nodename, current->s_info->nodename);
++		strcpy (tmp.domainname, current->s_info->domainname);
 +		pttmp = &tmp;
 +	}
 +	else
@@ -697,9 +566,9 @@ diff -NurpP --minimal linux-2.4.22/arch/x86_64/kernel/sys_x86_64.c linux-2.4.22-
  	up_read(&uts_sem);
  	if (personality(current->personality) == PER_LINUX32)
  		err = copy_to_user(name->machine, "i686", 5);
-diff -NurpP --minimal linux-2.4.22/drivers/block/Config.in linux-2.4.22-vs1.3.0/drivers/block/Config.in
+diff -NurpP --minimal linux-2.4.22/drivers/block/Config.in linux-2.4.22-vs1.22/drivers/block/Config.in
 --- linux-2.4.22/drivers/block/Config.in	Fri Nov 29 00:53:12 2002
-+++ linux-2.4.22-vs1.3.0/drivers/block/Config.in	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/drivers/block/Config.in	Sat Dec 13 18:32:37 2003
 @@ -40,6 +40,7 @@ dep_tristate 'Mylex DAC960/DAC1100 PCI R
  dep_tristate 'Micro Memory MM5415 Battery Backed RAM support (EXPERIMENTAL)' CONFIG_BLK_DEV_UMEM $CONFIG_PCI $CONFIG_EXPERIMENTAL
  
@@ -708,9 +577,9 @@ diff -NurpP --minimal linux-2.4.22/drivers/block/Config.in linux-2.4.22-vs1.3.0/
  dep_tristate 'Network block device support' CONFIG_BLK_DEV_NBD $CONFIG_NET
  
  tristate 'RAM disk support' CONFIG_BLK_DEV_RAM
-diff -NurpP --minimal linux-2.4.22/drivers/block/Makefile linux-2.4.22-vs1.3.0/drivers/block/Makefile
+diff -NurpP --minimal linux-2.4.22/drivers/block/Makefile linux-2.4.22-vs1.22/drivers/block/Makefile
 --- linux-2.4.22/drivers/block/Makefile	Fri Jun 13 16:51:32 2003
-+++ linux-2.4.22-vs1.3.0/drivers/block/Makefile	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/drivers/block/Makefile	Sat Dec 13 18:32:37 2003
 @@ -31,6 +31,7 @@ obj-$(CONFIG_BLK_CPQ_CISS_DA)  += cciss.
  obj-$(CONFIG_BLK_DEV_DAC960)	+= DAC960.o
  obj-$(CONFIG_BLK_DEV_UMEM)	+= umem.o
@@ -719,9 +588,9 @@ diff -NurpP --minimal linux-2.4.22/drivers/block/Makefile linux-2.4.22-vs1.3.0/d
  
  subdir-$(CONFIG_PARIDE) += paride
  
-diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.c linux-2.4.22-vs1.3.0/drivers/block/vroot.c
+diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.c linux-2.4.22-vs1.22/drivers/block/vroot.c
 --- linux-2.4.22/drivers/block/vroot.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/drivers/block/vroot.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/drivers/block/vroot.c	Sat Dec 13 18:32:37 2003
 @@ -0,0 +1,329 @@
 +/*
 + *  linux/drivers/block/vroot.c
@@ -1052,9 +921,9 @@ diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.c linux-2.4.22-vs1.3.0/dr
 +__setup("max_vroot=", max_vroot_setup);
 +
 +#endif
-diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.h linux-2.4.22-vs1.3.0/drivers/block/vroot.h
+diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.h linux-2.4.22-vs1.22/drivers/block/vroot.h
 --- linux-2.4.22/drivers/block/vroot.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/drivers/block/vroot.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/drivers/block/vroot.h	Sat Dec 13 18:32:37 2003
 @@ -0,0 +1,46 @@
 +#ifndef _LINUX_VROOT_H
 +#define _LINUX_VROOT_H
@@ -1102,9 +971,9 @@ diff -NurpP --minimal linux-2.4.22/drivers/block/vroot.h linux-2.4.22-vs1.3.0/dr
 +#define VROOT_CLR_DEV		0x5601
 +
 +#endif
-diff -NurpP --minimal linux-2.4.22/fs/Makefile linux-2.4.22-vs1.3.0/fs/Makefile
+diff -NurpP --minimal linux-2.4.22/fs/Makefile linux-2.4.22-vs1.22/fs/Makefile
 --- linux-2.4.22/fs/Makefile	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/Makefile	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/Makefile	Sat Dec 13 18:32:37 2003
 @@ -7,7 +7,7 @@
  
  O_TARGET := fs.o
@@ -1114,9 +983,9 @@ diff -NurpP --minimal linux-2.4.22/fs/Makefile linux-2.4.22-vs1.3.0/fs/Makefile
  mod-subdirs :=	nls
  
  obj-y :=	open.o read_write.o devices.o file_table.o buffer.o \
-diff -NurpP --minimal linux-2.4.22/fs/devpts/inode.c linux-2.4.22-vs1.3.0/fs/devpts/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/devpts/inode.c linux-2.4.22-vs1.22/fs/devpts/inode.c
 --- linux-2.4.22/fs/devpts/inode.c	Thu Oct 25 09:02:26 2001
-+++ linux-2.4.22-vs1.3.0/fs/devpts/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/devpts/inode.c	Sat Dec 13 18:32:37 2003
 @@ -22,6 +22,7 @@
  #include <linux/slab.h>
  #include <linux/stat.h>
@@ -1132,7 +1001,7 @@ diff -NurpP --minimal linux-2.4.22/fs/devpts/inode.c linux-2.4.22-vs1.3.0/fs/dev
 +static int devpts_tty_permission(struct inode *inode, int mask)
 +{
 +	int ret = -EACCES;
-+	if (vx_check_id(inode->u.devpts_i.xid, VX_SAME))
++	if (vx_check(inode->u.devpts_i.vx_id, VX_IDENT))
 +		ret = vfs_permission(inode, mask);
 +	return ret;
 +}
@@ -1148,14 +1017,14 @@ diff -NurpP --minimal linux-2.4.22/fs/devpts/inode.c linux-2.4.22-vs1.3.0/fs/dev
  	inode->i_uid = sbi->setuid ? sbi->uid : current->fsuid;
  	inode->i_gid = sbi->setgid ? sbi->gid : current->fsgid;
  	inode->i_mtime = inode->i_atime = inode->i_ctime = CURRENT_TIME;
-+	inode->u.devpts_i.xid = vx_current_id();
++	inode->u.devpts_i.vx_id = current->vx_id;
 +	inode->i_op = &devpts_tty_inode_operations;
  	init_special_inode(inode, S_IFCHR|sbi->mode, kdev_t_to_nr(device));
  
  	if ( sbi->inodes[number] ) {
-diff -NurpP --minimal linux-2.4.22/fs/devpts/root.c linux-2.4.22-vs1.3.0/fs/devpts/root.c
+diff -NurpP --minimal linux-2.4.22/fs/devpts/root.c linux-2.4.22-vs1.22/fs/devpts/root.c
 --- linux-2.4.22/fs/devpts/root.c	Fri Dec 21 18:41:55 2001
-+++ linux-2.4.22-vs1.3.0/fs/devpts/root.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/devpts/root.c	Sat Dec 13 18:32:37 2003
 @@ -14,6 +14,7 @@
  #include <linux/stat.h>
  #include <linux/param.h>
@@ -1164,27 +1033,18 @@ diff -NurpP --minimal linux-2.4.22/fs/devpts/root.c linux-2.4.22-vs1.3.0/fs/devp
  #include "devpts_i.h"
  
  static int devpts_root_readdir(struct file *,void *,filldir_t);
-@@ -64,11 +65,14 @@ static int devpts_root_readdir(struct fi
+@@ -64,7 +65,9 @@ static int devpts_root_readdir(struct fi
  	default:
  		while ( nr - 2 < sbi->max_ptys ) {
  			int ptynr = nr - 2;
 -			if ( sbi->inodes[ptynr] ) {
--				genptsname(numbuf, ptynr);
--				if ( filldir(dirent, numbuf, strlen(numbuf), nr, nr, DT_CHR) < 0 )
--					return 0;
--			}
 +			struct inode *inode = sbi->inodes[ptynr];
-+
-+			if (!inode || !vx_check_id(inode->u.devpts_i.xid, VX_WATCH|VX_SAME))
-+				goto skip;
-+			genptsname(numbuf, ptynr);
-+			if ( filldir(dirent, numbuf, strlen(numbuf), nr, nr, DT_CHR) < 0 )
-+				return 0;
-+		skip:
- 			filp->f_pos = ++nr;
- 		}
- 		break;
-@@ -100,6 +104,7 @@ static struct dentry *devpts_root_lookup
++			if (inode && vx_check(inode->u.devpts_i.vx_id,
++				VX_WATCH|VX_IDENT)) {
+ 				genptsname(numbuf, ptynr);
+ 				if ( filldir(dirent, numbuf, strlen(numbuf), nr, nr, DT_CHR) < 0 )
+ 					return 0;
+@@ -100,6 +103,7 @@ static struct dentry *devpts_root_lookup
  	unsigned int entry;
  	int i;
  	const char *p;
@@ -1192,14 +1052,14 @@ diff -NurpP --minimal linux-2.4.22/fs/devpts/root.c linux-2.4.22-vs1.3.0/fs/devp
  
  	dentry->d_op    = &devpts_dentry_operations;
  
-@@ -126,10 +131,15 @@ static struct dentry *devpts_root_lookup
+@@ -126,10 +130,15 @@ static struct dentry *devpts_root_lookup
  	if ( entry >= sbi->max_ptys )
  		return NULL;
  
 -	if ( sbi->inodes[entry] )
 -		atomic_inc(&sbi->inodes[entry]->i_count);
 +	inode = sbi->inodes[entry];
-+	if (inode && vx_check_id(inode->u.devpts_i.xid, VX_SAME))
++	if (inode && vx_check(inode->u.devpts_i.vx_id, VX_IDENT))
 +		atomic_inc(&inode->i_count);
 +	else
 +		inode = NULL;
@@ -1211,9 +1071,9 @@ diff -NurpP --minimal linux-2.4.22/fs/devpts/root.c linux-2.4.22-vs1.3.0/fs/devp
  }
 +
 +
-diff -NurpP --minimal linux-2.4.22/fs/exec.c linux-2.4.22-vs1.3.0/fs/exec.c
+diff -NurpP --minimal linux-2.4.22/fs/exec.c linux-2.4.22-vs1.22/fs/exec.c
 --- linux-2.4.22/fs/exec.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/exec.c	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/fs/exec.c	Sat Dec 13 18:32:37 2003
 @@ -733,7 +733,7 @@ void compute_creds(struct linux_binprm *
  	kernel_cap_t new_permitted, working;
  	int do_unlock = 0;
@@ -1223,9 +1083,9 @@ diff -NurpP --minimal linux-2.4.22/fs/exec.c linux-2.4.22-vs1.3.0/fs/exec.c
  	working = cap_intersect(bprm->cap_inheritable,
  				current->cap_inheritable);
  	new_permitted = cap_combine(new_permitted, working);
-diff -NurpP --minimal linux-2.4.22/fs/ext2/ialloc.c linux-2.4.22-vs1.3.0/fs/ext2/ialloc.c
+diff -NurpP --minimal linux-2.4.22/fs/ext2/ialloc.c linux-2.4.22-vs1.22/fs/ext2/ialloc.c
 --- linux-2.4.22/fs/ext2/ialloc.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext2/ialloc.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext2/ialloc.c	Sat Dec 13 18:32:37 2003
 @@ -388,7 +388,7 @@ repeat:
  	inode->u.ext2_i.i_new_inode = 1;
  	inode->u.ext2_i.i_flags = dir->u.ext2_i.i_flags & ~EXT2_BTREE_FL;
@@ -1235,9 +1095,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext2/ialloc.c linux-2.4.22-vs1.3.0/fs/ext2
  	inode->u.ext2_i.i_block_group = group;
  	ext2_set_inode_flags(inode);
  	insert_inode_hash(inode);
-diff -NurpP --minimal linux-2.4.22/fs/ext2/inode.c linux-2.4.22-vs1.3.0/fs/ext2/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/ext2/inode.c linux-2.4.22-vs1.22/fs/ext2/inode.c
 --- linux-2.4.22/fs/ext2/inode.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext2/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext2/inode.c	Sat Dec 13 18:32:37 2003
 @@ -46,6 +46,8 @@ void ext2_put_inode (struct inode * inod
  	ext2_discard_prealloc (inode);
  }
@@ -1304,9 +1164,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext2/inode.c linux-2.4.22-vs1.3.0/fs/ext2/
  	if (flags & EXT2_NOATIME_FL)
  		inode->i_flags |= S_NOATIME;
  }
-diff -NurpP --minimal linux-2.4.22/fs/ext2/ioctl.c linux-2.4.22-vs1.3.0/fs/ext2/ioctl.c
+diff -NurpP --minimal linux-2.4.22/fs/ext2/ioctl.c linux-2.4.22-vs1.22/fs/ext2/ioctl.c
 --- linux-2.4.22/fs/ext2/ioctl.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext2/ioctl.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext2/ioctl.c	Sat Dec 13 18:32:37 2003
 @@ -39,12 +39,12 @@ int ext2_ioctl (struct inode * inode, st
  		oldflags = inode->u.ext2_i.i_flags;
  
@@ -1323,9 +1183,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext2/ioctl.c linux-2.4.22-vs1.3.0/fs/ext2/
  			if (!capable(CAP_LINUX_IMMUTABLE))
  				return -EPERM;
  		}
-diff -NurpP --minimal linux-2.4.22/fs/ext3/ialloc.c linux-2.4.22-vs1.3.0/fs/ext3/ialloc.c
+diff -NurpP --minimal linux-2.4.22/fs/ext3/ialloc.c linux-2.4.22-vs1.22/fs/ext3/ialloc.c
 --- linux-2.4.22/fs/ext3/ialloc.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext3/ialloc.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext3/ialloc.c	Sat Dec 13 18:32:37 2003
 @@ -485,7 +485,7 @@ repeat:
  	inode->i_mtime = inode->i_atime = inode->i_ctime = CURRENT_TIME;
  	inode->u.ext3_i.i_flags = dir->u.ext3_i.i_flags & ~EXT3_INDEX_FL;
@@ -1335,9 +1195,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext3/ialloc.c linux-2.4.22-vs1.3.0/fs/ext3
  #ifdef EXT3_FRAGMENTS
  	inode->u.ext3_i.i_faddr = 0;
  	inode->u.ext3_i.i_frag_no = 0;
-diff -NurpP --minimal linux-2.4.22/fs/ext3/inode.c linux-2.4.22-vs1.3.0/fs/ext3/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/ext3/inode.c linux-2.4.22-vs1.22/fs/ext3/inode.c
 --- linux-2.4.22/fs/ext3/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext3/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext3/inode.c	Sat Dec 13 18:32:37 2003
 @@ -172,6 +172,7 @@ void ext3_put_inode (struct inode * inod
  	ext3_discard_prealloc (inode);
  }
@@ -1406,9 +1266,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext3/inode.c linux-2.4.22-vs1.3.0/fs/ext3/
  	if (flags & EXT3_NOATIME_FL)
  		inode->i_flags |= S_NOATIME;
  }
-diff -NurpP --minimal linux-2.4.22/fs/ext3/ioctl.c linux-2.4.22-vs1.3.0/fs/ext3/ioctl.c
+diff -NurpP --minimal linux-2.4.22/fs/ext3/ioctl.c linux-2.4.22-vs1.22/fs/ext3/ioctl.c
 --- linux-2.4.22/fs/ext3/ioctl.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/ext3/ioctl.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ext3/ioctl.c	Sat Dec 13 18:32:37 2003
 @@ -48,12 +48,12 @@ int ext3_ioctl (struct inode * inode, st
  		jflag = flags & EXT3_JOURNAL_DATA_FL;
  
@@ -1425,9 +1285,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ext3/ioctl.c linux-2.4.22-vs1.3.0/fs/ext3/
  			if (!capable(CAP_LINUX_IMMUTABLE))
  				return -EPERM;
  		}
-diff -NurpP --minimal linux-2.4.22/fs/fat/file.c linux-2.4.22-vs1.3.0/fs/fat/file.c
+diff -NurpP --minimal linux-2.4.22/fs/fat/file.c linux-2.4.22-vs1.22/fs/fat/file.c
 --- linux-2.4.22/fs/fat/file.c	Sun Aug 12 19:56:56 2001
-+++ linux-2.4.22-vs1.3.0/fs/fat/file.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/fat/file.c	Sat Dec 13 18:32:37 2003
 @@ -119,7 +119,7 @@ void fat_truncate(struct inode *inode)
  	/* Why no return value?  Surely the disk could fail... */
  	if (IS_RDONLY (inode))
@@ -1437,9 +1297,9 @@ diff -NurpP --minimal linux-2.4.22/fs/fat/file.c linux-2.4.22-vs1.3.0/fs/fat/fil
  		return /* -EPERM */;
  	cluster = 1 << sbi->cluster_bits;
  	/* 
-diff -NurpP --minimal linux-2.4.22/fs/fat/inode.c linux-2.4.22-vs1.3.0/fs/fat/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/fat/inode.c linux-2.4.22-vs1.22/fs/fat/inode.c
 --- linux-2.4.22/fs/fat/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/fat/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/fat/inode.c	Sat Dec 13 18:32:37 2003
 @@ -950,7 +950,7 @@ static void fat_fill_inode(struct inode 
  	}
  	if(de->attr & ATTR_SYS)
@@ -1449,9 +1309,9 @@ diff -NurpP --minimal linux-2.4.22/fs/fat/inode.c linux-2.4.22-vs1.3.0/fs/fat/in
  	MSDOS_I(inode)->i_attrs = de->attr & ATTR_UNUSED;
  	/* this is as close to the truth as we can get ... */
  	inode->i_blksize = 1 << sbi->cluster_bits;
-diff -NurpP --minimal linux-2.4.22/fs/hpfs/file.c linux-2.4.22-vs1.3.0/fs/hpfs/file.c
+diff -NurpP --minimal linux-2.4.22/fs/hpfs/file.c linux-2.4.22-vs1.22/fs/hpfs/file.c
 --- linux-2.4.22/fs/hpfs/file.c	Mon Aug 13 02:37:53 2001
-+++ linux-2.4.22-vs1.3.0/fs/hpfs/file.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/hpfs/file.c	Sat Dec 13 18:32:37 2003
 @@ -60,7 +60,7 @@ secno hpfs_bmap(struct inode *inode, uns
  
  void hpfs_truncate(struct inode *i)
@@ -1461,20 +1321,9 @@ diff -NurpP --minimal linux-2.4.22/fs/hpfs/file.c linux-2.4.22-vs1.3.0/fs/hpfs/f
  	i->i_hpfs_n_secs = 0;
  	i->i_blocks = 1 + ((i->i_size + 511) >> 9);
  	i->u.hpfs_i.mmu_private = i->i_size;
-diff -NurpP --minimal linux-2.4.22/fs/inode.c linux-2.4.22-vs1.3.0/fs/inode.c
---- linux-2.4.22/fs/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/inode.c	Wed Dec 10 01:38:49 2003
-@@ -112,6 +112,7 @@ static struct inode *alloc_inode(struct 
- 		inode->i_pipe = NULL;
- 		inode->i_bdev = NULL;
- 		inode->i_cdev = NULL;
-+		inode->i_xid = vx_current_id();
- 
- 		mapping->a_ops = &empty_aops;
- 		mapping->host = inode;
-diff -NurpP --minimal linux-2.4.22/fs/intermezzo/vfs.c linux-2.4.22-vs1.3.0/fs/intermezzo/vfs.c
+diff -NurpP --minimal linux-2.4.22/fs/intermezzo/vfs.c linux-2.4.22-vs1.22/fs/intermezzo/vfs.c
 --- linux-2.4.22/fs/intermezzo/vfs.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/intermezzo/vfs.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/intermezzo/vfs.c	Sat Dec 13 18:32:37 2003
 @@ -140,7 +140,7 @@ static inline int may_delete(struct inod
          if (IS_APPEND(dir))
                  return -EPERM;
@@ -1520,9 +1369,9 @@ diff -NurpP --minimal linux-2.4.22/fs/intermezzo/vfs.c linux-2.4.22-vs1.3.0/fs/i
                  EXIT;
                  return -EPERM;
          }
-diff -NurpP --minimal linux-2.4.22/fs/jfs/xattr.c linux-2.4.22-vs1.3.0/fs/jfs/xattr.c
+diff -NurpP --minimal linux-2.4.22/fs/jfs/xattr.c linux-2.4.22-vs1.22/fs/jfs/xattr.c
 --- linux-2.4.22/fs/jfs/xattr.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/fs/jfs/xattr.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/jfs/xattr.c	Sat Dec 13 18:32:37 2003
 @@ -646,7 +646,7 @@ static int can_set_xattr(struct inode *i
  	if (IS_RDONLY(inode))
  		return -EROFS;
@@ -1532,9 +1381,9 @@ diff -NurpP --minimal linux-2.4.22/fs/jfs/xattr.c linux-2.4.22-vs1.3.0/fs/jfs/xa
  		return -EPERM;
  
  	if((strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN) != 0) &&
-diff -NurpP --minimal linux-2.4.22/fs/namei.c linux-2.4.22-vs1.3.0/fs/namei.c
+diff -NurpP --minimal linux-2.4.22/fs/namei.c linux-2.4.22-vs1.22/fs/namei.c
 --- linux-2.4.22/fs/namei.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/namei.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/namei.c	Sat Dec 13 18:32:37 2003
 @@ -22,6 +22,7 @@
  #include <linux/dnotify.h>
  #include <linux/smp_lock.h>
@@ -1587,9 +1436,9 @@ diff -NurpP --minimal linux-2.4.22/fs/namei.c linux-2.4.22-vs1.3.0/fs/namei.c
  		goto exit_lock;
  	if (!dir->i_op || !dir->i_op->link)
  		goto exit_lock;
-diff -NurpP --minimal linux-2.4.22/fs/nfsd/vfs.c linux-2.4.22-vs1.3.0/fs/nfsd/vfs.c
+diff -NurpP --minimal linux-2.4.22/fs/nfsd/vfs.c linux-2.4.22-vs1.22/fs/nfsd/vfs.c
 --- linux-2.4.22/fs/nfsd/vfs.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/nfsd/vfs.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/nfsd/vfs.c	Sat Dec 13 18:32:37 2003
 @@ -1480,7 +1480,7 @@ nfsd_permission(struct svc_export *exp, 
  	if (acc == MAY_NOP)
  		return 0;
@@ -1618,9 +1467,9 @@ diff -NurpP --minimal linux-2.4.22/fs/nfsd/vfs.c linux-2.4.22-vs1.3.0/fs/nfsd/vf
  			return nfserr_perm;
  	}
  	if ((acc & MAY_TRUNC) && IS_APPEND(inode))
-diff -NurpP --minimal linux-2.4.22/fs/open.c linux-2.4.22-vs1.3.0/fs/open.c
+diff -NurpP --minimal linux-2.4.22/fs/open.c linux-2.4.22-vs1.22/fs/open.c
 --- linux-2.4.22/fs/open.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/open.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/open.c	Sat Dec 13 18:32:37 2003
 @@ -148,7 +148,7 @@ static inline long do_sys_truncate(const
  		goto dput_and_out;
  
@@ -1657,26 +1506,14 @@ diff -NurpP --minimal linux-2.4.22/fs/open.c linux-2.4.22-vs1.3.0/fs/open.c
  		goto out;
  	if (user == (uid_t) -1)
  		user = inode->i_uid;
-diff -NurpP --minimal linux-2.4.22/fs/proc/Makefile linux-2.4.22-vs1.3.0/fs/proc/Makefile
---- linux-2.4.22/fs/proc/Makefile	Sun Oct 19 18:13:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/Makefile	Wed Dec 10 01:38:50 2003
-@@ -12,7 +12,7 @@ O_TARGET := proc.o
- export-objs := root.o
- 
- obj-y    := inode.o root.o base.o generic.o array.o \
--		kmsg.o proc_tty.o proc_misc.o kcore.o
-+		kmsg.o proc_tty.o proc_misc.o kcore.o virtual.o
- 
- ifeq ($(CONFIG_PROC_DEVICETREE),y)
- obj-y += proc_devtree.o
-diff -NurpP --minimal linux-2.4.22/fs/proc/array.c linux-2.4.22-vs1.3.0/fs/proc/array.c
+diff -NurpP --minimal linux-2.4.22/fs/proc/array.c linux-2.4.22-vs1.22/fs/proc/array.c
 --- linux-2.4.22/fs/proc/array.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/array.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/proc/array.c	Sat Dec 13 18:32:37 2003
 @@ -75,6 +75,7 @@
  #include <asm/pgtable.h>
  #include <asm/io.h>
  #include <asm/processor.h>
-+// #include <asm/unistd.h>
++#include <asm/unistd.h>
  
  /* Gcc optimizes away "strlen(x)" for constant x */
  #define ADDBUF(buffer, string) \
@@ -1689,8 +1526,8 @@ diff -NurpP --minimal linux-2.4.22/fs/proc/array.c linux-2.4.22-vs1.3.0/fs/proc/
  	read_lock(&tasklist_lock);
 +	ppid = p->p_opptr->pid;
 +	if (ppid != 0
-+		&& current->vx_info
-+		&& current->vx_info->vx_initpid == ppid)
++		&& current->s_info
++		&& current->s_info->initpid == ppid)
 +		ppid = 1;
  	buffer += sprintf(buffer,
  		"State:\t%s\n"
@@ -1719,22 +1556,33 @@ diff -NurpP --minimal linux-2.4.22/fs/proc/array.c linux-2.4.22-vs1.3.0/fs/proc/
  }
  
  
-@@ -291,6 +299,40 @@ int proc_pid_status(struct task_struct *
+@@ -291,6 +299,51 @@ int proc_pid_status(struct task_struct *
  	}
  	buffer = task_sig(task, buffer);
  	buffer = task_cap(task, buffer);
-+	if (task->vx_info) {
-+		buffer += sprintf (buffer,"s_context: %d\n", vx_task_id(task));
++	if (task->s_info) {
++		int i;
++
++		buffer += sprintf (buffer,"s_context: %d [", task->vx_id);
++		for (i=0; i<NB_S_CONTEXT; i++) {
++			int ctx = task->s_info->vx_id[i];
++
++			if (ctx == 0)
++				break;
++			buffer += sprintf (buffer," %d",ctx);
++		}
++		*buffer++ = ']';
++		*buffer++ = '\n';
 +		buffer += sprintf (buffer,"ctxticks: %d %ld %d\n"
-+			,atomic_read(&task->vx_info->limit.ticks)
++			,atomic_read(&task->s_info->ticks)
 +			,task->counter
-+			,atomic_read(&task->vx_info->vx_refcount));
++			,atomic_read(&task->s_info->refcount));
 +		buffer += sprintf (buffer,"ctxflags: %d\n"
-+			,task->vx_info->vx_flags);
++			,task->s_info->flags);
 +		buffer += sprintf (buffer,"initpid: %d\n"
-+			,task->vx_info->vx_initpid);
++			,task->s_info->initpid);
 +	} else {
-+		buffer += sprintf (buffer,"s_context: %d\n", vx_task_id(task));
++		buffer += sprintf (buffer,"s_context: %d\n", task->vx_id);
 +		buffer += sprintf (buffer,"ctxticks: none\n");
 +		buffer += sprintf (buffer,"ctxflags: none\n");
 +		buffer += sprintf (buffer,"initpid: none\n");
@@ -1760,38 +1608,30 @@ diff -NurpP --minimal linux-2.4.22/fs/proc/array.c linux-2.4.22-vs1.3.0/fs/proc/
  #if defined(CONFIG_ARCH_S390)
  	buffer = task_show_regs(task, buffer);
  #endif
-@@ -344,6 +386,8 @@ int proc_pid_stat(struct task_struct *ta
+@@ -344,6 +397,8 @@ int proc_pid_stat(struct task_struct *ta
  
  	read_lock(&tasklist_lock);
  	ppid = task->pid ? task->p_opptr->pid : 0;
-+	if (current->vx_info && current->vx_info->vx_initpid == ppid)
++	if (current->s_info && current->s_info->initpid == ppid)
 +		ppid = 1;
  	read_unlock(&tasklist_lock);
  	res = sprintf(buffer,"%d (%s) %c %d %d %d %d %d %lu %lu \
  %lu %lu %lu %lu %lu %ld %ld %ld %ld %ld %ld %lu %lu %ld %lu %lu %lu %lu %lu \
-diff -NurpP --minimal linux-2.4.22/fs/proc/base.c linux-2.4.22-vs1.3.0/fs/proc/base.c
+diff -NurpP --minimal linux-2.4.22/fs/proc/base.c linux-2.4.22-vs1.22/fs/proc/base.c
 --- linux-2.4.22/fs/proc/base.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/base.c	Wed Dec 10 01:38:50 2003
-@@ -752,6 +752,7 @@ static struct inode *proc_pid_make_inode
- 		inode->i_uid = task->euid;
- 		inode->i_gid = task->egid;
- 	}
-+	inode->i_xid = vx_task_id(task);
- 
- out:
- 	return inode;
-@@ -1056,6 +1057,10 @@ struct dentry *proc_pid_lookup(struct in
++++ linux-2.4.22-vs1.22/fs/proc/base.c	Sat Dec 13 18:32:37 2003
+@@ -1056,6 +1056,10 @@ struct dentry *proc_pid_lookup(struct in
  	if (!task)
  		goto out;
  
-+	if (pid != 1 && !vx_check(task->vx_info, VX_WATCH|VX_IDENT)) {
++	if (pid != 1 && !vx_check(task->vx_id, VX_WATCH|VX_IDENT)) {
 +		free_task_struct(task);
 +		goto out;
 +	}
  	inode = proc_pid_make_inode(dir->i_sb, task, PROC_PID_INO);
  
  	free_task_struct(task);
-@@ -1066,7 +1071,7 @@ struct dentry *proc_pid_lookup(struct in
+@@ -1066,7 +1070,7 @@ struct dentry *proc_pid_lookup(struct in
  	inode->i_op = &proc_base_inode_operations;
  	inode->i_fop = &proc_base_operations;
  	inode->i_nlink = 3;
@@ -1800,7 +1640,7 @@ diff -NurpP --minimal linux-2.4.22/fs/proc/base.c linux-2.4.22-vs1.3.0/fs/proc/b
  
  	dentry->d_op = &pid_base_dentry_operations;
  	d_add(dentry, inode);
-@@ -1101,6 +1106,18 @@ static int get_pid_list(int index, unsig
+@@ -1101,6 +1105,18 @@ static int get_pid_list(int index, unsig
  	for_each_task(p) {
  		int pid = p->pid;
  		if (!pid)
@@ -1812,301 +1652,16 @@ diff -NurpP --minimal linux-2.4.22/fs/proc/base.c linux-2.4.22-vs1.3.0/fs/proc/b
 +		/* send any signal either */
 +
 +		/* A process with security context 1 can see all processes */
-+		if (pid != 1 && !vx_check(p->vx_info, VX_WATCH|VX_IDENT))
++		if (pid != 1 && !vx_check(p->vx_id, VX_WATCH|VX_IDENT))
 +			continue;
 +		/* We hide the fakeinit process since we show it as process 1 */
-+		if (current->vx_info && current->vx_info->vx_initpid == pid)
++		if (current->s_info && current->s_info->initpid == pid)
  			continue;
  		if (--index >= 0)
  			continue;
-diff -NurpP --minimal linux-2.4.22/fs/proc/generic.c linux-2.4.22-vs1.3.0/fs/proc/generic.c
---- linux-2.4.22/fs/proc/generic.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/generic.c	Wed Dec 10 01:38:50 2003
-@@ -331,9 +331,12 @@ int proc_readdir(struct file * filp,
- 			}
- 
- 			do {
-+				if (de->vx_flags && !vx_check_id(de->xid, de->vx_flags))
-+					goto skip;
- 				if (filldir(dirent, de->name, de->namelen, filp->f_pos,
- 					    de->low_ino, de->mode >> 12) < 0)
- 					return 0;
-+			skip:
- 				filp->f_pos++;
- 				de = de->next;
- 			} while (de);
-diff -NurpP --minimal linux-2.4.22/fs/proc/inode.c linux-2.4.22-vs1.3.0/fs/proc/inode.c
---- linux-2.4.22/fs/proc/inode.c	Fri Jun 13 16:51:37 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/inode.c	Wed Dec 10 01:38:50 2003
-@@ -154,6 +154,9 @@ printk("proc_iget: using deleted entry %
- 			inode->i_uid = de->uid;
- 			inode->i_gid = de->gid;
- 		}
-+		inode->i_xid = de->xid;
-+		if (de->vx_flags)
-+			inode->u.proc_i.vx_flags = de->vx_flags;
- 		if (de->size)
- 			inode->i_size = de->size;
- 		if (de->nlink)
-diff -NurpP --minimal linux-2.4.22/fs/proc/proc_misc.c linux-2.4.22-vs1.3.0/fs/proc/proc_misc.c
---- linux-2.4.22/fs/proc/proc_misc.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/proc_misc.c	Wed Dec 10 01:38:50 2003
-@@ -124,6 +124,12 @@ static int uptime_read_proc(char *page, 
- 
- 	uptime = jiffies;
- 	idle = init_tasks[0]->times.tms_utime + init_tasks[0]->times.tms_stime;
-+	if (!vx_check(0, VX_ADMIN|VX_WATCH)) {
-+		struct vx_info *vxi = current->vx_info;
-+
-+		uptime -= vxi->virt.bias_jiffies;
-+		idle -= vxi->virt.bias_idle;
-+	}
- 
- 	/* The formula for the fraction parts really is ((t * 100) / HZ) % 100, but
- 	   that would overflow about every five days at HZ == 100.
-@@ -371,14 +377,25 @@ static int kstat_read_proc(char *page, c
- 		}
- 	}
- 
--	proc_sprintf(page, &off, &len,
--		"\nctxt %u\n"
--		"btime %lu\n"
--		"processes %lu\n",
--		kstat.context_swtch,
--		xtime.tv_sec - jif / HZ,
--		total_forks);
-+	if (vx_check(0, VX_ADMIN|VX_WATCH)) {
-+		proc_sprintf(page, &off, &len,
-+			"\nctxt %u\n"
-+			"btime %lu\n"
-+			"processes %lu\n"
-+			,kstat.context_swtch
-+			,xtime.tv_sec - jif / HZ
-+			,total_forks);
-+	} else {
-+		struct vx_info *vxi = current->vx_info;
- 
-+		proc_sprintf(page, &off, &len,
-+			"\nctxt %u\n"
-+			"btime %lu\n"
-+			"processes %lu\n"
-+			,kstat.context_swtch - vxi->virt.bias_cswtch
-+			,xtime.tv_sec - jif / HZ + vxi->virt.bias_jiffies / HZ
-+			,vxi->virt.total_forks);
-+	}
- 	return proc_calc_metrics(page, start, off, count, eof, len);
- }
- 
-diff -NurpP --minimal linux-2.4.22/fs/proc/root.c linux-2.4.22-vs1.3.0/fs/proc/root.c
---- linux-2.4.22/fs/proc/root.c	Sun Oct 19 18:13:51 2003
-+++ linux-2.4.22-vs1.3.0/fs/proc/root.c	Wed Dec 10 01:38:50 2003
-@@ -15,6 +15,7 @@
- #include <linux/config.h>
- #include <linux/init.h>
- #include <linux/module.h>
-+#include <linux/vcontext.h>
- #include <asm/bitops.h>
- 
- struct proc_dir_entry *proc_net, *proc_bus, *proc_root_fs, *proc_root_driver;
-@@ -22,6 +23,8 @@ struct proc_dir_entry *proc_net, *proc_b
- #ifdef CONFIG_SYSCTL
- struct proc_dir_entry *proc_sys_root;
- #endif
-+struct proc_dir_entry *proc_virtual;
-+
- 
- static DECLARE_FSTYPE(proc_fs_type, "proc", proc_read_super, FS_SINGLE);
- 
-@@ -68,6 +71,7 @@ void __init proc_root_init(void)
- 	proc_rtas_init();
- #endif
- 	proc_bus = proc_mkdir("bus", 0);
-+	proc_virtual = proc_mkdir("virtual", 0);
- }
- 
- static struct dentry *proc_root_lookup(struct inode * dir, struct dentry * dentry)
-@@ -144,4 +148,5 @@ EXPORT_SYMBOL(proc_root);
- EXPORT_SYMBOL(proc_root_fs);
- EXPORT_SYMBOL(proc_net);
- EXPORT_SYMBOL(proc_bus);
-+EXPORT_SYMBOL(proc_virtual);
- EXPORT_SYMBOL(proc_root_driver);
-diff -NurpP --minimal linux-2.4.22/fs/proc/virtual.c linux-2.4.22-vs1.3.0/fs/proc/virtual.c
---- linux-2.4.22/fs/proc/virtual.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/fs/proc/virtual.c	Wed Dec 10 01:38:50 2003
-@@ -0,0 +1,169 @@
-+/*
-+ *  linux/fs/proc/virtual.c
-+ *
-+ *  Virtual Context Support
-+ *
-+ *  Copyright (C) 2003  Herbert Pötzl
-+ *
-+ *  V0.01  basic structure
-+ *  V0.02  adaptation vs1.3.0
-+ *  V0.03  proc permissions
-+ *
-+ */
-+
-+#include <asm/uaccess.h>
-+
-+#include <linux/config.h>
-+#include <linux/errno.h>
-+#include <linux/proc_fs.h>
-+
-+#include <linux/vcontext.h>
-+#include <linux/vswitch.h>
-+
-+
-+extern struct proc_dir_entry *proc_virtual;
-+
-+struct proc_dir_entry *proc_virtual_info;
-+
-+
-+char *vx_proc_info (struct vx_info *info, char *buffer)
-+{
-+	buffer += sprintf(buffer,
-+		"ID:\t%d\n"
-+		"Info:\t%p\n"
-+		"Init:\t%d\n"
-+		,info->vx_id
-+		,info, info->vx_initpid);
-+	return buffer;
-+}
-+
-+int vx_info_read_func (char *page, char **start, off_t off, int count, int *eof, void *data)
-+{
-+	int len;
-+	char *buffer = page;
-+	
-+	buffer = vx_proc_info(data, buffer);
-+
-+	len = buffer-page;
-+	if (len <= off+count) *eof = 1;
-+	
-+	*start = page + off;
-+	len -= off;
-+	if (len>count) len = count;
-+	if (len<0) len = 0;
-+	return len;
-+}
-+
-+char *vx_proc_status (struct vx_info *info, char *buffer)
-+{
-+	buffer += sprintf(buffer,
-+		"RefC:\t%d\n"		
-+		"Flags:\t%08x\n"
-+		"Ticks:\t%d\n"		
-+		,atomic_read(&info->vx_refcount)
-+		,info->vx_flags
-+		,atomic_read(&info->limit.ticks));
-+	return buffer;
-+}
-+
-+int vx_status_read_func (char *page, char **start, off_t off, int count, int *eof, void *data)
-+{
-+	int len;
-+	char *buffer = page;
-+	
-+	buffer = vx_proc_status(data, buffer);
-+
-+	len = buffer-page;
-+	if (len <= off+count) *eof = 1;
-+	
-+	*start = page + off;
-+	len -= off;
-+	if (len>count) len = count;
-+	if (len<0) len = 0;
-+	return len;
-+}
-+
-+static int vx_proc_permission(struct inode *inode, int mask)
-+{
-+	dprintk("vx_proc_permission(%p) = #%d,%04x\n",
-+		inode, inode->i_xid, inode->u.proc_i.vx_flags);
-+	if (vx_check_id(inode->i_xid, inode->u.proc_i.vx_flags))
-+		return 0;
-+	dprintk("vx_proc_permission(%p) #%d != #%d\n",
-+		inode, inode->i_xid, vx_current_id());
-+	return -ENOENT;
-+}
-+
-+static struct inode_operations vx_proc_inode_operations = {
-+	lookup:		proc_lookup,
-+	permission:	vx_proc_permission,
-+};
-+
-+
-+int vx_proc_create(struct vx_info *info)
-+{
-+	struct proc_dir_entry *entry, *sub;
-+	char name[8];
-+
-+	snprintf(name, sizeof(name)-1, "%d", info->vx_id);
-+	entry = create_proc_entry(name,
-+		S_IFDIR|S_IXUGO, proc_virtual);
-+	entry->vx_flags = VX_ADMIN|VX_WATCH|VX_SAME;
-+	entry->xid = info->vx_id;
-+	entry->proc_iops = &vx_proc_inode_operations;
-+	info->vx_procent = entry;
-+	sub = create_proc_read_entry("info",
-+		S_IFREG|S_IRUGO|S_IWUSR,
-+		entry, vx_info_read_func, info);
-+	sub = create_proc_read_entry("status",
-+		S_IFREG|S_IRUGO|S_IWUSR,
-+		entry, vx_status_read_func, info);
-+	return 0;
-+}
-+
-+int vx_proc_destroy(struct vx_info *info)
-+{
-+	struct proc_dir_entry *entry = info->vx_procent;
-+	if (!entry)
-+	    return 0;
-+	remove_proc_entry(entry->name, proc_virtual);
-+	info->vx_procent = NULL;
-+	return 0;
-+}
-+
-+char *vs_proc_info(void *data, char *buffer)
-+{
-+	buffer += sprintf(buffer,
-+		"VCIVersion:\t%04x:%04x\n"
-+		,VCI_VERSION >> 16
-+		,VCI_VERSION & 0xFFFF);
-+	return buffer;
-+}
-+
-+int vs_info_read_func(char *page, char **start, off_t off, int count, int *eof, void *data)
-+{
-+	int len;
-+	char *buffer = page;
-+	
-+	buffer = vs_proc_info(data, buffer);
-+
-+	len = buffer-page;
-+	if (len <= off+count) *eof = 1;
-+	
-+	*start = page + off;
-+	len -= off;
-+	if (len>count) len = count;
-+	if (len<0) len = 0;
-+	return len;
-+}
-+
-+
-+static int __init virtual_proc_init(void)
-+{
-+	proc_virtual_info = create_proc_read_entry("info",
-+		S_IFREG|S_IRUGO|S_IWUSR,
-+		proc_virtual, vs_info_read_func, NULL);
-+	return 0;
-+}
-+
-+__initcall(virtual_proc_init);
-diff -NurpP --minimal linux-2.4.22/fs/quota.c linux-2.4.22-vs1.3.0/fs/quota.c
+diff -NurpP --minimal linux-2.4.22/fs/quota.c linux-2.4.22-vs1.22/fs/quota.c
 --- linux-2.4.22/fs/quota.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/quota.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/quota.c	Sat Dec 13 18:32:37 2003
 @@ -14,6 +14,10 @@
  #include <linux/quotaops.h>
  #include <linux/quotacompat.h>
@@ -2217,9 +1772,9 @@ diff -NurpP --minimal linux-2.4.22/fs/quota.c linux-2.4.22-vs1.3.0/fs/quota.c
  			return -EPERM;
  	return 0;
  }
-diff -NurpP --minimal linux-2.4.22/fs/reiserfs/inode.c linux-2.4.22-vs1.3.0/fs/reiserfs/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/reiserfs/inode.c linux-2.4.22-vs1.22/fs/reiserfs/inode.c
 --- linux-2.4.22/fs/reiserfs/inode.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/reiserfs/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/reiserfs/inode.c	Sat Dec 13 18:32:37 2003
 @@ -1574,7 +1574,7 @@ int reiserfs_new_inode (struct reiserfs_
  
      /* symlink cannot be immutable or append only, right? */
@@ -2265,9 +1820,9 @@ diff -NurpP --minimal linux-2.4.22/fs/reiserfs/inode.c linux-2.4.22-vs1.3.0/fs/r
  		if( inode -> i_flags & S_SYNC )
  			*sd_attrs |= REISERFS_SYNC_FL;
  		else
-diff -NurpP --minimal linux-2.4.22/fs/reiserfs/ioctl.c linux-2.4.22-vs1.3.0/fs/reiserfs/ioctl.c
+diff -NurpP --minimal linux-2.4.22/fs/reiserfs/ioctl.c linux-2.4.22-vs1.22/fs/reiserfs/ioctl.c
 --- linux-2.4.22/fs/reiserfs/ioctl.c	Mon Aug 25 13:44:43 2003
-+++ linux-2.4.22-vs1.3.0/fs/reiserfs/ioctl.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/reiserfs/ioctl.c	Sat Dec 13 18:32:37 2003
 @@ -51,7 +51,8 @@ int reiserfs_ioctl (struct inode * inode
  		if (get_user(flags, (int *) arg))
  			return -EFAULT;
@@ -2278,9 +1833,9 @@ diff -NurpP --minimal linux-2.4.22/fs/reiserfs/ioctl.c linux-2.4.22-vs1.3.0/fs/r
  		     !capable( CAP_LINUX_IMMUTABLE ) )
  			return -EPERM;
  			
-diff -NurpP --minimal linux-2.4.22/fs/udf/inode.c linux-2.4.22-vs1.3.0/fs/udf/inode.c
+diff -NurpP --minimal linux-2.4.22/fs/udf/inode.c linux-2.4.22-vs1.22/fs/udf/inode.c
 --- linux-2.4.22/fs/udf/inode.c	Sat Aug  3 02:39:45 2002
-+++ linux-2.4.22-vs1.3.0/fs/udf/inode.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/udf/inode.c	Sat Dec 13 18:32:37 2003
 @@ -860,7 +860,7 @@ void udf_truncate(struct inode * inode)
  	if (!(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
  			S_ISLNK(inode->i_mode)))
@@ -2290,9 +1845,9 @@ diff -NurpP --minimal linux-2.4.22/fs/udf/inode.c linux-2.4.22-vs1.3.0/fs/udf/in
  		return;
  
  	if (UDF_I_ALLOCTYPE(inode) == ICBTAG_FLAG_AD_IN_ICB)
-diff -NurpP --minimal linux-2.4.22/fs/ufs/truncate.c linux-2.4.22-vs1.3.0/fs/ufs/truncate.c
+diff -NurpP --minimal linux-2.4.22/fs/ufs/truncate.c linux-2.4.22-vs1.22/fs/ufs/truncate.c
 --- linux-2.4.22/fs/ufs/truncate.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/fs/ufs/truncate.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/fs/ufs/truncate.c	Sat Dec 13 18:32:37 2003
 @@ -434,7 +434,7 @@ void ufs_truncate (struct inode * inode)
  
  	if (!(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) || S_ISLNK(inode->i_mode)))
@@ -2302,9 +1857,9 @@ diff -NurpP --minimal linux-2.4.22/fs/ufs/truncate.c linux-2.4.22-vs1.3.0/fs/ufs
  		return;
  	while (1) {
  		retry = ufs_trunc_direct(inode);
-diff -NurpP --minimal linux-2.4.22/include/asm-alpha/unistd.h linux-2.4.22-vs1.3.0/include/asm-alpha/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-alpha/unistd.h linux-2.4.22-vs1.22/include/asm-alpha/unistd.h
 --- linux-2.4.22/include/asm-alpha/unistd.h	Sat Aug  3 02:39:45 2002
-+++ linux-2.4.22-vs1.3.0/include/asm-alpha/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-alpha/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -233,6 +233,7 @@
  #define __NR_osf_memcntl	260	/* not implemented */
  #define __NR_osf_fdatasync	261	/* not implemented */
@@ -2313,9 +1868,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-alpha/unistd.h linux-2.4.22-vs1.3
  
  /*
   * Linux-specific system calls begin at 300
-diff -NurpP --minimal linux-2.4.22/include/asm-i386/unistd.h linux-2.4.22-vs1.3.0/include/asm-i386/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-i386/unistd.h linux-2.4.22-vs1.22/include/asm-i386/unistd.h
 --- linux-2.4.22/include/asm-i386/unistd.h	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/include/asm-i386/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-i386/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -258,6 +258,8 @@
  #define __NR_free_hugepages	251
  #define __NR_exit_group		252
@@ -2325,9 +1880,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-i386/unistd.h linux-2.4.22-vs1.3.
  /* user-visible error numbers are in the range -1 - -124: see <asm-i386/errno.h> */
  
  #define __syscall_return(type, res) \
-diff -NurpP --minimal linux-2.4.22/include/asm-parisc/unistd.h linux-2.4.22-vs1.3.0/include/asm-parisc/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-parisc/unistd.h linux-2.4.22-vs1.22/include/asm-parisc/unistd.h
 --- linux-2.4.22/include/asm-parisc/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-parisc/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-parisc/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -702,7 +702,9 @@
  #define __NR_readahead          (__NR_Linux + 207)
  #define __NR_tkill              (__NR_Linux + 208)
@@ -2339,9 +1894,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-parisc/unistd.h linux-2.4.22-vs1.
  
  #define HPUX_GATEWAY_ADDR       0xC0000004
  #define LINUX_GATEWAY_ADDR      0x100
-diff -NurpP --minimal linux-2.4.22/include/asm-ppc/unistd.h linux-2.4.22-vs1.3.0/include/asm-ppc/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-ppc/unistd.h linux-2.4.22-vs1.22/include/asm-ppc/unistd.h
 --- linux-2.4.22/include/asm-ppc/unistd.h	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-ppc/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-ppc/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -239,6 +239,8 @@
  #define __NR_io_cancel		231
  #endif
@@ -2351,9 +1906,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-ppc/unistd.h linux-2.4.22-vs1.3.0
  #define __NR(n)	#n
  
  /* On powerpc a system call basically clobbers the same registers like a
-diff -NurpP --minimal linux-2.4.22/include/asm-ppc64/unistd.h linux-2.4.22-vs1.3.0/include/asm-ppc64/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-ppc64/unistd.h linux-2.4.22-vs1.22/include/asm-ppc64/unistd.h
 --- linux-2.4.22/include/asm-ppc64/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-ppc64/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-ppc64/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -244,6 +244,7 @@
  #define __NR_alloc_hugepages	232
  #define __NR_free_hugepages	233
@@ -2362,9 +1917,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-ppc64/unistd.h linux-2.4.22-vs1.3
  
  #define __NR(n)	#n
  
-diff -NurpP --minimal linux-2.4.22/include/asm-sparc/unistd.h linux-2.4.22-vs1.3.0/include/asm-sparc/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-sparc/unistd.h linux-2.4.22-vs1.22/include/asm-sparc/unistd.h
 --- linux-2.4.22/include/asm-sparc/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-sparc/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-sparc/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -272,6 +272,8 @@
  #define __NR_nfsservctl         254
  #define __NR_aplib              255
@@ -2374,9 +1929,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-sparc/unistd.h linux-2.4.22-vs1.3
  #define _syscall0(type,name) \
  type name(void) \
  { \
-diff -NurpP --minimal linux-2.4.22/include/asm-sparc64/unistd.h linux-2.4.22-vs1.3.0/include/asm-sparc64/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-sparc64/unistd.h linux-2.4.22-vs1.22/include/asm-sparc64/unistd.h
 --- linux-2.4.22/include/asm-sparc64/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-sparc64/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-sparc64/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -274,6 +274,8 @@
  #define __NR_nfsservctl         254
  #define __NR_aplib              255
@@ -2386,9 +1941,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-sparc64/unistd.h linux-2.4.22-vs1
  #define _syscall0(type,name) \
  type name(void) \
  { \
-diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/ia32_unistd.h linux-2.4.22-vs1.3.0/include/asm-x86_64/ia32_unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/ia32_unistd.h linux-2.4.22-vs1.22/include/asm-x86_64/ia32_unistd.h
 --- linux-2.4.22/include/asm-x86_64/ia32_unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-x86_64/ia32_unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-x86_64/ia32_unistd.h	Sat Dec 13 18:32:37 2003
 @@ -250,6 +250,8 @@
  #define __NR_ia32_sched_setaffinity	241
  #define __NR_ia32_sched_getaffinity	242
@@ -2399,9 +1954,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/ia32_unistd.h linux-2.4.22
 +#define IA32_NR_syscalls 274
  
  #endif /* _ASM_X86_64_IA32_UNISTD_H_ */
-diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/unistd.h linux-2.4.22-vs1.3.0/include/asm-x86_64/unistd.h
+diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/unistd.h linux-2.4.22-vs1.22/include/asm-x86_64/unistd.h
 --- linux-2.4.22/include/asm-x86_64/unistd.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/asm-x86_64/unistd.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/asm-x86_64/unistd.h	Sat Dec 13 18:32:37 2003
 @@ -496,7 +496,10 @@ __SYSCALL(__NR_remap_file_pages, sys_ni_
  #define __NR_getdents64 217
  __SYSCALL(__NR_getdents64, sys_getdents64)
@@ -2414,9 +1969,9 @@ diff -NurpP --minimal linux-2.4.22/include/asm-x86_64/unistd.h linux-2.4.22-vs1.
  
  #ifndef __NO_STUBS
  
-diff -NurpP --minimal linux-2.4.22/include/linux/capability.h linux-2.4.22-vs1.3.0/include/linux/capability.h
+diff -NurpP --minimal linux-2.4.22/include/linux/capability.h linux-2.4.22-vs1.22/include/linux/capability.h
 --- linux-2.4.22/include/linux/capability.h	Wed Nov 19 18:34:54 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/capability.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/capability.h	Sat Dec 13 18:33:20 2003
 @@ -130,7 +130,8 @@ typedef __u32 kernel_cap_t;
  
  #define CAP_SETPCAP          8
@@ -2446,17 +2001,17 @@ diff -NurpP --minimal linux-2.4.22/include/linux/capability.h linux-2.4.22-vs1.3
  
  #ifdef __KERNEL__
  /* 
-diff -NurpP --minimal linux-2.4.22/include/linux/devpts_fs_info.h linux-2.4.22-vs1.3.0/include/linux/devpts_fs_info.h
+diff -NurpP --minimal linux-2.4.22/include/linux/devpts_fs_info.h linux-2.4.22-vs1.22/include/linux/devpts_fs_info.h
 --- linux-2.4.22/include/linux/devpts_fs_info.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/include/linux/devpts_fs_info.h	Wed Dec 10 01:38:49 2003
++++ linux-2.4.22-vs1.22/include/linux/devpts_fs_info.h	Sat Dec 13 18:32:37 2003
 @@ -0,0 +1,4 @@
 +struct devpts_inode_info {
-+	xid_t xid;
++	int vx_id;
 +};
 +
-diff -NurpP --minimal linux-2.4.22/include/linux/ext2_fs.h linux-2.4.22-vs1.3.0/include/linux/ext2_fs.h
+diff -NurpP --minimal linux-2.4.22/include/linux/ext2_fs.h linux-2.4.22-vs1.22/include/linux/ext2_fs.h
 --- linux-2.4.22/include/linux/ext2_fs.h	Wed Nov 19 18:36:05 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/ext2_fs.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/ext2_fs.h	Sat Dec 13 18:34:40 2003
 @@ -187,7 +187,7 @@ struct ext2_group_desc
  #define	EXT2_UNRM_FL			0x00000002 /* Undelete */
  #define	EXT2_COMPR_FL			0x00000004 /* Compress file */
@@ -2480,9 +2035,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/ext2_fs.h linux-2.4.22-vs1.3.0/
  
  /*
   * ioctl commands
-diff -NurpP --minimal linux-2.4.22/include/linux/ext3_fs.h linux-2.4.22-vs1.3.0/include/linux/ext3_fs.h
+diff -NurpP --minimal linux-2.4.22/include/linux/ext3_fs.h linux-2.4.22-vs1.22/include/linux/ext3_fs.h
 --- linux-2.4.22/include/linux/ext3_fs.h	Wed Nov 19 18:36:12 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/ext3_fs.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/ext3_fs.h	Sat Dec 13 18:34:48 2003
 @@ -190,7 +190,7 @@ struct ext3_group_desc
  #define	EXT3_UNRM_FL			0x00000002 /* Undelete */
  #define	EXT3_COMPR_FL			0x00000004 /* Compress file */
@@ -2506,9 +2061,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/ext3_fs.h linux-2.4.22-vs1.3.0/
  
  /*
   * Inode dynamic state flags
-diff -NurpP --minimal linux-2.4.22/include/linux/fs.h linux-2.4.22-vs1.3.0/include/linux/fs.h
+diff -NurpP --minimal linux-2.4.22/include/linux/fs.h linux-2.4.22-vs1.22/include/linux/fs.h
 --- linux-2.4.22/include/linux/fs.h	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/fs.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/fs.h	Sat Dec 13 18:33:20 2003
 @@ -132,9 +132,10 @@ extern int leases_enable, dir_notify_ena
  #define S_NOATIME	2	/* Do not update access times */
  #define S_QUOTA		4	/* Quota initialized for file */
@@ -2550,15 +2105,7 @@ diff -NurpP --minimal linux-2.4.22/include/linux/fs.h linux-2.4.22-vs1.3.0/inclu
  
  /*
   * Includes for diskquotas and mount structures.
-@@ -450,6 +454,7 @@ struct inode {
- 	nlink_t			i_nlink;
- 	uid_t			i_uid;
- 	gid_t			i_gid;
-+	xid_t			i_xid;
- 	kdev_t			i_rdev;
- 	loff_t			i_size;
- 	time_t			i_atime;
-@@ -517,6 +522,7 @@ struct inode {
+@@ -517,6 +521,7 @@ struct inode {
  		struct socket			socket_i;
  		struct usbdev_inode_info        usbdev_i;
  		struct jffs2_inode_info		jffs2_i;
@@ -2566,9 +2113,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/fs.h linux-2.4.22-vs1.3.0/inclu
  		void				*generic_ip;
  	} u;
  };
-diff -NurpP --minimal linux-2.4.22/include/linux/major.h linux-2.4.22-vs1.3.0/include/linux/major.h
+diff -NurpP --minimal linux-2.4.22/include/linux/major.h linux-2.4.22-vs1.22/include/linux/major.h
 --- linux-2.4.22/include/linux/major.h	Fri Jun 13 16:51:38 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/major.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/major.h	Sat Dec 13 18:32:37 2003
 @@ -24,6 +24,7 @@
  #define PTY_SLAVE_MAJOR 3
  #define HD_MAJOR	IDE0_MAJOR
@@ -2577,32 +2124,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/major.h linux-2.4.22-vs1.3.0/in
  #define TTYAUX_MAJOR	5
  #define LP_MAJOR	6
  #define VCS_MAJOR	7
-diff -NurpP --minimal linux-2.4.22/include/linux/proc_fs.h linux-2.4.22-vs1.3.0/include/linux/proc_fs.h
---- linux-2.4.22/include/linux/proc_fs.h	Mon Dec  8 22:53:24 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/proc_fs.h	Wed Dec 10 01:38:50 2003
-@@ -58,6 +58,8 @@ struct proc_dir_entry {
- 	nlink_t nlink;
- 	uid_t uid;
- 	gid_t gid;
-+	xid_t xid;
-+	int vx_flags;
- 	unsigned long size;
- 	struct inode_operations * proc_iops;
- 	struct file_operations * proc_fops;
-diff -NurpP --minimal linux-2.4.22/include/linux/proc_fs_i.h linux-2.4.22-vs1.3.0/include/linux/proc_fs_i.h
---- linux-2.4.22/include/linux/proc_fs_i.h	Fri Apr  7 22:38:00 2000
-+++ linux-2.4.22-vs1.3.0/include/linux/proc_fs_i.h	Wed Dec 10 01:38:50 2003
-@@ -1,6 +1,7 @@
- struct proc_inode_info {
- 	struct task_struct *task;
- 	int type;
-+	int vx_flags;
- 	union {
- 		int (*proc_get_link)(struct inode *, struct dentry **, struct vfsmount **);
- 		int (*proc_read)(struct task_struct *task, char *page);
-diff -NurpP --minimal linux-2.4.22/include/linux/reiserfs_fs.h linux-2.4.22-vs1.3.0/include/linux/reiserfs_fs.h
+diff -NurpP --minimal linux-2.4.22/include/linux/reiserfs_fs.h linux-2.4.22-vs1.22/include/linux/reiserfs_fs.h
 --- linux-2.4.22/include/linux/reiserfs_fs.h	Wed Nov 19 18:37:13 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/reiserfs_fs.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/reiserfs_fs.h	Sat Dec 13 18:35:55 2003
 @@ -866,7 +866,8 @@ struct stat_data_v1
  
  /* we want common flags to have the same values as in ext2,
@@ -2623,9 +2147,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/reiserfs_fs.h linux-2.4.22-vs1.
  				REISERFS_SYNC_FL |	\
  				REISERFS_NOATIME_FL |	\
  				REISERFS_NODUMP_FL |	\
-diff -NurpP --minimal linux-2.4.22/include/linux/sched.h linux-2.4.22-vs1.3.0/include/linux/sched.h
+diff -NurpP --minimal linux-2.4.22/include/linux/sched.h linux-2.4.22-vs1.22/include/linux/sched.h
 --- linux-2.4.22/include/linux/sched.h	Mon Nov 17 19:49:11 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/sched.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/sched.h	Sat Dec 13 18:33:20 2003
 @@ -85,6 +85,7 @@ extern int last_pid;
  #endif
  
@@ -2638,7 +2162,7 @@ diff -NurpP --minimal linux-2.4.22/include/linux/sched.h linux-2.4.22-vs1.3.0/in
  	/* Hash table maintenance information */
  	struct user_struct *next, **pprev;
  	uid_t uid;
-+	xid_t xid;
++	int vx_id;
  };
  
  #define get_current_user() ({ 				\
@@ -2647,24 +2171,25 @@ diff -NurpP --minimal linux-2.4.22/include/linux/sched.h linux-2.4.22-vs1.3.0/in
  	__user; })
  
 +
-+struct vx_info;
++struct context_info;
 +struct iproot_info;
 +
  extern struct user_struct root_user;
  #define INIT_USER (&root_user)
  
-@@ -404,6 +410,10 @@ struct task_struct {
+@@ -404,6 +410,11 @@ struct task_struct {
  	unsigned long sas_ss_sp;
  	size_t sas_ss_size;
  	int (*notifier)(void *priv);
-+
++	int vx_id;	/* Process can only deal with other processes */
++			/* with the same vx_id */
 +	__u32 cap_bset;	/* Maximum capability of this process and children */
-+	struct vx_info *vx_info;
++	struct context_info *s_info;
 +	struct iproot_info *ip_info;
  	void *notifier_data;
  	sigset_t *notifier_mask;
  	
-@@ -509,6 +519,7 @@ extern struct exec_domain	default_exec_d
+@@ -509,6 +520,7 @@ extern struct exec_domain	default_exec_d
      blocked:		{{0}},						\
      alloc_lock:		SPIN_LOCK_UNLOCKED,				\
      journal_info:	NULL,						\
@@ -2672,27 +2197,18 @@ diff -NurpP --minimal linux-2.4.22/include/linux/sched.h linux-2.4.22-vs1.3.0/in
  }
  
  
-@@ -573,7 +584,7 @@ static inline void task_release_cpu(stru
+@@ -573,7 +585,7 @@ static inline void task_release_cpu(stru
  }
  
  /* per-UID process charging. */
 -extern struct user_struct * alloc_uid(uid_t);
-+extern struct user_struct * alloc_uid(xid_t, uid_t);
++extern struct user_struct * alloc_uid(int, uid_t);
  extern void free_uid(struct user_struct *);
  
  #include <asm/current.h>
-@@ -908,6 +919,8 @@ static inline void unhash_process(struct
- 		out_of_line_bug();
- 	write_lock_irq(&tasklist_lock);
- 	nr_threads--;
-+	if (p->vx_info)
-+		p->vx_info->virt.nr_threads--;
- 	unhash_pid(p);
- 	REMOVE_LINKS(p);
- 	list_del(&p->thread_group);
-diff -NurpP --minimal linux-2.4.22/include/linux/sys.h linux-2.4.22-vs1.3.0/include/linux/sys.h
+diff -NurpP --minimal linux-2.4.22/include/linux/sys.h linux-2.4.22-vs1.22/include/linux/sys.h
 --- linux-2.4.22/include/linux/sys.h	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/sys.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/sys.h	Sat Dec 13 18:32:37 2003
 @@ -4,7 +4,7 @@
  /*
   * system call entry points ... but not all are defined
@@ -2702,9 +2218,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/sys.h linux-2.4.22-vs1.3.0/incl
  
  /*
   * These are system calls that will be removed at some time
-diff -NurpP --minimal linux-2.4.22/include/linux/sysctl.h linux-2.4.22-vs1.3.0/include/linux/sysctl.h
+diff -NurpP --minimal linux-2.4.22/include/linux/sysctl.h linux-2.4.22-vs1.22/include/linux/sysctl.h
 --- linux-2.4.22/include/linux/sysctl.h	Mon Dec  8 22:53:18 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/sysctl.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/sysctl.h	Sat Dec 13 18:33:23 2003
 @@ -127,6 +127,7 @@ enum
   	KERN_CORE_PATTERN=56,	/* string: pattern for core-files */
  	KERN_PPC_L3CR=57,       /* l3cr register on PPC */
@@ -2713,33 +2229,18 @@ diff -NurpP --minimal linux-2.4.22/include/linux/sysctl.h linux-2.4.22-vs1.3.0/i
  };
  
  
-diff -NurpP --minimal linux-2.4.22/include/linux/types.h linux-2.4.22-vs1.3.0/include/linux/types.h
---- linux-2.4.22/include/linux/types.h	Mon Dec  8 22:53:16 2003
-+++ linux-2.4.22-vs1.3.0/include/linux/types.h	Wed Dec 10 01:38:49 2003
-@@ -33,6 +33,7 @@ typedef __kernel_uid32_t	uid_t;
- typedef __kernel_gid32_t	gid_t;
- typedef __kernel_uid16_t        uid16_t;
- typedef __kernel_gid16_t        gid16_t;
-+typedef	unsigned int		xid_t;
- 
- #ifdef CONFIG_UID16
- /* This is defined by include/asm-{arch}/posix_types.h */
-diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.3.0/include/linux/vcontext.h
+diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.22/include/linux/vcontext.h
 --- linux-2.4.22/include/linux/vcontext.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/include/linux/vcontext.h	Wed Dec 10 01:38:50 2003
-@@ -0,0 +1,179 @@
++++ linux-2.4.22-vs1.22/include/linux/vcontext.h	Sat Dec 13 18:33:20 2003
+@@ -0,0 +1,114 @@
 +#ifndef _VX_CONTEXT_H
 +#define _VX_CONTEXT_H
 +
-+#define DEBUG_VX
-+#if defined(DEBUG) || defined(DEBUG_VX)
-+#include <linux/kernel.h>
-+#define dprintk(x...) printk("vxd: " x)
-+#else
-+#define dprintk(x...)
-+#endif
-+
-+
++/*
++	We may have a different domainname and nodename for each security
++	context. By default, a security context share the same as its
++	parent, potentially the information in system_utsname
++*/
 +#define VX_INFO_LOCK		1	/* Can't request a new vx_id */
 +#define VX_INFO_SCHED		2	/* All process in the vx_id */
 +					/* Contribute to the schedular */
@@ -2760,47 +2261,33 @@ diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.3.0
 +
 +#define NB_IPV4ROOT	16
 +
-+#include <linux/list.h>
-+#include <linux/spinlock.h>
-+#include <linux/utsname.h>
 +#include <asm/resource.h>
 +#include <asm/atomic.h>
 +
-+
-+struct _vx_virt {
++struct context_info {
++	atomic_t refcount;
++	short int vx_id[NB_S_CONTEXT];/* root is allowed to switch the current */
++				/* security context using any in this table */
++	unsigned long rlim[RLIM_NLIMITS];	/* Per context limit */
++	atomic_t res[RLIM_NLIMITS];	/* Current value */
++	struct proc_dir_entry *procent;
++	char nodename[65];
++	char domainname[65];
++	int flags;		/* VX_INFO_xxx */
++	atomic_t ticks;		/* Number of ticks used by all process */
++				/* in the vx_id */
++	int initpid;		/* PID of the logical process 1 of the */
++				/* of the context */
 +	int nr_threads;
-+	int nr_running;
-+	int max_threads;
 +	unsigned long total_forks;
-+
 +	unsigned int bias_cswtch;
 +	long bias_jiffies;
 +	long bias_idle;
-+
-+	struct new_utsname utsname;
++	void *data1;
++	void *data2;
++	void *data3;
++	void *data4;
 +};
-+
-+struct _vx_limit {
-+	atomic_t ticks;
-+
-+	unsigned long rlim[RLIM_NLIMITS];	/* Per context limit */
-+	atomic_t res[RLIM_NLIMITS];		/* Current value */
-+};
-+
-+struct vx_info {
-+	struct list_head vx_list;		/* linked list of contexts */
-+	xid_t vx_id;				/* context id */
-+	atomic_t vx_refcount;			/* refcount */
-+	struct vx_info *vx_parent;		/* parent context */
-+
-+	struct proc_dir_entry *vx_procent;	/* proc entry */
-+	unsigned int vx_flags;			/* VX_INFO_xxx */
-+	pid_t vx_initpid;			/* PID of fake init process */
-+
-+	struct _vx_virt virt;			/* virtual/bias stuff */
-+	struct _vx_limit limit;			/* vserver limits */
-+};
-+
 +
 +struct iproot_info {
 +	unsigned long mark;	/* Special signature for debugging */
@@ -2818,37 +2305,11 @@ diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.3.0
 +};
 +
 +
-+void free_vx_info(struct vx_info *);
-+extern int proc_pid_vinfo(struct task_struct *, char *);
-+
-+static inline struct vx_info *get_vx_info(struct vx_info *vxi)
-+{
-+	dprintk("get_vx_info(%p[#%d.%d])\n", vxi,
-+		vxi->vx_id, atomic_read(&vxi->vx_refcount));
-+	atomic_inc(&vxi->vx_refcount);
-+	return vxi;
-+}
-+
-+static inline void put_vx_info(struct vx_info *vxi)
-+{
-+	/* for now we allow vxi to be null */
-+	if (!vxi)
-+		return;
-+	dprintk("put_vx_info(%p[#%d.%d])\n", vxi,
-+		vxi->vx_id, atomic_read(&vxi->vx_refcount));
-+	if (atomic_dec_and_lock(&vxi->vx_refcount, &vxlist_lock)) {
-+		list_del(&vxi->vx_list);
-+		spin_unlock(&vxlist_lock);
-+		free_vx_info(vxi);
-+	}
-+}
-+
-+
 +#define	VX_ADMIN	0x0001
 +#define	VX_WATCH	0x0002
 +
-+#define	VX_IDENT	0x0010		/* pointer based */
-+#define	VX_SAME		0x0020		/* id based */
++#define	VX_IDENT	0x0010
++#define	VX_EQUIV	0x0020
 +#define	VX_PARENT	0x0040
 +#define	VX_CHILD	0x0080
 +
@@ -2857,43 +2318,22 @@ diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.3.0
 +#include <asm/current.h>
 +
 +/* required to resolve recursive dependancies */
-+#define vx_task_id(t)	__vx_id(t->vx_info)
-+
-+#define vx_current_id() vx_task_id(current)
-+
-+static inline int __vx_id(struct vx_info *vxi)
-+{
-+	if (!vxi)
-+		return 0;
-+	return vxi->vx_id;
-+}
-+
-+
-+/* required to resolve recursive dependancies */
-+#define vx_check(c,m)		\
-+	__vx_check(current->vx_info,c,__vx_id(c),m)
-+
-+#define vx_check_id(c,m)	\
-+	__vx_check(current->vx_info,0,c,m)
++#define vx_check(c,m)	__vx_check(current->vx_id,c,m)
 +
 +/*
 + * check current context for ADMIN/WATCH and
 + * optionally agains supplied argument
 + */
-+static inline int __vx_check(struct vx_info *cvxi,
-+	struct vx_info *vxi, int id, unsigned int mode)
++static inline int __vx_check(int cctx, int ctx, unsigned int mode)
 +{
 +	if (mode & VX_ARG_MASK) {
-+		if ((mode & VX_IDENT) &&
-+			(vxi == cvxi))
++		if ((mode & VX_IDENT) && (ctx == cctx))
 +			return 1;
-+		if ((mode & VX_SAME) &&
-+			(__vx_id(cvxi) == id))
++		if ((mode & VX_EQUIV) && (ctx == cctx))
 +			return 1;
 +	}
-+	return (((mode & VX_ADMIN) && (cvxi == 0)) ||
-+		((mode & VX_WATCH) && (cvxi) &&
-+		(__vx_id(cvxi) == 1)));
++	return (((mode & VX_ADMIN) && (cctx == 0)) ||
++		((mode & VX_WATCH) && (cctx == 1)));
 +}
 +
 +
@@ -2907,9 +2347,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/vcontext.h linux-2.4.22-vs1.3.0
 +int vc_set_ipv4root(uint32_t, void *);
 +
 +#endif
-diff -NurpP --minimal linux-2.4.22/include/linux/vswitch.h linux-2.4.22-vs1.3.0/include/linux/vswitch.h
+diff -NurpP --minimal linux-2.4.22/include/linux/vswitch.h linux-2.4.22-vs1.22/include/linux/vswitch.h
 --- linux-2.4.22/include/linux/vswitch.h	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/include/linux/vswitch.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/linux/vswitch.h	Sat Dec 13 18:33:33 2003
 @@ -0,0 +1,122 @@
 +#ifndef _LINUX_VIRTUAL_H
 +#define _LINUX_VIRTUAL_H
@@ -3033,9 +2473,9 @@ diff -NurpP --minimal linux-2.4.22/include/linux/vswitch.h linux-2.4.22-vs1.3.0/
 +
 +
 +#endif /* _LINUX_VIRTUAL_H */
-diff -NurpP --minimal linux-2.4.22/include/net/ip.h linux-2.4.22-vs1.3.0/include/net/ip.h
+diff -NurpP --minimal linux-2.4.22/include/net/ip.h linux-2.4.22-vs1.22/include/net/ip.h
 --- linux-2.4.22/include/net/ip.h	Mon Dec  8 22:55:21 2003
-+++ linux-2.4.22-vs1.3.0/include/net/ip.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/net/ip.h	Sat Dec 13 18:35:45 2003
 @@ -29,6 +29,7 @@
  #include <linux/netdevice.h>
  #include <linux/inetdevice.h>
@@ -3044,9 +2484,9 @@ diff -NurpP --minimal linux-2.4.22/include/net/ip.h linux-2.4.22-vs1.3.0/include
  #include <net/route.h>
  #include <net/arp.h>
  
-diff -NurpP --minimal linux-2.4.22/include/net/route.h linux-2.4.22-vs1.3.0/include/net/route.h
+diff -NurpP --minimal linux-2.4.22/include/net/route.h linux-2.4.22-vs1.22/include/net/route.h
 --- linux-2.4.22/include/net/route.h	Wed Nov 19 18:37:04 2003
-+++ linux-2.4.22-vs1.3.0/include/net/route.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/net/route.h	Sat Dec 13 18:35:45 2003
 @@ -32,6 +32,7 @@
  #include <linux/route.h>
  #include <linux/ip.h>
@@ -3064,8 +2504,6 @@ diff -NurpP --minimal linux-2.4.22/include/net/route.h linux-2.4.22-vs1.3.0/incl
 +		__u32 ipv4root = ip_info->ipv4[0];
 +		if (ipv4root != 0) {
 +			int n = ip_info->nbipv4;
-+			if (dst == 0x0100007f && !vx_check(0, VX_ADMIN))
-+				dst = ipv4root;
 +			if (src == 0) {
 +				if (n > 1) {
 +					u32 foundsrc;
@@ -3095,14 +2533,16 @@ diff -NurpP --minimal linux-2.4.22/include/net/route.h linux-2.4.22-vs1.3.0/incl
 +				if (i == n)
 +					return -EPERM;
 +			}
++			if (dst == 0x0100007f && !vx_check(0, VX_ADMIN))
++				dst = ipv4root;
 +		}
 +	}
  	err = ip_route_output(rp, dst, src, tos, oif);
  	if (err || (dst && src))
  		return err;
-diff -NurpP --minimal linux-2.4.22/include/net/sock.h linux-2.4.22-vs1.3.0/include/net/sock.h
+diff -NurpP --minimal linux-2.4.22/include/net/sock.h linux-2.4.22-vs1.22/include/net/sock.h
 --- linux-2.4.22/include/net/sock.h	Mon Nov 17 19:49:47 2003
-+++ linux-2.4.22-vs1.3.0/include/net/sock.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/net/sock.h	Sat Dec 13 18:34:14 2003
 @@ -498,6 +498,7 @@ do {	spin_lock_init(&((__sk)->lock.slock
  } while(0)
  
@@ -3133,14 +2573,14 @@ diff -NurpP --minimal linux-2.4.22/include/net/sock.h linux-2.4.22-vs1.3.0/inclu
  	void			*user_data;
    
 +	/* Context of process creating this socket */
-+	xid_t			xid;
++	int			vx_id;
 +
  	/* Callbacks */
  	void			(*state_change)(struct sock *sk);
  	void			(*data_ready)(struct sock *sk,int bytes);
-diff -NurpP --minimal linux-2.4.22/include/net/tcp.h linux-2.4.22-vs1.3.0/include/net/tcp.h
+diff -NurpP --minimal linux-2.4.22/include/net/tcp.h linux-2.4.22-vs1.22/include/net/tcp.h
 --- linux-2.4.22/include/net/tcp.h	Mon Nov 17 19:52:27 2003
-+++ linux-2.4.22-vs1.3.0/include/net/tcp.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/include/net/tcp.h	Sat Dec 13 18:36:50 2003
 @@ -173,6 +173,7 @@ struct tcp_tw_bucket {
  	unsigned char		reuse,
  				rcv_wscale; /* It is also TW bucket specific */
@@ -3153,18 +2593,18 @@ diff -NurpP --minimal linux-2.4.22/include/net/tcp.h linux-2.4.22-vs1.3.0/includ
  	struct in6_addr		v6_daddr;
  	struct in6_addr		v6_rcv_saddr;
  #endif
-+	xid_t			xid;
++	int			vx_id;
  };
  
  extern kmem_cache_t *tcp_timewait_cachep;
-diff -NurpP --minimal linux-2.4.22/ipc/util.c linux-2.4.22-vs1.3.0/ipc/util.c
+diff -NurpP --minimal linux-2.4.22/ipc/util.c linux-2.4.22-vs1.22/ipc/util.c
 --- linux-2.4.22/ipc/util.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/ipc/util.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/ipc/util.c	Sat Dec 13 18:32:37 2003
 @@ -93,6 +93,8 @@ int ipc_findkey(struct ipc_ids* ids, key
  	struct kern_ipc_perm* p;
  
  	for (id = 0; id <= ids->max_id; id++) {
-+		if (!vx_check_id(ids->entries[id].xid, VX_SAME))
++		if (!vx_check(ids->entries[id].vx_id, VX_IDENT))
 +			continue;
  		p = ids->entries[id].p;
  		if(p==NULL)
@@ -3173,13 +2613,13 @@ diff -NurpP --minimal linux-2.4.22/ipc/util.c linux-2.4.22-vs1.3.0/ipc/util.c
  
  	spin_lock(&ids->ary);
  	ids->entries[id].p = new;
-+	ids->entries[id].xid = vx_current_id();
++	ids->entries[id].vx_id = current->vx_id;
  	return id;
  }
  
-diff -NurpP --minimal linux-2.4.22/ipc/util.h linux-2.4.22-vs1.3.0/ipc/util.h
+diff -NurpP --minimal linux-2.4.22/ipc/util.h linux-2.4.22-vs1.22/ipc/util.h
 --- linux-2.4.22/ipc/util.h	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/ipc/util.h	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/ipc/util.h	Sat Dec 13 18:38:16 2003
 @@ -5,6 +5,8 @@
   * ipc helper functions (c) 1999 Manfred Spraul <manfreds@colorfullife.com>
   */
@@ -3193,7 +2633,7 @@ diff -NurpP --minimal linux-2.4.22/ipc/util.h linux-2.4.22-vs1.3.0/ipc/util.h
  
  struct ipc_id {
  	struct kern_ipc_perm* p;
-+	xid_t xid;
++	int vx_id;	// Context owning this ID
  };
  
  
@@ -3203,16 +2643,16 @@ diff -NurpP --minimal linux-2.4.22/ipc/util.h linux-2.4.22-vs1.3.0/ipc/util.h
  	out = ids->entries[lid].p;
 -	if(out==NULL)
 +	if (out==NULL ||
-+		!vx_check_id(ids->entries[lid].xid, VX_WATCH|VX_SAME)) {
++		!vx_check(ids->entries[lid].vx_id, VX_WATCH|VX_IDENT)) {
  		spin_unlock(&ids->ary);
 +		out = NULL;
 +	}
  	return out;
  }
  
-diff -NurpP --minimal linux-2.4.22/kernel/Makefile linux-2.4.22-vs1.3.0/kernel/Makefile
+diff -NurpP --minimal linux-2.4.22/kernel/Makefile linux-2.4.22-vs1.22/kernel/Makefile
 --- linux-2.4.22/kernel/Makefile	Mon Sep 17 06:22:40 2001
-+++ linux-2.4.22-vs1.3.0/kernel/Makefile	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/Makefile	Sat Dec 13 18:32:37 2003
 @@ -14,7 +14,7 @@ export-objs = signal.o sys.o kmod.o cont
  obj-y     = sched.o dma.o fork.o exec_domain.o panic.o printk.o \
  	    module.o exit.o itimer.o info.o time.o softirq.o resource.o \
@@ -3222,9 +2662,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/Makefile linux-2.4.22-vs1.3.0/kernel/M
  
  obj-$(CONFIG_UID16) += uid16.o
  obj-$(CONFIG_MODULES) += ksyms.o
-diff -NurpP --minimal linux-2.4.22/kernel/exit.c linux-2.4.22-vs1.3.0/kernel/exit.c
+diff -NurpP --minimal linux-2.4.22/kernel/exit.c linux-2.4.22-vs1.22/kernel/exit.c
 --- linux-2.4.22/kernel/exit.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/kernel/exit.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/exit.c	Sat Dec 13 18:32:37 2003
 @@ -16,6 +16,7 @@
  #ifdef CONFIG_BSD_PROCESS_ACCT
  #include <linux/acct.h>
@@ -3233,25 +2673,24 @@ diff -NurpP --minimal linux-2.4.22/kernel/exit.c linux-2.4.22-vs1.3.0/kernel/exi
  
  #include <asm/uaccess.h>
  #include <asm/pgtable.h>
-@@ -66,6 +67,9 @@ static void release_task(struct task_str
+@@ -66,6 +67,8 @@ static void release_task(struct task_str
  		current->counter += p->counter;
  		if (current->counter >= MAX_COUNTER)
  			current->counter = MAX_COUNTER;
-+		put_vx_info(p->vx_info);
-+		// vx_release_info(p);
++		vx_release_info(p);
 +		vx_release_ip_info(p->ip_info);
  		p->pid = 0;
  		free_task_struct(p);
  	} else {
-@@ -159,8 +163,18 @@ static inline int has_stopped_jobs(int p
+@@ -159,8 +162,18 @@ static inline int has_stopped_jobs(int p
  static inline void forget_original_parent(struct task_struct * father)
  {
  	struct task_struct * p;
 +	struct task_struct *vchild_reaper = child_reaper;
  
  	read_lock(&tasklist_lock);
-+	if (father->vx_info) {
-+		pid_t initpid = father->vx_info->vx_initpid;
++	if (father->s_info) {
++		pid_t initpid = father->s_info->initpid;
 +		if ((initpid != 0) && (father->pid != initpid)) {
 +			struct task_struct *r = find_task_by_pid(initpid);
 +
@@ -3262,7 +2701,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/exit.c linux-2.4.22-vs1.3.0/kernel/exi
  
  	for_each_task(p) {
  		if (p->p_opptr == father) {
-@@ -169,7 +183,7 @@ static inline void forget_original_paren
+@@ -169,7 +182,7 @@ static inline void forget_original_paren
  			p->self_exec_id++;
  
  			/* Make sure we're not reparenting to ourselves */
@@ -3271,9 +2710,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/exit.c linux-2.4.22-vs1.3.0/kernel/exi
  
  			if (p->pdeath_signal) send_sig(p->pdeath_signal, p, 0);
  		}
-diff -NurpP --minimal linux-2.4.22/kernel/fork.c linux-2.4.22-vs1.3.0/kernel/fork.c
+diff -NurpP --minimal linux-2.4.22/kernel/fork.c linux-2.4.22-vs1.22/kernel/fork.c
 --- linux-2.4.22/kernel/fork.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/kernel/fork.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/fork.c	Sat Dec 13 18:32:37 2003
 @@ -22,6 +22,7 @@
  #include <linux/namespace.h>
  #include <linux/personality.h>
@@ -3286,74 +2725,26 @@ diff -NurpP --minimal linux-2.4.22/kernel/fork.c linux-2.4.22-vs1.3.0/kernel/for
  	*p = *current;
  
  	retval = -EAGAIN;
-+	if (p->vx_info && (p->vx_info->vx_flags & VX_INFO_NPROC)) {
-+		if (atomic_read(&p->vx_info->vx_refcount) >= p->rlim[RLIMIT_NPROC].rlim_max)
++	if (p->s_info && (p->s_info->flags & VX_INFO_NPROC)) {
++		if (atomic_read(&p->s_info->refcount) >= p->rlim[RLIMIT_NPROC].rlim_max)
 +			goto bad_fork_free;
 +	}
  	/*
  	 * Check if we are over our maximum process limit, but be sure to
  	 * exclude root. This is needed to make it possible for login and
-@@ -671,6 +676,13 @@ int do_fork(unsigned long clone_flags, u
+@@ -670,6 +675,9 @@ int do_fork(unsigned long clone_flags, u
+ 	if (atomic_read(&p->user->processes) >= p->rlim[RLIMIT_NPROC].rlim_cur
  	              && !capable(CAP_SYS_ADMIN) && !capable(CAP_SYS_RESOURCE))
  		goto bad_fork_free;
- 
-+	if (current->vx_info)
-+		p->vx_info = get_vx_info(current->vx_info);
-+	else
-+		p->vx_info = NULL;
-+	// vx_assign_info(p);
-+	vx_assign_ip_info(p->ip_info);
 +
++	vx_assign_info(p);
++	vx_assign_ip_info(p->ip_info);
+ 
  	atomic_inc(&p->user->__count);
  	atomic_inc(&p->user->processes);
- 
-@@ -804,6 +816,8 @@ int do_fork(unsigned long clone_flags, u
- 	SET_LINKS(p);
- 	hash_pid(p);
- 	nr_threads++;
-+	if (p->vx_info)
-+		p->vx_info->virt.nr_threads++;
- 	write_unlock_irq(&tasklist_lock);
- 
- 	if (p->ptrace & PT_PTRACED)
-@@ -811,6 +825,8 @@ int do_fork(unsigned long clone_flags, u
- 
- 	wake_up_process(p);		/* do this last */
- 	++total_forks;
-+	if (p->vx_info)
-+		p->vx_info->virt.total_forks++;
- 	if (clone_flags & CLONE_VFORK)
- 		wait_for_completion(&vfork);
- 
-diff -NurpP --minimal linux-2.4.22/kernel/info.c linux-2.4.22-vs1.3.0/kernel/info.c
---- linux-2.4.22/kernel/info.c	Sat Apr 21 01:15:40 2001
-+++ linux-2.4.22-vs1.3.0/kernel/info.c	Wed Dec 10 01:38:50 2003
-@@ -20,13 +20,19 @@ asmlinkage long sys_sysinfo(struct sysin
- 	memset((char *)&val, 0, sizeof(struct sysinfo));
- 
- 	cli();
--	val.uptime = jiffies / HZ;
-+	if (vx_check(0, VX_ADMIN|VX_WATCH)) {
-+		val.uptime = jiffies / HZ;
-+		val.procs = nr_threads-1;
-+	} else {
-+		struct vx_info *vxi = current->vx_info;
-+
-+		val.uptime = (jiffies - vxi->virt.bias_jiffies) / HZ;
-+		val.procs = vxi->virt.nr_threads;
-+	}
- 
- 	val.loads[0] = avenrun[0] << (SI_LOAD_SHIFT - FSHIFT);
- 	val.loads[1] = avenrun[1] << (SI_LOAD_SHIFT - FSHIFT);
- 	val.loads[2] = avenrun[2] << (SI_LOAD_SHIFT - FSHIFT);
--
--	val.procs = nr_threads-1;
- 	sti();
- 
- 	si_meminfo(&val);
-diff -NurpP --minimal linux-2.4.22/kernel/printk.c linux-2.4.22-vs1.3.0/kernel/printk.c
+diff -NurpP --minimal linux-2.4.22/kernel/printk.c linux-2.4.22-vs1.22/kernel/printk.c
 --- linux-2.4.22/kernel/printk.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/kernel/printk.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/printk.c	Sat Dec 13 18:32:37 2003
 @@ -26,6 +26,7 @@
  #include <linux/module.h>
  #include <linux/interrupt.h>			/* For in_interrupt() */
@@ -3372,9 +2763,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/printk.c linux-2.4.22-vs1.3.0/kernel/p
  
  	switch (type) {
  	case 0:		/* Close log */
-diff -NurpP --minimal linux-2.4.22/kernel/sched.c linux-2.4.22-vs1.3.0/kernel/sched.c
+diff -NurpP --minimal linux-2.4.22/kernel/sched.c linux-2.4.22-vs1.22/kernel/sched.c
 --- linux-2.4.22/kernel/sched.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/kernel/sched.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/sched.c	Sat Dec 13 18:32:37 2003
 @@ -29,6 +29,7 @@
  #include <linux/completion.h>
  #include <linux/prefetch.h>
@@ -3388,9 +2779,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/sched.c linux-2.4.22-vs1.3.0/kernel/sc
  		 * over..
  		 */
 -		weight = p->counter;
-+		if (p->vx_info && (p->vx_info->vx_flags & VX_INFO_SCHED)) {
-+			weight = atomic_read(&p->vx_info->limit.ticks) /
-+				atomic_read(&p->vx_info->vx_refcount);
++		if (p->s_info && (p->s_info->flags & VX_INFO_SCHED)) {
++			weight = atomic_read(&p->s_info->ticks) /
++				atomic_read(&p->s_info->refcount);
 +			weight = (weight+p->counter) >> 1;
 +		} else
 +			weight = p->counter;
@@ -3407,20 +2798,20 @@ diff -NurpP --minimal linux-2.4.22/kernel/sched.c linux-2.4.22-vs1.3.0/kernel/sc
 +			member processes p->counter
 +		*/
 +		for_each_task(p) {
-+			if (p->vx_info && (p->vx_info->vx_flags & VX_INFO_SCHED))
-+				atomic_set(&p->vx_info->limit.ticks, 0);
++			if (p->s_info && (p->s_info->flags & VX_INFO_SCHED))
++				atomic_set(&p->s_info->ticks, 0);
 +		}
 +		for_each_task(p) {
  			p->counter = (p->counter >> 1) + NICE_TO_TICKS(p->nice);
-+			if (p->vx_info && (p->vx_info->vx_flags & VX_INFO_SCHED))
-+				atomic_add(p->counter, &p->vx_info->limit.ticks);
++			if (p->s_info && (p->s_info->flags & VX_INFO_SCHED))
++				atomic_add(p->counter, &p->s_info->ticks);
 +		}
  		read_unlock(&tasklist_lock);
  		spin_lock_irq(&runqueue_lock);
  		goto repeat_schedule;
-diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.3.0/kernel/signal.c
+diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.22/kernel/signal.c
 --- linux-2.4.22/kernel/signal.c	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.22-vs1.3.0/kernel/signal.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/signal.c	Sat Dec 13 18:32:37 2003
 @@ -13,6 +13,7 @@
  #include <linux/smp_lock.h>
  #include <linux/init.h>
@@ -3436,7 +2827,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.3.0/kernel/s
 -			if (p->pgrp == pgrp && thread_group_leader(p)) {
 +			if (p->pgrp == pgrp && thread_group_leader(p) &&
 +				((long)info == 1 ||
-+				vx_check(p->vx_info, VX_IDENT))) {
++				vx_check(p->vx_id, VX_IDENT))) {
  				int err = send_sig_info(sig, info, p);
  				if (retval)
  					retval = err;
@@ -3447,7 +2838,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.3.0/kernel/s
 -		error = send_sig_info(sig, info, p);
 +		switch ((unsigned long)info) {
 +		case 0:
-+			if (vx_check(p->vx_info, VX_IDENT))
++			if (vx_check(p->vx_id, VX_IDENT))
 +				error = send_sig_info(sig, info, p);
 +			break;
 +		case 1:
@@ -3455,7 +2846,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.3.0/kernel/s
 +			break;
 +		default:
 +			if ((info->si_code == SI_KERNEL)
-+				|| vx_check(p->vx_info, VX_IDENT))
++				|| vx_check(p->vx_id, VX_IDENT))
 +				error = send_sig_info(sig, info, p);
 +			break;
 +		}
@@ -3469,13 +2860,13 @@ diff -NurpP --minimal linux-2.4.22/kernel/signal.c linux-2.4.22-vs1.3.0/kernel/s
 -			if (p->pid > 1 && p != current && thread_group_leader(p)) {
 +			if (p->pid > 1 && p != current &&
 +				thread_group_leader(p) &&
-+				vx_check(p->vx_info, VX_IDENT)) {
++				vx_check(p->vx_id, VX_IDENT)) {
  				int err = send_sig_info(sig, info, p);
  				++count;
  				if (err != -EPERM)
-diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.c
+diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.22/kernel/sys.c
 --- linux-2.4.22/kernel/sys.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/kernel/sys.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/sys.c	Sat Dec 13 18:32:38 2003
 @@ -6,14 +6,17 @@
  
  #include <linux/module.h>
@@ -3523,7 +2914,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
 +			"PATH=/sbin:/usr/sbin:/bin:/usr/bin",
 +			uid_buf, pid_buf, cmd_buf, 0};
 +
-+	snprintf(id_buf, sizeof(id_buf)-1, "%d", vx_current_id());
++	snprintf(id_buf, sizeof(id_buf)-1, "%d", current->vx_id);
 +
 +	snprintf(cmd_buf, sizeof(cmd_buf)-1, "VS_CMD=%08x", cmd);
 +	snprintf(uid_buf, sizeof(uid_buf)-1, "VS_UID=%d", current->uid);
@@ -3577,11 +2968,11 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  	 * we should be checking for it.  -DaveM
  	 */
 -	new_user = alloc_uid(new_ruid);
-+	new_user = alloc_uid(vx_current_id(), new_ruid);
++	new_user = alloc_uid(current->vx_id, new_ruid);
  	if (!new_user)
  		return -EAGAIN;
  	old_user = current->user;
-@@ -1034,9 +1101,16 @@ DECLARE_RWSEM(uts_sem);
+@@ -1034,9 +1101,18 @@ DECLARE_RWSEM(uts_sem);
  asmlinkage long sys_newuname(struct new_utsname * name)
  {
  	int errno = 0;
@@ -3589,8 +2980,10 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  
  	down_read(&uts_sem);
 -	if (copy_to_user(name,&system_utsname,sizeof *name))
-+	if (current->vx_info) {
-+		tmp = current->vx_info->virt.utsname;
++	if (current->s_info) {
++		tmp = system_utsname;
++		strcpy (tmp.nodename,current->s_info->nodename);
++		strcpy (tmp.domainname,current->s_info->domainname);
 +		pttmp = &tmp;
 +	}
 +	else
@@ -3599,7 +2992,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  		errno = -EFAULT;
  	up_read(&uts_sem);
  	return errno;
-@@ -1045,6 +1119,7 @@ asmlinkage long sys_newuname(struct new_
+@@ -1045,6 +1121,7 @@ asmlinkage long sys_newuname(struct new_
  asmlinkage long sys_sethostname(char *name, int len)
  {
  	int errno;
@@ -3607,13 +3000,13 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  	char tmp[__NEW_UTS_LEN];
  
  	if (!capable(CAP_SYS_ADMIN))
-@@ -1053,9 +1128,12 @@ asmlinkage long sys_sethostname(char *na
+@@ -1053,9 +1130,12 @@ asmlinkage long sys_sethostname(char *na
  		return -EINVAL;
  	down_write(&uts_sem);
  	errno = -EFAULT;
 +	nodename = system_utsname.nodename;
-+	if (current->vx_info)
-+		nodename = current->vx_info->virt.utsname.nodename;
++	if (current->s_info)
++		nodename = current->s_info->nodename;
  	if (!copy_from_user(tmp, name, len)) {
 -		memcpy(system_utsname.nodename, tmp, len);
 -		system_utsname.nodename[len] = 0;
@@ -3622,7 +3015,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  		errno = 0;
  	}
  	up_write(&uts_sem);
-@@ -1065,15 +1143,19 @@ asmlinkage long sys_sethostname(char *na
+@@ -1065,15 +1145,19 @@ asmlinkage long sys_sethostname(char *na
  asmlinkage long sys_gethostname(char *name, int len)
  {
  	int i, errno;
@@ -3633,8 +3026,8 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  	down_read(&uts_sem);
 -	i = 1 + strlen(system_utsname.nodename);
 +	nodename = system_utsname.nodename;
-+	if (current->vx_info)
-+		nodename = current->vx_info->virt.utsname.nodename;
++	if (current->s_info)
++		nodename = current->s_info->nodename;
 +	i = 1 + strlen(nodename);
  	if (i > len)
  		i = len;
@@ -3644,7 +3037,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  		errno = -EFAULT;
  	up_read(&uts_sem);
  	return errno;
-@@ -1086,6 +1168,7 @@ asmlinkage long sys_gethostname(char *na
+@@ -1086,6 +1170,7 @@ asmlinkage long sys_gethostname(char *na
  asmlinkage long sys_setdomainname(char *name, int len)
  {
  	int errno;
@@ -3652,13 +3045,13 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  	char tmp[__NEW_UTS_LEN];
  
  	if (!capable(CAP_SYS_ADMIN))
-@@ -1094,10 +1177,13 @@ asmlinkage long sys_setdomainname(char *
+@@ -1094,10 +1179,13 @@ asmlinkage long sys_setdomainname(char *
  		return -EINVAL;
  
  	down_write(&uts_sem);
 +	domainname = system_utsname.domainname;
-+	if (current->vx_info)
-+		domainname = current->vx_info->virt.utsname.domainname;
++	if (current->s_info)
++		domainname = current->s_info->domainname;
  	errno = -EFAULT;
  	if (!copy_from_user(tmp, name, len)) {
 -		memcpy(system_utsname.domainname, tmp, len);
@@ -3668,9 +3061,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/sys.c linux-2.4.22-vs1.3.0/kernel/sys.
  		errno = 0;
  	}
  	up_write(&uts_sem);
-diff -NurpP --minimal linux-2.4.22/kernel/sysctl.c linux-2.4.22-vs1.3.0/kernel/sysctl.c
+diff -NurpP --minimal linux-2.4.22/kernel/sysctl.c linux-2.4.22-vs1.22/kernel/sysctl.c
 --- linux-2.4.22/kernel/sysctl.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/kernel/sysctl.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/sysctl.c	Sat Dec 13 18:32:38 2003
 @@ -30,6 +30,7 @@
  #include <linux/init.h>
  #include <linux/sysrq.h>
@@ -3712,21 +3105,21 @@ diff -NurpP --minimal linux-2.4.22/kernel/sysctl.c linux-2.4.22-vs1.3.0/kernel/s
 +	ctl_table tmp;
  
 +	/* HACK for per context hostname and domainname */
-+	if (current->vx_info) {
++	if (current->s_info) {
 +		tmp = *table;
 +		table = &tmp;
 +
 +		if (table->data == (void*)&system_utsname.nodename)
-+			tmp.data = &current->vx_info->virt.utsname.nodename;
++			tmp.data = &current->s_info->nodename;
 +		else if (table->data == (void*)&system_utsname.domainname)
-+			tmp.data = &current->vx_info->virt.utsname.domainname;
++			tmp.data = &current->s_info->domainname;
 +	}
  	if (!write) {
  		down_read(&uts_sem);
  		r=proc_dostring(table,0,filp,buffer,lenp);
-diff -NurpP --minimal linux-2.4.22/kernel/timer.c linux-2.4.22-vs1.3.0/kernel/timer.c
+diff -NurpP --minimal linux-2.4.22/kernel/timer.c linux-2.4.22-vs1.22/kernel/timer.c
 --- linux-2.4.22/kernel/timer.c	Fri Nov 29 00:53:15 2002
-+++ linux-2.4.22-vs1.3.0/kernel/timer.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/timer.c	Sat Dec 13 18:32:37 2003
 @@ -22,6 +22,7 @@
  #include <linux/smp_lock.h>
  #include <linux/interrupt.h>
@@ -3739,8 +3132,8 @@ diff -NurpP --minimal linux-2.4.22/kernel/timer.c linux-2.4.22-vs1.3.0/kernel/ti
  
  	update_one_process(p, user_tick, system, cpu);
  	if (p->pid) {
-+		if (p->vx_info && (p->vx_info->vx_flags & VX_INFO_SCHED))
-+			atomic_dec (&p->vx_info->limit.ticks);
++		if (p->s_info && (p->s_info->flags & VX_INFO_SCHED))
++			atomic_dec (&p->s_info->ticks);
  		if (--p->counter <= 0) {
  			p->counter = 0;
  			/*
@@ -3748,8 +3141,8 @@ diff -NurpP --minimal linux-2.4.22/kernel/timer.c linux-2.4.22-vs1.3.0/kernel/ti
   */
  asmlinkage long sys_getpid(void)
  {
-+	if (current->vx_info &&
-+		current->vx_info->vx_initpid == current->tgid)
++	if (current->s_info &&
++		current->s_info->initpid == current->tgid)
 +		/* We are faking process 1 for this security context */
 +		return 1;
  	return current->tgid;
@@ -3759,16 +3152,16 @@ diff -NurpP --minimal linux-2.4.22/kernel/timer.c linux-2.4.22-vs1.3.0/kernel/ti
  #endif
  		break;
  	}
-+	if (pid && current->vx_info
-+		&& current->vx_info->vx_initpid == pid)
++	if (pid && current->s_info
++		&& current->s_info->initpid == pid)
 +		/* We are faking process 1 for this security context */
 +		pid = 1;
  	return pid;
  }
  
-diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/user.c
+diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.22/kernel/user.c
 --- linux-2.4.22/kernel/user.c	Wed Nov 29 07:43:39 2000
-+++ linux-2.4.22-vs1.3.0/kernel/user.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/user.c	Sat Dec 13 18:32:37 2003
 @@ -6,6 +6,19 @@
   * We have a per-user structure to keep track of how many
   * processes, files etc the user has claimed, in order to be
@@ -3794,7 +3187,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/use
  }
  
 -static inline struct user_struct *uid_hash_find(uid_t uid, struct user_struct **hashent)
-+static inline struct user_struct *uid_hash_find(xid_t xid, uid_t uid, struct user_struct **hashent)
++static inline struct user_struct *uid_hash_find(int vx_id, uid_t uid, struct user_struct **hashent)
  {
  	struct user_struct *next;
  
@@ -3803,7 +3196,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/use
  		if (next) {
  			next = up->next;
 -			if (up->uid != uid)
-+			if (up->uid != uid || up->xid != xid)
++			if (up->uid != uid || up->vx_id != vx_id)
  				continue;
  			atomic_inc(&up->__count);
  		}
@@ -3812,14 +3205,14 @@ diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/use
  }
  
 -struct user_struct * alloc_uid(uid_t uid)
-+struct user_struct * alloc_uid(xid_t xid, uid_t uid)
++struct user_struct * alloc_uid(int vx_id, uid_t uid)
  {
  	struct user_struct **hashent = uidhashentry(uid);
  	struct user_struct *up;
  
  	spin_lock(&uidhash_lock);
 -	up = uid_hash_find(uid, hashent);
-+	up = uid_hash_find(xid, uid, hashent);
++	up = uid_hash_find(vx_id, uid, hashent);
  	spin_unlock(&uidhash_lock);
  
  	if (!up) {
@@ -3827,7 +3220,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/use
  		if (!new)
  			return NULL;
  		new->uid = uid;
-+		new->xid = xid;
++		new->vx_id = vx_id;
  		atomic_set(&new->__count, 1);
  		atomic_set(&new->processes, 0);
  		atomic_set(&new->files, 0);
@@ -3836,14 +3229,14 @@ diff -NurpP --minimal linux-2.4.22/kernel/user.c linux-2.4.22-vs1.3.0/kernel/use
  		 */
  		spin_lock(&uidhash_lock);
 -		up = uid_hash_find(uid, hashent);
-+		up = uid_hash_find(xid, uid, hashent);
++		up = uid_hash_find(vx_id, uid, hashent);
  		if (up) {
  			kmem_cache_free(uid_cachep, new);
  		} else {
-diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel/vcontext.c
+diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.22/kernel/vcontext.c
 --- linux-2.4.22/kernel/vcontext.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/kernel/vcontext.c	Wed Dec 10 01:38:50 2003
-@@ -0,0 +1,459 @@
++++ linux-2.4.22-vs1.22/kernel/vcontext.c	Sat Dec 13 18:32:37 2003
+@@ -0,0 +1,427 @@
 +/*
 + *  linux/kernel/vcontext.c
 + *
@@ -3852,8 +3245,6 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 + *  Copyright (C) 2003  Herbert Pötzl
 + *
 + *  V0.01  context helper
-+ *  V0.02  vx_ctx_kill
-+ *  V0.03  replaced context_info calls
 + *
 + */
 +
@@ -3895,9 +3286,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 +	case -1:
 +	case  0:
 +		for_each_task(p) {
-+			if (!initpid && vx_task_id(p) == id && p->vx_info)
-+				initpid = p->vx_info->vx_initpid;
-+			if (vx_task_id(p) == id  && p->pid > 1
++			if (!initpid && p->vx_id == id && p->s_info)
++				initpid = p->s_info->initpid;
++			if (p->vx_id == id  && p->pid > 1
 +				&& (!vc_data.pid || initpid != p->pid)
 +				&& thread_group_leader(p)) {
 +				int err = send_sig_info(vc_data.sig, &info, p);
@@ -3919,7 +3310,7 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 +				if (tg)
 +					p = tg;
 +			}
-+			if ((id == -1) || (vx_task_id(p) == id))
++			if ((id == -1) || (p->vx_id == id))
 +				retval = send_sig_info(vc_data.sig, &info, p);
 +		}
 +		break;
@@ -3948,165 +3339,86 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 +/*  system functions */
 +
 +
-+LIST_HEAD(vx_infos);
-+
-+spinlock_t vxlist_lock
-+	__cacheline_aligned_in_smp = SPIN_LOCK_UNLOCKED;
-+
-+
 +/*
-+ *	struct vx_info allocation and deallocation
++ *	Alloc a new s_info to the current process and release
++ *	the one currently owned by the current process.
 + */
-+
-+static struct vx_info *alloc_vx_info(int id)
++static void vx_alloc_info(void)
 +{
-+	struct vx_info *new = NULL;
-+	
-+	dprintk("alloc_vx_info(%d)\n", id);
-+	/* would this benefit from a slab cache? */
-+	new = kmalloc(sizeof(struct vx_info), GFP_KERNEL);
-+	if (!new)
-+		return 0;
-+	
-+	memset (new, 0, sizeof(struct vx_info));
-+	new->vx_id = id;
-+	/* rest of init goes here */
-+	
-+	atomic_set(&new->limit.ticks, current->counter);
-+	new->virt.nr_threads = 1;
-+	new->virt.bias_cswtch = kstat.context_swtch;
-+	new->virt.bias_jiffies = jiffies;
-+	new->virt.bias_idle = init_tasks[0]->times.tms_utime +
-+		init_tasks[0]->times.tms_stime;
-+	down_read(&uts_sem);
-+	new->virt.utsname = system_utsname;
-+	up_read(&uts_sem);
-+	
-+	dprintk("alloc_vx_info(%d) = %p\n", id, new);
-+	return new;
-+}
++	struct context_info *s_info;
 +
-+extern int vx_proc_destroy(struct vx_info *);
-+
-+void free_vx_info(struct vx_info *vxi)
-+{
-+	dprintk("free_vx_info(%p)\n", vxi);
-+	vx_proc_destroy(vxi);
-+	kfree(vxi);
-+}
-+
-+
-+/*
-+ *	struct vx_info search by id
-+ *	needs the vxlist_lock
-+ */
-+
-+static inline struct vx_info *__find_vx_info(int id)
-+{
-+	struct vx_info *vxi;
-+
-+	list_for_each_entry(vxi, &vx_infos, vx_list)
-+		if (vxi->vx_id == id)
-+			return vxi;
-+	return 0;
-+}
-+
-+
-+/*
-+ *	struct vx_info ref stuff
-+ */
-+
-+static struct vx_info *find_vx_info(int id)
-+{
-+	struct vx_info *vxi;
-+	
-+	spin_lock(&vxlist_lock);
-+	if ((vxi = __find_vx_info(id)))
-+		get_vx_info(vxi);
-+	spin_unlock(&vxlist_lock);
-+	return vxi;
-+}
-+
-+extern int vx_proc_create(struct vx_info *);
-+
-+static struct vx_info *find_or_create_vx_info(int id)
-+{
-+	struct vx_info *vxi, *new;
-+	
-+	dprintk("find_or_create_vx_info(%d)\n", id);
-+	if (!(new = alloc_vx_info(id)))
-+		return 0;
-+	atomic_set(&new->vx_refcount, 1);
-+	spin_lock(&vxlist_lock);
-+	if ((vxi = __find_vx_info(id))) {
-+		dprintk("find_or_create_vx_info(%d) = %p (found)\n", id, vxi);
-+		get_vx_info(vxi);
-+		spin_unlock(&vxlist_lock);
-+		free_vx_info(new);
-+		return vxi;
++	s_info = kmalloc(sizeof(struct context_info), GFP_KERNEL);
++	if (s_info) {
++		int i;
++		memset (s_info, 0, sizeof(*s_info));
++		s_info->vx_id[0] = current->vx_id;
++		atomic_set(&s_info->refcount, 1);
++		atomic_set(&s_info->ticks, current->counter);
++		s_info->flags = 0;
++		s_info->initpid = 0;
++		s_info->nr_threads = 1;
++		s_info->total_forks = 0;
++		s_info->bias_cswtch = kstat.context_swtch;
++		s_info->bias_jiffies = jiffies;
++		s_info->bias_idle = init_tasks[0]->times.tms_utime +
++			init_tasks[0]->times.tms_stime;
++		for (i=0; i<RLIM_NLIMITS; i++) {
++			s_info->rlim[i] = 0xffffffff;
++			atomic_set(&s_info->res[i], 0);
++		}
++		down_read(&uts_sem);
++		if (current->s_info) {
++			strcpy(s_info->nodename, current->s_info->nodename);
++			strcpy(s_info->domainname, current->s_info->domainname);
++		} else {
++			strcpy(s_info->nodename, system_utsname.nodename);
++			strcpy(s_info->domainname, system_utsname.domainname);
++		}
++		up_read(&uts_sem);
++		vx_release_info(current);	
++		current->s_info = s_info;
++		/*
++			The current process is switching to a new context
++			so we preset the open file counter with
++			the file currently open by that process.
++			Some of those files may have been opened by
++			a parent, so do not strictly belong to this
++			process, so we kind of over bill the current process
++			but it is minimal.
++		*/
++		atomic_set(&s_info->res[RLIMIT_NOFILE],
++			atomic_read(&current->files->count));
 +	}
-+	list_add(&new->vx_list, &vx_infos);
-+	vx_proc_create(new);
-+	dprintk("find_or_create_vx_info(%d) = %p (new)\n", id, new);
-+	spin_unlock(&vxlist_lock);
-+	return new;
 +}
 +
++static spinlock_t ctx_ref_lock = SPIN_LOCK_UNLOCKED;
 +
-+
-+static int vx_migrate_user(struct task_struct *p, struct vx_info *vxi)
++/*
++ *	Increase the reference count on the context_info member of a task
++ */
++void vx_assign_info (struct task_struct *p)
 +{
-+	struct user_struct *new_user, *old_user;
-+	
-+	if (!p || !vxi)
-+		BUG();
-+	new_user = alloc_uid(vxi->vx_id, p->uid);
-+	if (!new_user)
-+		return -ENOMEM;
-+
-+	old_user = p->user;
-+	if (new_user != old_user) {
-+		atomic_inc(&new_user->processes);
-+		atomic_dec(&old_user->processes);
-+		p->user = new_user;
-+	}
-+	free_uid(old_user);
-+	return 0;
++	spin_lock (&ctx_ref_lock);
++	if (p->s_info)
++		atomic_inc(&p->s_info->refcount);
++	spin_unlock (&ctx_ref_lock);
 +}
 +
 +/*
-+ *	migrate task to new context
-+ *	gets vxi, puts old_vxi on change
++ *	Decrease the reference count on the context_info member of a task
++ *	Free the struct if the reference count reach 0.
 + */
-+
-+static int vx_migrate_task(struct task_struct *p, struct vx_info *vxi)
++void vx_release_info (struct task_struct *p)
 +{
-+	struct vx_info *old_vxi;
-+	int ret = 0;
-+	
-+	if (!p || !vxi)
-+		BUG();
-+
-+	dprintk("vx_migrate_task(%p,%p[#%d.%d)\n", p, vxi,
-+		vxi->vx_id, atomic_read(&vxi->vx_refcount));
-+	spin_lock(&p->alloc_lock);
-+	if ((old_vxi = p->vx_info) == vxi)
-+		goto out;
-+
-+	if (!(ret = vx_migrate_user(p, vxi))) {
-+		if (old_vxi)
-+			old_vxi->virt.nr_threads--;
-+		vxi->virt.nr_threads++;
-+		p->vx_info = get_vx_info(vxi);
-+		if (old_vxi)
-+			put_vx_info(old_vxi);
++	spin_lock (&ctx_ref_lock);
++	if (p->s_info) {
++		if (atomic_dec_and_test(&p->s_info->refcount)) {
++			kfree(p->s_info);
++			p->s_info = NULL;
++		}
 +	}
-+out:
-+	spin_unlock(&p->alloc_lock);
-+	return ret;
++	spin_unlock (&ctx_ref_lock);
 +}
-+
-+
 +
 +/*
 + *	Alloc a new ip_info to the current process and release
@@ -4148,107 +3460,156 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 +}
 +
 +
-+static int vx_set_initpid(struct vx_info *vxi, int pid)
++static int vx_switch_user_struct(int new_context)
++{
++	struct user_struct *new_user;
++
++	new_user = alloc_uid(new_context, current->uid);
++	if (!new_user)
++		return -ENOMEM;
++
++	if (new_user != current->user) {
++		struct user_struct *old_user = current->user;
++
++		atomic_inc(&new_user->processes);
++		atomic_dec(&old_user->processes);
++		current->user = new_user;
++		free_uid(old_user);
++	} else
++		free_uid(new_user);
++	return 0;
++}
++
++static int vx_set_initpid(int flags)
 +{
 +	int ret = 0;
-+	if (vxi->vx_initpid)
-+		ret = -EPERM;
-+	else
-+		vxi->vx_initpid = pid;
++	if (flags & VX_INFO_INIT) {
++		if (current->s_info == NULL)
++			ret = -EINVAL;
++		else if (current->s_info->initpid != 0)
++			ret = -EPERM;
++		else
++			current->s_info->initpid = current->tgid;
++	}
 +	return ret;
 +}
 +
++
++/*  new security context (syscall) */
++
++/*
++ *	Change to a new security context and reduce the capability
++ *	basic set of the current process
++ */
 +int vc_new_s_context(uint32_t ctx, void *data)
 +{
 +	int ret = -EPERM;
 +	struct vcmd_new_s_context_v1 vc_data;
-+	struct vx_info *new_vxi;
 +
 +	if (copy_from_user(&vc_data, data, sizeof(vc_data)))
 +		return -EFAULT;
-+	switch (ctx) {
-+	case -1:
-+		/* allocate dynamic context */
-+		if (current->vx_info == NULL
-+			|| !(current->vx_info->vx_flags & VX_INFO_LOCK)) {
++	if (ctx == -1) {
++		if (current->s_info == NULL
++			|| !(current->s_info->flags & VX_INFO_LOCK)) {
++			/* Ok we allocate a new context. For now, we just increase */
++			/* it. Wrap around possible, so we loop */
 +			static int new_xid = MAX_S_CONTEXT;
 +			static spinlock_t alloc_ctx_lock = SPIN_LOCK_UNLOCKED;
++			int old_xid = current->vx_id;
 +			int barrier = new_xid;
-+			int done = 0;
++			int valid = 0;
 +
++			spin_lock(&alloc_ctx_lock);
 +			do {
-+				spin_lock(&alloc_ctx_lock);
++				struct task_struct *p;
++				
++				valid = 1;
 +				if (++new_xid > MAX_S_CONTEXT)
 +					new_xid = MIN_D_CONTEXT;
-+				spin_unlock(&alloc_ctx_lock);
 +
-+				new_vxi = find_or_create_vx_info(new_xid);
-+				if (atomic_read(&new_vxi->vx_refcount) > 1)
-+					put_vx_info(new_vxi);
-+				else {
-+					done = 1;
++				/* Check if in use */
++				read_lock(&tasklist_lock);
++				for_each_task(p) {
++					if (p->vx_id == new_xid) {
++						valid = 0;
++						break;
++					}
++				}
++				read_unlock(&tasklist_lock);
++				
++				if (valid) {
++					current->vx_id = new_xid;
 +					break;
 +				}
 +			} while (barrier != new_xid);
++			spin_unlock(&alloc_ctx_lock);
 +			
-+			if (!done)
++			if (!valid)
 +				return -EDEADLK;
 +			
-+			ret = vx_migrate_task(current, new_vxi);
++			ret = vx_switch_user_struct(new_xid);
 +			if (ret == 0) {
 +				current->cap_bset &= (~vc_data.remove_cap);
-+				new_vxi->vx_flags |= vc_data.flags;
-+				if (vc_data.flags & VX_INFO_INIT)
-+					vx_set_initpid(new_vxi, current->tgid);
-+				ret = new_vxi->vx_id;
-+			}
-+			put_vx_info(new_vxi);
++				ret = new_xid;
++				vx_alloc_info();
++				if (current->s_info) {
++					vx_set_initpid(vc_data.flags);
++					current->s_info->flags |= vc_data.flags;
++				}
++			} else
++				current->vx_id = old_xid;
 +		}
-+		break;
-+	
-+	case -2:
-+		/* assign flags and initpid */
-+		if (!current->vx_info)
-+			return -EINVAL;
-+		ret = 0;
-+		if (vc_data.flags & VX_INFO_INIT)
-+			ret = vx_set_initpid(current->vx_info, current->tgid);
++	} else if (ctx == -2) {
++		ret = vx_set_initpid(vc_data.flags);
 +		if (ret == 0) {
 +			/* We keep the same vx_id, but lower the capabilities */
 +			current->cap_bset &= (~vc_data.remove_cap);
-+			ret = vx_current_id();
-+			current->vx_info->vx_flags |= vc_data.flags;
++			ret = current->vx_id;
++			if (current->s_info) {
++				if (vc_data.flags & VX_INFO_INIT)
++					current->s_info->initpid = current->tgid;
++				current->s_info->flags |= vc_data.flags;
++			}
 +		}
-+		break;
-+	
-+	case 0:
-+		return -EINVAL;
-+		break;
-+	
-+	default:
-+		if (ctx <= 0 || ctx > MAX_S_CONTEXT)
-+			return -EINVAL;
-+		if (!vx_check(0, VX_ADMIN) ||
-+			!capable(CAP_SYS_ADMIN) ||
-+			(current->vx_info &&
-+			(current->vx_info->vx_flags & VX_INFO_LOCK)))
-+			return -EPERM;
-+		if (ctx >= MIN_D_CONTEXT)
-+			new_vxi = find_vx_info(ctx);
-+		else
-+			new_vxi = find_or_create_vx_info(ctx);
-+		if (!new_vxi)
-+			return -EINVAL;
-+		ret = vx_migrate_task(current, new_vxi);
-+		if (ret == 0) {
-+			current->cap_bset &= (~vc_data.remove_cap);
-+			new_vxi->vx_flags |= vc_data.flags;
-+			if (vc_data.flags & VX_INFO_INIT)
-+				vx_set_initpid(new_vxi, current->tgid);
-+			ret = new_vxi->vx_id;
++	} else if (ctx <= 0 || ctx > MAX_S_CONTEXT) {
++		ret = -EINVAL;
++	} else if (vx_check(0, VX_ADMIN)
++		&& capable(CAP_SYS_ADMIN)
++		&& (current->s_info == NULL
++			||(current->s_info->flags & VX_INFO_LOCK) == 0)) {
++		/* The root context can become any context it wants */
++		int found = 0;
++		struct task_struct *p;
++
++		/* Check if in use so we reuse the same context_info */
++		read_lock(&tasklist_lock);
++		ret = ctx;
++		for_each_task(p) {
++			if (p->vx_id == ctx) {
++				found = 1;
++				if (p->s_info == NULL
++					|| !(p->s_info->flags & VX_INFO_PRIVATE)) {
++					vx_release_info(current);
++					vx_assign_info (p);
++					current->s_info = p->s_info;
++				}
++				else
++					ret = -EPERM;
++				break;
++			}
 +		}
-+		put_vx_info(new_vxi);
-+		break;
++		read_unlock(&tasklist_lock);
++		if (ret == ctx) {
++			ret = vx_switch_user_struct(ctx);
++			if (ret == 0) {
++				current->vx_id = ctx;
++				current->cap_bset &= (~vc_data.remove_cap);
++				if (!found)
++					vx_alloc_info();
++				if (current->s_info)
++					current->s_info->flags |= vc_data.flags;
++			}
++		}
 +	}
 +	return ret;
 +}
@@ -4303,9 +3664,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/vcontext.c linux-2.4.22-vs1.3.0/kernel
 +	}
 +	return ret;
 +}
-diff -NurpP --minimal linux-2.4.22/kernel/vswitch.c linux-2.4.22-vs1.3.0/kernel/vswitch.c
+diff -NurpP --minimal linux-2.4.22/kernel/vswitch.c linux-2.4.22-vs1.22/kernel/vswitch.c
 --- linux-2.4.22/kernel/vswitch.c	Thu Jan  1 01:00:00 1970
-+++ linux-2.4.22-vs1.3.0/kernel/vswitch.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/kernel/vswitch.c	Sat Dec 13 18:32:37 2003
 @@ -0,0 +1,71 @@
 +/*
 + *  linux/kernel/vswitch.c
@@ -4378,9 +3739,9 @@ diff -NurpP --minimal linux-2.4.22/kernel/vswitch.c linux-2.4.22-vs1.3.0/kernel/
 +	return ret;
 +}
 +
-diff -NurpP --minimal linux-2.4.22/net/ipv4/af_inet.c linux-2.4.22-vs1.3.0/net/ipv4/af_inet.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/af_inet.c linux-2.4.22-vs1.22/net/ipv4/af_inet.c
 --- linux-2.4.22/net/ipv4/af_inet.c	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/af_inet.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/af_inet.c	Sat Dec 13 18:32:37 2003
 @@ -177,6 +177,8 @@ void inet_sock_destruct(struct sock *sk)
  
  	if (sk->protinfo.af_inet.opt)
@@ -4394,7 +3755,7 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/af_inet.c linux-2.4.22-vs1.3.0/net/i
  	sk->protinfo.af_inet.mc_index	= 0;
  	sk->protinfo.af_inet.mc_list	= NULL;
  
-+	sk->xid = vx_current_id();
++	sk->vx_id = current->vx_id;
 +	sk->ip_info = NULL;
 +
  #ifdef INET_REFCNT_DEBUG
@@ -4481,9 +3842,9 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/af_inet.c linux-2.4.22-vs1.3.0/net/i
  		err = -EADDRINUSE;
  		goto out;
  	}
-diff -NurpP --minimal linux-2.4.22/net/ipv4/devinet.c linux-2.4.22-vs1.3.0/net/ipv4/devinet.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/devinet.c linux-2.4.22-vs1.22/net/ipv4/devinet.c
 --- linux-2.4.22/net/ipv4/devinet.c	Fri Jun 13 16:51:39 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/devinet.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/devinet.c	Sat Dec 13 18:32:37 2003
 @@ -455,6 +455,33 @@ static __inline__ int inet_abc_len(u32 a
    	return -1;
  }
@@ -4549,9 +3910,9 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/devinet.c linux-2.4.22-vs1.3.0/net/i
  			if (ip_idx < s_ip_idx)
  				continue;
  			if (inet_fill_ifaddr(skb, ifa, NETLINK_CB(cb->skb).pid,
-diff -NurpP --minimal linux-2.4.22/net/ipv4/raw.c linux-2.4.22-vs1.3.0/net/ipv4/raw.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/raw.c linux-2.4.22-vs1.22/net/ipv4/raw.c
 --- linux-2.4.22/net/ipv4/raw.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/raw.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/raw.c	Sat Dec 13 18:32:37 2003
 @@ -96,16 +96,47 @@ static void raw_v4_unhash(struct sock *s
  	write_unlock_bh(&raw_v4_lock);
  }
@@ -4608,13 +3969,13 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/raw.c linux-2.4.22-vs1.3.0/net/ipv4/
  		for (sk = raw_v4_htable[i]; sk; sk = sk->next, num++) {
 -			if (sk->family != PF_INET)
 +			if (sk->family != PF_INET ||
-+				!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += 128;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_ipv4.c linux-2.4.22-vs1.3.0/net/ipv4/tcp_ipv4.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_ipv4.c linux-2.4.22-vs1.22/net/ipv4/tcp_ipv4.c
 --- linux-2.4.22/net/ipv4/tcp_ipv4.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/tcp_ipv4.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/tcp_ipv4.c	Sat Dec 13 18:32:37 2003
 @@ -180,6 +180,49 @@ static inline void tcp_bind_hash(struct 
  	sk->prev = (struct sock *) tb;
  }
@@ -4740,7 +4101,7 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_ipv4.c linux-2.4.22-vs1.3.0/net/
  			int uid;
  			struct tcp_opt *tp = &(sk->tp_pinfo.af_tcp);
  
-+			if (!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++			if (!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
 +				continue;
 +			
  			if (!TCP_INET_FAMILY(sk->family))
@@ -4752,7 +4113,7 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_ipv4.c linux-2.4.22-vs1.3.0/net/
  		for(sk = head->chain; sk; sk = sk->next, num++) {
 -			if (!TCP_INET_FAMILY(sk->family))
 +			if (!TCP_INET_FAMILY(sk->family) ||
-+				!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += TMPSZ;
  			if (pos <= offset)
@@ -4762,18 +4123,18 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_ipv4.c linux-2.4.22-vs1.3.0/net/
  		     tw = (struct tcp_tw_bucket *)tw->next, num++) {
 -			if (!TCP_INET_FAMILY(tw->family))
 +			if (!TCP_INET_FAMILY(tw->family) ||
-+				!vx_check_id(tw->xid, VX_WATCH|VX_SAME))
++				!vx_check(tw->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += TMPSZ;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_minisocks.c linux-2.4.22-vs1.3.0/net/ipv4/tcp_minisocks.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_minisocks.c linux-2.4.22-vs1.22/net/ipv4/tcp_minisocks.c
 --- linux-2.4.22/net/ipv4/tcp_minisocks.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/tcp_minisocks.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/tcp_minisocks.c	Sat Dec 13 18:32:37 2003
 @@ -380,6 +380,9 @@ void tcp_time_wait(struct sock *sk, int 
  		tw->ts_recent_stamp= tp->ts_recent_stamp;
  		tw->pprev_death = NULL;
  
-+		tw->xid		= sk->xid;
++		tw->vx_id	= sk->vx_id;
 +		tw->ip_info	= NULL;
 +
  #if defined(CONFIG_IPV6) || defined(CONFIG_IPV6_MODULE)
@@ -4787,9 +4148,9 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/tcp_minisocks.c linux-2.4.22-vs1.3.0
  		newsk->state = TCP_SYN_RECV;
  
  		/* SANITY */
-diff -NurpP --minimal linux-2.4.22/net/ipv4/udp.c linux-2.4.22-vs1.3.0/net/ipv4/udp.c
+diff -NurpP --minimal linux-2.4.22/net/ipv4/udp.c linux-2.4.22-vs1.22/net/ipv4/udp.c
 --- linux-2.4.22/net/ipv4/udp.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv4/udp.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv4/udp.c	Sat Dec 13 18:32:37 2003
 @@ -110,6 +110,9 @@ rwlock_t udp_hash_lock = RW_LOCK_UNLOCKE
  /* Shared by v4/v6 udp. */
  int udp_port_rover;
@@ -4875,33 +4236,33 @@ diff -NurpP --minimal linux-2.4.22/net/ipv4/udp.c linux-2.4.22-vs1.3.0/net/ipv4/
  		for (sk = udp_hash[i]; sk; sk = sk->next, num++) {
 -			if (sk->family != PF_INET)
 +			if (sk->family != PF_INET ||
-+				!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += 128;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/ipv6/raw.c linux-2.4.22-vs1.3.0/net/ipv6/raw.c
+diff -NurpP --minimal linux-2.4.22/net/ipv6/raw.c linux-2.4.22-vs1.22/net/ipv6/raw.c
 --- linux-2.4.22/net/ipv6/raw.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv6/raw.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv6/raw.c	Sat Dec 13 18:32:37 2003
 @@ -879,7 +879,8 @@ int raw6_get_info(char *buffer, char **s
  		struct sock *sk;
  
  		for (sk = raw_v6_htable[i]; sk; sk = sk->next, num++) {
 -			if (sk->family != PF_INET6)
 +			if (sk->family != PF_INET6 ||
-+				!vx_check_id(sk->vx_id, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/ipv6/tcp_ipv6.c linux-2.4.22-vs1.3.0/net/ipv6/tcp_ipv6.c
+diff -NurpP --minimal linux-2.4.22/net/ipv6/tcp_ipv6.c linux-2.4.22-vs1.22/net/ipv6/tcp_ipv6.c
 --- linux-2.4.22/net/ipv6/tcp_ipv6.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv6/tcp_ipv6.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv6/tcp_ipv6.c	Sat Dec 13 18:32:37 2003
 @@ -2027,7 +2027,8 @@ int tcp6_get_info(char *buffer, char **s
  			int uid;
  			struct tcp_opt *tp = &(sk->tp_pinfo.af_tcp);
  
 -			if (sk->family != PF_INET6)
 +			if (sk->family != PF_INET6 ||
-+				!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += LINE_LEN+1;
  			if (pos >= offset) {
@@ -4911,7 +4272,7 @@ diff -NurpP --minimal linux-2.4.22/net/ipv6/tcp_ipv6.c linux-2.4.22-vs1.3.0/net/
  		for(sk = head->chain; sk; sk = sk->next, num++) {
 -			if (sk->family != PF_INET6)
 +			if (sk->family != PF_INET6 ||
-+				!vx_check_id(sk->xid, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
@@ -4921,31 +4282,31 @@ diff -NurpP --minimal linux-2.4.22/net/ipv6/tcp_ipv6.c linux-2.4.22-vs1.3.0/net/
  		     tw = (struct tcp_tw_bucket *)tw->next, num++) {
 -			if (tw->family != PF_INET6)
 +			if (tw->family != PF_INET6 ||
-+				!vx_check_id(tw->xid, VX_WATCH|VX_SAME))
++				!vx_check(tw->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/ipv6/udp.c linux-2.4.22-vs1.3.0/net/ipv6/udp.c
+diff -NurpP --minimal linux-2.4.22/net/ipv6/udp.c linux-2.4.22-vs1.22/net/ipv6/udp.c
 --- linux-2.4.22/net/ipv6/udp.c	Mon Aug 25 13:44:44 2003
-+++ linux-2.4.22-vs1.3.0/net/ipv6/udp.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/ipv6/udp.c	Sat Dec 13 18:32:37 2003
 @@ -979,7 +979,8 @@ int udp6_get_info(char *buffer, char **s
  		struct sock *sk;
  
  		for (sk = udp_hash[i]; sk; sk = sk->next, num++) {
 -			if (sk->family != PF_INET6)
 +			if (sk->family != PF_INET6 ||
-+				!vx_check_id(sk->vx_id, VX_WATCH|VX_SAME))
++				!vx_check(sk->vx_id, VX_WATCH|VX_IDENT))
  				continue;
  			pos += LINE_LEN+1;
  			if (pos <= offset)
-diff -NurpP --minimal linux-2.4.22/net/unix/af_unix.c linux-2.4.22-vs1.3.0/net/unix/af_unix.c
+diff -NurpP --minimal linux-2.4.22/net/unix/af_unix.c linux-2.4.22-vs1.22/net/unix/af_unix.c
 --- linux-2.4.22/net/unix/af_unix.c	Fri Nov 29 00:53:16 2002
-+++ linux-2.4.22-vs1.3.0/net/unix/af_unix.c	Wed Dec 10 01:38:50 2003
++++ linux-2.4.22-vs1.22/net/unix/af_unix.c	Sat Dec 13 18:32:37 2003
 @@ -479,6 +479,8 @@ static struct sock * unix_create1(struct
  
  	sk->write_space		=	unix_write_space;
  
-+	sk->xid = vx_current_id();
++	sk->vx_id = current->vx_id;
 +
  	sk->max_ack_backlog = sysctl_unix_max_dgram_qlen;
  	sk->destruct = unix_sock_destructor;
@@ -4954,7 +4315,7 @@ diff -NurpP --minimal linux-2.4.22/net/unix/af_unix.c linux-2.4.22-vs1.3.0/net/u
  	read_lock(&unix_table_lock);
  	forall_unix_sockets (i,s)
  	{
-+		if (!vx_check_id(s->xid, VX_WATCH|VX_SAME))
++		if (!vx_check(s->vx_id, VX_WATCH|VX_IDENT))
 +			continue;
 +
  		unix_state_rlock(s);
