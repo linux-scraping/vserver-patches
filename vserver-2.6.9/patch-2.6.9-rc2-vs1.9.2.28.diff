@@ -1,6 +1,6 @@
-diff -NurpP --minimal linux-2.6.9-rc2/Documentation/vserver/debug.txt linux-2.6.9-rc2-vs1.9.2.27/Documentation/vserver/debug.txt
+diff -NurpP --minimal linux-2.6.9-rc2/Documentation/vserver/debug.txt linux-2.6.9-rc2-vs1.9.2.28/Documentation/vserver/debug.txt
 --- linux-2.6.9-rc2/Documentation/vserver/debug.txt	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/Documentation/vserver/debug.txt	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/Documentation/vserver/debug.txt	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,171 @@
 +
 +debug_switch:
@@ -173,21 +173,21 @@ diff -NurpP --minimal linux-2.6.9-rc2/Documentation/vserver/debug.txt linux-2.6.
 +	"vx_pages_avail[%5d,%s,%2d]: %5ld > %5d + %5d"
 +	
 +	
-diff -NurpP --minimal linux-2.6.9-rc2/Makefile linux-2.6.9-rc2-vs1.9.2.27/Makefile
+diff -NurpP --minimal linux-2.6.9-rc2/Makefile linux-2.6.9-rc2-vs1.9.2.28/Makefile
 --- linux-2.6.9-rc2/Makefile	2004-09-13 18:40:15.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/Makefile	2004-09-13 18:51:31.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/Makefile	2004-09-16 17:35:56.000000000 +0200
 @@ -1,7 +1,7 @@
  VERSION = 2
  PATCHLEVEL = 6
  SUBLEVEL = 9
 -EXTRAVERSION = -rc2
-+EXTRAVERSION = -rc2-vs1.9.2.27-P1-vs1.9.2.27
++EXTRAVERSION = -rc2-vs1.9.2.28
  NAME=Zonked Quokka
  
  # *DOCUMENTATION*
-diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/Kconfig
 --- linux-2.6.9-rc2/arch/alpha/Kconfig	2004-09-13 18:40:15.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -590,6 +590,8 @@ source "arch/alpha/oprofile/Kconfig"
  
  source "arch/alpha/Kconfig.debug"
@@ -197,9 +197,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/Kconfig linux-2.6.9-rc2-vs1.9.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/alpha/kernel/ptrace.c	2004-08-14 12:56:14.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -287,6 +287,8 @@ do_sys_ptrace(long request, long pid, lo
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -209,9 +209,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/ptrace.c linux-2.6.9-rc2
  
  	if (request == PTRACE_ATTACH) {
  		ret = ptrace_attach(child);
-diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/kernel/systbls.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/kernel/systbls.S
 --- linux-2.6.9-rc2/arch/alpha/kernel/systbls.S	2004-08-14 12:55:35.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/alpha/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/alpha/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
 @@ -291,7 +291,7 @@ sys_call_table:
  	.quad alpha_ni_syscall			/* 270 */
  	.quad alpha_ni_syscall
@@ -221,9 +221,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/alpha/kernel/systbls.S linux-2.6.9-rc
  	.quad alpha_ni_syscall
  	.quad alpha_ni_syscall			/* 275 */
  	.quad alpha_ni_syscall
-diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/arm/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/arm/Kconfig
 --- linux-2.6.9-rc2/arch/arm/Kconfig	2004-09-13 18:40:15.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/arm/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/arm/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -674,6 +674,8 @@ source "drivers/mmc/Kconfig"
  
  source "arch/arm/Kconfig.debug"
@@ -233,9 +233,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/Kconfig linux-2.6.9-rc2-vs1.9.2.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/arm/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/arm/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/arm/kernel/ptrace.c	2004-09-13 18:40:15.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/arm/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/arm/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -754,6 +754,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -245,9 +245,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/arm/kernel/ptrace.c linux-2.6.9-rc2-v
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/arm26/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/arm26/Kconfig
 --- linux-2.6.9-rc2/arch/arm26/Kconfig	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/arm26/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/arm26/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -216,6 +216,8 @@ source "drivers/usb/Kconfig"
  
  source "arch/arm26/Kconfig.debug"
@@ -257,9 +257,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/Kconfig linux-2.6.9-rc2-vs1.9.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/arm26/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/arm26/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/arm26/kernel/ptrace.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/arm26/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/arm26/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -691,6 +691,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -269,9 +269,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/arm26/kernel/ptrace.c linux-2.6.9-rc2
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/cris/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/cris/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/cris/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/cris/Kconfig
 --- linux-2.6.9-rc2/arch/cris/Kconfig	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/cris/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/cris/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -169,6 +169,8 @@ source "drivers/usb/Kconfig"
  
  source "arch/cris/Kconfig.debug"
@@ -281,9 +281,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/cris/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/h8300/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/h8300/Kconfig
 --- linux-2.6.9-rc2/arch/h8300/Kconfig	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/h8300/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/h8300/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -183,6 +183,8 @@ source "fs/Kconfig"
  
  source "arch/h8300/Kconfig.debug"
@@ -293,9 +293,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/Kconfig linux-2.6.9-rc2-vs1.9.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/h8300/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/h8300/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/h8300/kernel/ptrace.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/h8300/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/h8300/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -80,6 +80,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -305,9 +305,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/h8300/kernel/ptrace.c linux-2.6.9-rc2
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/i386/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/i386/Kconfig
 --- linux-2.6.9-rc2/arch/i386/Kconfig	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/i386/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/i386/Kconfig	2004-09-16 17:31:49.000000000 +0200
 @@ -1184,6 +1184,8 @@ source "arch/i386/oprofile/Kconfig"
  
  source "arch/i386/Kconfig.debug"
@@ -317,9 +317,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/entry.S linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/entry.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/entry.S linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/entry.S
 --- linux-2.6.9-rc2/arch/i386/kernel/entry.S	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/entry.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/entry.S	2004-09-13 18:51:02.000000000 +0200
 @@ -889,7 +889,7 @@ ENTRY(sys_call_table)
  	.long sys_tgkill	/* 270 */
  	.long sys_utimes
@@ -329,9 +329,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/entry.S linux-2.6.9-rc2-v
  	.long sys_mbind
  	.long sys_get_mempolicy
  	.long sys_set_mempolicy
-diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/i386/kernel/ptrace.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -260,6 +260,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -341,9 +341,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/ptrace.c linux-2.6.9-rc2-
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/sys_i386.c linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/sys_i386.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/sys_i386.c linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/sys_i386.c
 --- linux-2.6.9-rc2/arch/i386/kernel/sys_i386.c	2004-08-14 12:56:23.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/i386/kernel/sys_i386.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/i386/kernel/sys_i386.c	2004-09-13 18:51:02.000000000 +0200
 @@ -19,6 +19,7 @@
  #include <linux/mman.h>
  #include <linux/file.h>
@@ -391,9 +391,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/kernel/sys_i386.c linux-2.6.9-rc
  	error |= __put_user(0,name->machine+__OLD_UTS_LEN);
  	
  	up_read(&uts_sem);
-diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.27/arch/i386/mm/hugetlbpage.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.28/arch/i386/mm/hugetlbpage.c
 --- linux-2.6.9-rc2/arch/i386/mm/hugetlbpage.c	2004-08-14 12:56:22.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/i386/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/i386/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
 @@ -42,7 +42,8 @@ static void set_huge_pte(struct mm_struc
  {
  	pte_t entry;
@@ -424,9 +424,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/i386/mm/hugetlbpage.c linux-2.6.9-rc2
  	flush_tlb_range(vma, start, end);
  }
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/Kconfig
 --- linux-2.6.9-rc2/arch/ia64/Kconfig	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -374,6 +374,8 @@ source "arch/ia64/oprofile/Kconfig"
  
  source "arch/ia64/Kconfig.debug"
@@ -436,9 +436,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/ia32/binfmt_elf32.c linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/ia32/binfmt_elf32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/ia32/binfmt_elf32.c linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/ia32/binfmt_elf32.c
 --- linux-2.6.9-rc2/arch/ia64/ia32/binfmt_elf32.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/ia32/binfmt_elf32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/ia32/binfmt_elf32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -14,6 +14,7 @@
  #include <linux/types.h>
  #include <linux/mm.h>
@@ -480,9 +480,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/ia32/binfmt_elf32.c linux-2.6.9-
  	}
  
  	for (i = 0 ; i < MAX_ARG_PAGES ; i++) {
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/entry.S linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/entry.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/entry.S linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/entry.S
 --- linux-2.6.9-rc2/arch/ia64/kernel/entry.S	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/entry.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/entry.S	2004-09-13 18:51:02.000000000 +0200
 @@ -1526,7 +1526,7 @@ sys_call_table:
  	data8 sys_mq_notify
  	data8 sys_mq_getsetattr
@@ -492,9 +492,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/entry.S linux-2.6.9-rc2-v
  	data8 sys_ni_syscall			// 1270
  	data8 sys_ni_syscall
  	data8 sys_ni_syscall
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/perfmon.c linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/perfmon.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/perfmon.c linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/perfmon.c
 --- linux-2.6.9-rc2/arch/ia64/kernel/perfmon.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/perfmon.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/perfmon.c	2004-09-13 18:51:02.000000000 +0200
 @@ -2360,7 +2360,8 @@ pfm_smpl_buffer_alloc(struct task_struct
  	 */
  	insert_vm_struct(mm, vma);
@@ -505,9 +505,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/perfmon.c linux-2.6.9-rc2
  	vm_stat_account(vma);
  	up_write(&task->mm->mmap_sem);
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/ia64/kernel/ptrace.c	2004-08-14 12:56:23.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -1310,6 +1310,9 @@ sys_ptrace (long request, pid_t pid, uns
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -518,9 +518,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/kernel/ptrace.c linux-2.6.9-rc2-
  	ret = -EPERM;
  	if (pid == 1)		/* no messing around with init! */
  		goto out_tsk;
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/fault.c linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/mm/fault.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/fault.c linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/mm/fault.c
 --- linux-2.6.9-rc2/arch/ia64/mm/fault.c	2004-09-13 18:40:16.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/mm/fault.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/mm/fault.c	2004-09-13 18:51:02.000000000 +0200
 @@ -33,12 +33,19 @@ expand_backing_store (struct vm_area_str
  
  	grow = PAGE_SIZE >> PAGE_SHIFT;
@@ -544,9 +544,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/fault.c linux-2.6.9-rc2-vs1.9
  	__vm_stat_account(vma->vm_mm, vma->vm_flags, vma->vm_file, grow);
  	return 0;
  }
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/mm/hugetlbpage.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/mm/hugetlbpage.c
 --- linux-2.6.9-rc2/arch/ia64/mm/hugetlbpage.c	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ia64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ia64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
 @@ -65,7 +65,8 @@ set_huge_pte (struct mm_struct *mm, stru
  {
  	pte_t entry;
@@ -577,9 +577,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ia64/mm/hugetlbpage.c linux-2.6.9-rc2
  	flush_tlb_range(vma, start, end);
  }
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/Kconfig
 --- linux-2.6.9-rc2/arch/m68k/Kconfig	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -650,6 +650,8 @@ source "fs/Kconfig"
  
  source "arch/m68k/Kconfig.debug"
@@ -589,9 +589,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/atari/stram.c linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/atari/stram.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/atari/stram.c linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/atari/stram.c
 --- linux-2.6.9-rc2/arch/m68k/atari/stram.c	2004-08-14 12:55:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/atari/stram.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/atari/stram.c	2004-09-13 18:51:02.000000000 +0200
 @@ -635,7 +635,8 @@ static inline void unswap_pte(struct vm_
  	set_pte(dir, pte_mkdirty(mk_pte(page, vma->vm_page_prot)));
  	swap_free(entry);
@@ -602,9 +602,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/atari/stram.c linux-2.6.9-rc2-vs
  }
  
  static inline void unswap_pmd(struct vm_area_struct * vma, pmd_t *dir,
-diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/m68k/kernel/ptrace.c	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/m68k/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/m68k/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -140,6 +140,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -614,9 +614,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/m68k/kernel/ptrace.c linux-2.6.9-rc2-
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/m68knommu/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/m68knommu/Kconfig
 --- linux-2.6.9-rc2/arch/m68knommu/Kconfig	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/m68knommu/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/m68knommu/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -515,6 +515,8 @@ source "fs/Kconfig"
  
  source "arch/m68knommu/Kconfig.debug"
@@ -626,9 +626,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/Kconfig linux-2.6.9-rc2-vs1
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/m68knommu/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/m68knommu/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/m68knommu/kernel/ptrace.c	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/m68knommu/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/m68knommu/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -124,6 +124,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -638,9 +638,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/m68knommu/kernel/ptrace.c linux-2.6.9
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/mips/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/mips/Kconfig
 --- linux-2.6.9-rc2/arch/mips/Kconfig	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -1558,6 +1558,8 @@ source "fs/Kconfig"
  
  source "arch/mips/Kconfig.debug"
@@ -650,9 +650,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/irixelf.c linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/irixelf.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/irixelf.c linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/irixelf.c
 --- linux-2.6.9-rc2/arch/mips/kernel/irixelf.c	2004-08-14 12:56:25.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/irixelf.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/irixelf.c	2004-09-13 18:51:02.000000000 +0200
 @@ -686,7 +686,8 @@ static int load_irix_binary(struct linux
  	/* Do this so that we can load the interpreter, if need be.  We will
  	 * change some of these later.
@@ -663,9 +663,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/irixelf.c linux-2.6.9-rc2
  	setup_arg_pages(bprm, EXSTACK_DEFAULT);
  	current->mm->start_stack = bprm->p;
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/linux32.c linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/linux32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/linux32.c linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/linux32.c
 --- linux-2.6.9-rc2/arch/mips/kernel/linux32.c	2004-08-14 12:55:35.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/linux32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/linux32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -1208,7 +1208,7 @@ asmlinkage long sys32_newuname(struct ne
  	int ret = 0;
  
@@ -675,9 +675,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/linux32.c linux-2.6.9-rc2
  		ret = -EFAULT;
  	up_read(&uts_sem);
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/mips/kernel/ptrace.c	2004-08-14 12:56:24.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -76,6 +76,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -687,9 +687,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/ptrace.c linux-2.6.9-rc2-
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/syscall.c linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/syscall.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/syscall.c linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/syscall.c
 --- linux-2.6.9-rc2/arch/mips/kernel/syscall.c	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/syscall.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/syscall.c	2004-09-13 18:51:02.000000000 +0200
 @@ -24,6 +24,7 @@
  #include <linux/sem.h>
  #include <linux/msg.h>
@@ -750,9 +750,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/syscall.c linux-2.6.9-rc2
  		up_write(&uts_sem);
  		return 0;
  	}
-diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/sysirix.c linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/sysirix.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/sysirix.c linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/sysirix.c
 --- linux-2.6.9-rc2/arch/mips/kernel/sysirix.c	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/mips/kernel/sysirix.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/mips/kernel/sysirix.c	2004-09-13 18:51:02.000000000 +0200
 @@ -30,6 +30,7 @@
  #include <linux/socket.h>
  #include <linux/security.h>
@@ -771,9 +771,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/mips/kernel/sysirix.c linux-2.6.9-rc2
  		ret = -ENOMEM;
  		goto out;
  	}
-diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/Kconfig
 --- linux-2.6.9-rc2/arch/parisc/Kconfig	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -190,6 +190,8 @@ source "arch/parisc/oprofile/Kconfig"
  
  source "arch/parisc/Kconfig.debug"
@@ -783,9 +783,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/Kconfig linux-2.6.9-rc2-vs1.9.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/parisc/kernel/ptrace.c	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -110,6 +110,9 @@ long sys_ptrace(long request, pid_t pid,
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -796,9 +796,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/ptrace.c linux-2.6.9-rc
  	ret = -EPERM;
  	if (pid == 1)		/* no messing around with init! */
  		goto out_tsk;
-diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/sys_parisc32.c linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/kernel/sys_parisc32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/sys_parisc32.c linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/kernel/sys_parisc32.c
 --- linux-2.6.9-rc2/arch/parisc/kernel/sys_parisc32.c	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/parisc/kernel/sys_parisc32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/parisc/kernel/sys_parisc32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -677,6 +677,7 @@ asmlinkage int sys32_sysinfo(struct sysi
  
  	do {
@@ -807,9 +807,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/parisc/kernel/sys_parisc32.c linux-2.
  		val.uptime = jiffies / HZ;
  
  		val.loads[0] = avenrun[0] << (SI_LOAD_SHIFT - FSHIFT);
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/Kconfig
 --- linux-2.6.9-rc2/arch/ppc/Kconfig	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -1228,6 +1228,8 @@ source "arch/ppc/oprofile/Kconfig"
  
  source "arch/ppc/Kconfig.debug"
@@ -819,9 +819,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/Kconfig linux-2.6.9-rc2-vs1.9.2.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/misc.S linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/misc.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/misc.S linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/misc.S
 --- linux-2.6.9-rc2/arch/ppc/kernel/misc.S	2004-09-13 18:40:17.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/misc.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/misc.S	2004-09-13 18:51:02.000000000 +0200
 @@ -1435,7 +1435,7 @@ _GLOBAL(sys_call_table)
  	.long ppc_fadvise64_64
  	.long sys_ni_syscall		/* 255 - rtas (used on ppc64) */
@@ -831,9 +831,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/misc.S linux-2.6.9-rc2-vs1
  	.long sys_ni_syscall		/* 258 reserved for new sys_remap_file_pages */
  	.long sys_ni_syscall		/* 259 reserved for new sys_mbind */
  	.long sys_ni_syscall		/* 260 reserved for new sys_get_mempolicy */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/ppc/kernel/ptrace.c	2004-08-14 12:55:09.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -261,6 +261,8 @@ int sys_ptrace(long request, long pid, l
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -843,9 +843,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/ptrace.c linux-2.6.9-rc2-v
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/syscalls.c linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/syscalls.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/syscalls.c linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/syscalls.c
 --- linux-2.6.9-rc2/arch/ppc/kernel/syscalls.c	2004-08-14 12:56:22.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc/kernel/syscalls.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc/kernel/syscalls.c	2004-09-13 18:51:02.000000000 +0200
 @@ -36,6 +36,7 @@
  #include <linux/utsname.h>
  #include <linux/file.h>
@@ -893,9 +893,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc/kernel/syscalls.c linux-2.6.9-rc2
  	error = __put_user(0,name->machine+__OLD_UTS_LEN);
  	up_read(&uts_sem);
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/Kconfig
 --- linux-2.6.9-rc2/arch/ppc64/Kconfig	2004-09-13 18:40:18.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -345,6 +345,8 @@ source "arch/ppc64/oprofile/Kconfig"
  
  source "arch/ppc64/Kconfig.debug"
@@ -905,9 +905,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/Kconfig linux-2.6.9-rc2-vs1.9.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/misc.S linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/misc.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/misc.S linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/misc.S
 --- linux-2.6.9-rc2/arch/ppc64/kernel/misc.S	2004-09-13 18:40:18.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/misc.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/misc.S	2004-09-13 18:51:02.000000000 +0200
 @@ -858,7 +858,7 @@ _GLOBAL(sys_call_table32)
  	.llong .ppc32_fadvise64_64	/* 32bit only fadvise64_64 */
  	.llong .ppc_rtas		/* 255 */
@@ -917,9 +917,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/misc.S linux-2.6.9-rc2-v
  	.llong .sys_ni_syscall		/* 258 reserved for new sys_remap_file_pages */
  	.llong .sys_ni_syscall		/* 259 reserved for new sys_mbind */
  	.llong .sys_ni_syscall		/* 260 reserved for new sys_get_mempolicy */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/ppc64/kernel/ptrace.c	2004-08-14 12:56:00.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -76,6 +76,8 @@ int sys_ptrace(long request, long pid, l
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -929,9 +929,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/ptrace.c linux-2.6.9-rc2
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/sys_ppc32.c linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/sys_ppc32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/sys_ppc32.c linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/sys_ppc32.c
 --- linux-2.6.9-rc2/arch/ppc64/kernel/sys_ppc32.c	2004-08-14 12:55:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/kernel/sys_ppc32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/kernel/sys_ppc32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -60,6 +60,7 @@
  #include <linux/ptrace.h>
  #include <linux/aio_abi.h>
@@ -970,9 +970,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/kernel/sys_ppc32.c linux-2.6.9-
  	error = __put_user(0,name->machine+__OLD_UTS_LEN);
  	up_read(&uts_sem);
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/mm/hugetlbpage.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/mm/hugetlbpage.c
 --- linux-2.6.9-rc2/arch/ppc64/mm/hugetlbpage.c	2004-09-13 18:40:18.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/ppc64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/ppc64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
 @@ -125,7 +125,8 @@ static void setup_huge_pte(struct mm_str
  	hugepte_t entry;
  	int i;
@@ -1003,9 +1003,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/ppc64/mm/hugetlbpage.c linux-2.6.9-rc
  }
  
  int hugetlb_prefault(struct address_space *mapping, struct vm_area_struct *vma)
-diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/s390/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/s390/Kconfig
 --- linux-2.6.9-rc2/arch/s390/Kconfig	2004-09-13 18:40:18.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/s390/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/s390/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -461,6 +461,8 @@ source "arch/s390/oprofile/Kconfig"
  
  source "arch/s390/Kconfig.debug"
@@ -1015,9 +1015,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/compat_exec.c linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/compat_exec.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/compat_exec.c linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/compat_exec.c
 --- linux-2.6.9-rc2/arch/s390/kernel/compat_exec.c	2004-09-13 18:40:18.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/compat_exec.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/compat_exec.c	2004-09-13 18:51:02.000000000 +0200
 @@ -36,7 +36,7 @@
  
  int setup_arg_pages32(struct linux_binprm *bprm, int executable_stack)
@@ -1050,9 +1050,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/compat_exec.c linux-2.6.9
  	} 
  
  	for (i = 0 ; i < MAX_ARG_PAGES ; i++) {
-diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/s390/kernel/ptrace.c	2004-08-14 12:56:14.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -695,9 +695,11 @@ sys_ptrace(long request, long pid, long 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -1066,9 +1066,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/ptrace.c linux-2.6.9-rc2-
  	put_task_struct(child);
  out:
  	unlock_kernel();
-diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/syscalls.S linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/syscalls.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/syscalls.S linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/syscalls.S
 --- linux-2.6.9-rc2/arch/s390/kernel/syscalls.S	2004-08-14 12:54:49.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/s390/kernel/syscalls.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/s390/kernel/syscalls.S	2004-09-13 18:51:02.000000000 +0200
 @@ -271,7 +271,7 @@ SYSCALL(sys_clock_settime,sys_clock_sett
  SYSCALL(sys_clock_gettime,sys_clock_gettime,sys32_clock_gettime_wrapper)	/* 260 */
  SYSCALL(sys_clock_getres,sys_clock_getres,sys32_clock_getres_wrapper)
@@ -1078,9 +1078,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/s390/kernel/syscalls.S linux-2.6.9-rc
  SYSCALL(s390_fadvise64_64,sys_ni_syscall,sys32_fadvise64_64_wrapper)
  SYSCALL(sys_statfs64,sys_statfs64,compat_sys_statfs64_wrapper)
  SYSCALL(sys_fstatfs64,sys_fstatfs64,compat_sys_fstatfs64_wrapper)
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/sh/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/sh/Kconfig
 --- linux-2.6.9-rc2/arch/sh/Kconfig	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sh/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sh/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -743,6 +743,8 @@ source "arch/sh/oprofile/Kconfig"
  
  source "arch/sh/Kconfig.debug"
@@ -1090,9 +1090,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/Kconfig linux-2.6.9-rc2-vs1.9.2.27
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/sh/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/sh/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/sh/kernel/ptrace.c	2004-08-14 12:54:49.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sh/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sh/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -108,6 +108,8 @@ asmlinkage int sys_ptrace(long request, 
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -1102,9 +1102,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/kernel/ptrace.c linux-2.6.9-rc2-vs
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.27/arch/sh/mm/hugetlbpage.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.28/arch/sh/mm/hugetlbpage.c
 --- linux-2.6.9-rc2/arch/sh/mm/hugetlbpage.c	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sh/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sh/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
 @@ -62,7 +62,8 @@ static void set_huge_pte(struct mm_struc
  	unsigned long i;
  	pte_t entry;
@@ -1135,9 +1135,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sh/mm/hugetlbpage.c linux-2.6.9-rc2-v
  	flush_tlb_range(vma, start, end);
  }
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/Kconfig
 --- linux-2.6.9-rc2/arch/sparc/Kconfig	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -381,6 +381,8 @@ source "drivers/char/watchdog/Kconfig"
  
  source "arch/sparc/Kconfig.debug"
@@ -1147,9 +1147,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/Kconfig linux-2.6.9-rc2-vs1.9.2
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/sparc/kernel/ptrace.c	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -321,6 +321,10 @@ asmlinkage void do_ptrace(struct pt_regs
  		pt_error_return(regs, ESRCH);
  		goto out;
@@ -1161,9 +1161,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/ptrace.c linux-2.6.9-rc2
  
  	if ((current->personality == PER_SUNOS && request == PTRACE_SUNATTACH)
  	    || (current->personality != PER_SUNOS && request == PTRACE_ATTACH)) {
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/sys_sparc.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/sys_sparc.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/sys_sparc.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/sys_sparc.c
 --- linux-2.6.9-rc2/arch/sparc/kernel/sys_sparc.c	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/sys_sparc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/sys_sparc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -21,6 +21,7 @@
  #include <linux/utsname.h>
  #include <linux/smp.h>
@@ -1188,9 +1188,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/sys_sparc.c linux-2.6.9-
  		goto done;
  	err = 0;
  done:
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/systbls.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/systbls.S
 --- linux-2.6.9-rc2/arch/sparc/kernel/systbls.S	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
 @@ -72,7 +72,7 @@ sys_call_table:
  /*250*/	.long sparc_mremap, sys_sysctl, sys_getsid, sys_fdatasync, sys_nfsservctl
  /*255*/	.long sys_nis_syscall, sys_clock_settime, sys_clock_gettime, sys_clock_getres, sys_clock_nanosleep
@@ -1200,9 +1200,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc/kernel/systbls.S linux-2.6.9-rc
  /*270*/	.long sys_io_submit, sys_io_cancel, sys_io_getevents, sys_mq_open, sys_mq_unlink
  /*275*/	.long sys_mq_timedsend, sys_mq_timedreceive, sys_mq_notify, sys_mq_getsetattr, sys_waitid
  /*280*/	.long sys_ni_syscall, sys_ni_syscall, sys_ni_syscall
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/Kconfig
 --- linux-2.6.9-rc2/arch/sparc64/Kconfig	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -608,6 +608,8 @@ source "arch/sparc64/oprofile/Kconfig"
  
  source "arch/sparc64/Kconfig.debug"
@@ -1212,9 +1212,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/Kconfig linux-2.6.9-rc2-vs1.9
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/binfmt_aout32.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/binfmt_aout32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/binfmt_aout32.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/binfmt_aout32.c
 --- linux-2.6.9-rc2/arch/sparc64/kernel/binfmt_aout32.c	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/binfmt_aout32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/binfmt_aout32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -27,6 +27,7 @@
  #include <linux/binfmts.h>
  #include <linux/personality.h>
@@ -1233,9 +1233,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/binfmt_aout32.c linux-
  	current->mm->mmap = NULL;
  	compute_creds(bprm);
   	current->flags &= ~PF_FORKNOEXEC;
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/sparc64/kernel/ptrace.c	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -172,6 +172,10 @@ asmlinkage void do_ptrace(struct pt_regs
  		pt_error_return(regs, ESRCH);
  		goto out;
@@ -1247,9 +1247,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/ptrace.c linux-2.6.9-r
  
  	if ((current->personality == PER_SUNOS && request == PTRACE_SUNATTACH)
  	    || (current->personality != PER_SUNOS && request == PTRACE_ATTACH)) {
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/sys_sparc.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/sys_sparc.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/sys_sparc.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/sys_sparc.c
 --- linux-2.6.9-rc2/arch/sparc64/kernel/sys_sparc.c	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/sys_sparc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/sys_sparc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -25,6 +25,7 @@
  #include <linux/syscalls.h>
  #include <linux/ipc.h>
@@ -1274,9 +1274,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/sys_sparc.c linux-2.6.
  		goto done;
  	err = 0;
  done:
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/systbls.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/systbls.S linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/systbls.S
 --- linux-2.6.9-rc2/arch/sparc64/kernel/systbls.S	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/kernel/systbls.S	2004-09-13 18:51:02.000000000 +0200
 @@ -73,7 +73,7 @@ sys_call_table32:
  /*250*/	.word sys32_mremap, sys32_sysctl, sys32_getsid, sys_fdatasync, sys32_nfsservctl
  	.word sys_ni_syscall, sys32_clock_settime, compat_clock_gettime, compat_clock_getres, sys32_clock_nanosleep
@@ -1295,9 +1295,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/kernel/systbls.S linux-2.6.9-
  /*270*/	.word sys_io_submit, sys_io_cancel, sys_io_getevents, sys_mq_open, sys_mq_unlink
  	.word sys_mq_timedsend, sys_mq_timedreceive, sys_mq_notify, sys_mq_getsetattr, sys_waitid
  /*280*/	.word sys_ni_syscall, sys_ni_syscall, sys_ni_syscall
-diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/mm/hugetlbpage.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/mm/hugetlbpage.c linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/mm/hugetlbpage.c
 --- linux-2.6.9-rc2/arch/sparc64/mm/hugetlbpage.c	2004-08-14 12:55:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/sparc64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/sparc64/mm/hugetlbpage.c	2004-09-13 18:51:02.000000000 +0200
 @@ -59,7 +59,8 @@ static void set_huge_pte(struct mm_struc
  	unsigned long i;
  	pte_t entry;
@@ -1328,9 +1328,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/sparc64/mm/hugetlbpage.c linux-2.6.9-
  	flush_tlb_range(vma, start, end);
  }
  
-diff -NurpP --minimal linux-2.6.9-rc2/arch/um/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/um/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/um/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/um/Kconfig
 --- linux-2.6.9-rc2/arch/um/Kconfig	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/um/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/um/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -222,6 +222,8 @@ source "net/Kconfig"
  
  source "fs/Kconfig"
@@ -1340,9 +1340,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/um/Kconfig linux-2.6.9-rc2-vs1.9.2.27
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/um/kernel/ptrace.c	2004-09-13 18:40:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -53,6 +53,8 @@ int sys_ptrace(long request, long pid, l
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -1352,9 +1352,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/ptrace.c linux-2.6.9-rc2-vs
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/sys_call_table.c linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/sys_call_table.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/sys_call_table.c linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/sys_call_table.c
 --- linux-2.6.9-rc2/arch/um/kernel/sys_call_table.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/sys_call_table.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/sys_call_table.c	2004-09-13 18:51:02.000000000 +0200
 @@ -306,7 +306,7 @@ syscall_handler_t *sys_call_table[] = {
  	[ __NR_tgkill ] (syscall_handler_t *) sys_tgkill,
  	[ __NR_utimes ] (syscall_handler_t *) sys_utimes,
@@ -1364,9 +1364,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/sys_call_table.c linux-2.6.
  
  	ARCH_SYSCALLS
  	[ LAST_SYSCALL + 1 ... NR_syscalls ] = 
-diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/syscall_kern.c linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/syscall_kern.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/syscall_kern.c linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/syscall_kern.c
 --- linux-2.6.9-rc2/arch/um/kernel/syscall_kern.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/um/kernel/syscall_kern.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/um/kernel/syscall_kern.c	2004-09-13 18:51:02.000000000 +0200
 @@ -15,6 +15,8 @@
  #include "linux/unistd.h"
  #include "linux/slab.h"
@@ -1419,9 +1419,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/um/kernel/syscall_kern.c linux-2.6.9-
  				__OLD_UTS_LEN);
  	error |= __put_user(0,name->machine+__OLD_UTS_LEN);
  	
-diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/v850/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/v850/Kconfig
 --- linux-2.6.9-rc2/arch/v850/Kconfig	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/v850/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/v850/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -304,6 +304,8 @@ source "drivers/usb/Kconfig"
  
  source "arch/v850/Kconfig.debug"
@@ -1431,9 +1431,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/Kconfig linux-2.6.9-rc2-vs1.9.2.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/v850/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/v850/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/v850/kernel/ptrace.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/v850/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/v850/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -138,6 +138,8 @@ int sys_ptrace(long request, long pid, l
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -1443,9 +1443,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/v850/kernel/ptrace.c linux-2.6.9-rc2-
  
  	rval = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/Kconfig linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/Kconfig linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/Kconfig
 --- linux-2.6.9-rc2/arch/x86_64/Kconfig	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -411,6 +411,8 @@ source "arch/x86_64/oprofile/Kconfig"
  
  source "arch/x86_64/Kconfig.debug"
@@ -1455,9 +1455,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/Kconfig linux-2.6.9-rc2-vs1.9.
  source "security/Kconfig"
  
  source "crypto/Kconfig"
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_aout.c linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32_aout.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_aout.c linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32_aout.c
 --- linux-2.6.9-rc2/arch/x86_64/ia32/ia32_aout.c	2004-08-14 12:56:23.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32_aout.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32_aout.c	2004-09-13 18:51:02.000000000 +0200
 @@ -25,6 +25,7 @@
  #include <linux/binfmts.h>
  #include <linux/personality.h>
@@ -1476,9 +1476,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_aout.c linux-2.6.9-r
  	current->mm->mmap = NULL;
  	compute_creds(bprm);
   	current->flags &= ~PF_FORKNOEXEC;
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_binfmt.c linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32_binfmt.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_binfmt.c linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32_binfmt.c
 --- linux-2.6.9-rc2/arch/x86_64/ia32/ia32_binfmt.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32_binfmt.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32_binfmt.c	2004-09-13 18:51:02.000000000 +0200
 @@ -330,7 +330,7 @@ static void elf32_init(struct pt_regs *r
  
  int setup_arg_pages(struct linux_binprm *bprm, int executable_stack)
@@ -1511,9 +1511,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32_binfmt.c linux-2.6.9
  	} 
  
  	for (i = 0 ; i < MAX_ARG_PAGES ; i++) {
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32entry.S linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32entry.S
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32entry.S linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32entry.S
 --- linux-2.6.9-rc2/arch/x86_64/ia32/ia32entry.S	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/ia32entry.S	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/ia32entry.S	2004-09-13 18:51:02.000000000 +0200
 @@ -575,7 +575,7 @@ ia32_sys_call_table:
  	.quad sys_tgkill		/* 270 */
  	.quad compat_sys_utimes
@@ -1523,9 +1523,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/ia32entry.S linux-2.6.9-r
  	.quad sys_mbind
  	.quad compat_get_mempolicy	/* 275 */
  	.quad sys_set_mempolicy
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/sys_ia32.c linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/sys_ia32.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/sys_ia32.c linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/sys_ia32.c
 --- linux-2.6.9-rc2/arch/x86_64/ia32/sys_ia32.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/ia32/sys_ia32.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/ia32/sys_ia32.c	2004-09-13 18:51:02.000000000 +0200
 @@ -61,6 +61,7 @@
  #include <linux/ptrace.h>
  #include <linux/highuid.h>
@@ -1570,9 +1570,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/ia32/sys_ia32.c linux-2.6.9-rc
  	up_read(&uts_sem);
  	if (personality(current->personality) == PER_LINUX32) 
  		err |= copy_to_user(&name->machine, "i686", 5);
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/kernel/ptrace.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/ptrace.c linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/kernel/ptrace.c
 --- linux-2.6.9-rc2/arch/x86_64/kernel/ptrace.c	2004-09-13 18:40:20.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/kernel/ptrace.c	2004-09-13 18:51:02.000000000 +0200
 @@ -209,6 +209,8 @@ asmlinkage long sys_ptrace(long request,
  	read_unlock(&tasklist_lock);
  	if (!child)
@@ -1582,9 +1582,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/ptrace.c linux-2.6.9-rc
  
  	ret = -EPERM;
  	if (pid == 1)		/* you may not mess with init */
-diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/sys_x86_64.c linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/kernel/sys_x86_64.c
+diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/sys_x86_64.c linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/kernel/sys_x86_64.c
 --- linux-2.6.9-rc2/arch/x86_64/kernel/sys_x86_64.c	2004-08-14 12:55:35.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/arch/x86_64/kernel/sys_x86_64.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/arch/x86_64/kernel/sys_x86_64.c	2004-09-13 18:51:02.000000000 +0200
 @@ -16,6 +16,7 @@
  #include <linux/file.h>
  #include <linux/utsname.h>
@@ -1602,9 +1602,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/arch/x86_64/kernel/sys_x86_64.c linux-2.6.
  	up_read(&uts_sem);
  	if (personality(current->personality) == PER_LINUX32) 
  		err |= copy_to_user(&name->machine, "i686", 5); 		
-diff -NurpP --minimal linux-2.6.9-rc2/fs/attr.c linux-2.6.9-rc2-vs1.9.2.27/fs/attr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/attr.c linux-2.6.9-rc2-vs1.9.2.28/fs/attr.c
 --- linux-2.6.9-rc2/fs/attr.c	2004-08-14 12:54:50.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/attr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/attr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -14,6 +14,9 @@
  #include <linux/fcntl.h>
  #include <linux/quotaops.h>
@@ -1709,9 +1709,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/attr.c linux-2.6.9-rc2-vs1.9.2.27/fs/at
  				error = DQUOT_TRANSFER(inode, attr) ? -EDQUOT : 0;
  			if (!error)
  				error = inode_setattr(inode, attr);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_aout.c linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_aout.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_aout.c linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_aout.c
 --- linux-2.6.9-rc2/fs/binfmt_aout.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_aout.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_aout.c	2004-09-13 18:51:02.000000000 +0200
 @@ -24,6 +24,7 @@
  #include <linux/binfmts.h>
  #include <linux/personality.h>
@@ -1730,9 +1730,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_aout.c linux-2.6.9-rc2-vs1.9.2.2
  	current->mm->mmap = NULL;
  	compute_creds(bprm);
   	current->flags &= ~PF_FORKNOEXEC;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_elf.c linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_elf.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_elf.c linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_elf.c
 --- linux-2.6.9-rc2/fs/binfmt_elf.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_elf.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_elf.c	2004-09-13 18:51:02.000000000 +0200
 @@ -37,6 +37,7 @@
  #include <linux/pagemap.h>
  #include <linux/security.h>
@@ -1751,9 +1751,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_elf.c linux-2.6.9-rc2-vs1.9.2.27
  	current->mm->free_area_cache = current->mm->mmap_base;
  	retval = setup_arg_pages(bprm, executable_stack);
  	if (retval < 0) {
-diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_flat.c linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_flat.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_flat.c linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_flat.c
 --- linux-2.6.9-rc2/fs/binfmt_flat.c	2004-08-14 12:54:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_flat.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_flat.c	2004-09-13 18:51:02.000000000 +0200
 @@ -36,6 +36,7 @@
  #include <linux/personality.h>
  #include <linux/init.h>
@@ -1772,9 +1772,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_flat.c linux-2.6.9-rc2-vs1.9.2.2
  	}
  
  	if (flags & FLAT_FLAG_KTRACE)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_som.c linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_som.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_som.c linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_som.c
 --- linux-2.6.9-rc2/fs/binfmt_som.c	2004-08-14 12:55:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/binfmt_som.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/binfmt_som.c	2004-09-13 18:51:02.000000000 +0200
 @@ -28,6 +28,7 @@
  #include <linux/shm.h>
  #include <linux/personality.h>
@@ -1793,9 +1793,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/binfmt_som.c linux-2.6.9-rc2-vs1.9.2.27
  
  #if 0
  	printk("(start_brk) %08lx\n" , (unsigned long) current->mm->start_brk);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/devpts/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/devpts/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/devpts/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/devpts/inode.c
 --- linux-2.6.9-rc2/fs/devpts/inode.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/devpts/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/devpts/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -18,10 +18,9 @@
  #include <linux/mount.h>
  #include <linux/tty.h>
@@ -1846,9 +1846,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/devpts/inode.c linux-2.6.9-rc2-vs1.9.2.
  	inode->i_op = &devpts_file_inode_operations;
  	inode->u.generic_ip = tty;
  
-diff -NurpP --minimal linux-2.6.9-rc2/fs/exec.c linux-2.6.9-rc2-vs1.9.2.27/fs/exec.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/exec.c linux-2.6.9-rc2-vs1.9.2.28/fs/exec.c
 --- linux-2.6.9-rc2/fs/exec.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/exec.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/exec.c	2004-09-13 18:51:02.000000000 +0200
 @@ -46,6 +46,7 @@
  #include <linux/security.h>
  #include <linux/syscalls.h>
@@ -1888,9 +1888,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/exec.c linux-2.6.9-rc2-vs1.9.2.27/fs/ex
  	}
  
  	for (i = 0 ; i < MAX_ARG_PAGES ; i++) {
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/balloc.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/balloc.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/balloc.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/balloc.c
 --- linux-2.6.9-rc2/fs/ext2/balloc.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/balloc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/balloc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -16,6 +16,8 @@
  #include <linux/quotaops.h>
  #include <linux/sched.h>
@@ -1937,9 +1937,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/balloc.c linux-2.6.9-rc2-vs1.9.2.2
  	release_blocks(sb, es_alloc);
  out_dquot:
  	DQUOT_FREE_BLOCK(inode, dq_alloc);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ialloc.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/ialloc.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ialloc.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/ialloc.c
 --- linux-2.6.9-rc2/fs/ext2/ialloc.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/ialloc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/ialloc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -18,6 +18,9 @@
  #include <linux/backing-dev.h>
  #include <linux/buffer_head.h>
@@ -2000,9 +2000,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ialloc.c linux-2.6.9-rc2-vs1.9.2.2
  	make_bad_inode(inode);
  	iput(inode);
  	return ERR_PTR(err);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/inode.c
 --- linux-2.6.9-rc2/fs/ext2/inode.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -31,6 +31,7 @@
  #include <linux/writeback.h>
  #include <linux/buffer_head.h>
@@ -2169,9 +2169,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/inode.c linux-2.6.9-rc2-vs1.9.2.27
  	error = inode_setattr(inode, iattr);
  	if (!error && (iattr->ia_valid & ATTR_MODE))
  		error = ext2_acl_chmod(inode);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/ioctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ioctl.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/ioctl.c
 --- linux-2.6.9-rc2/fs/ext2/ioctl.c	2004-08-14 12:56:24.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/ioctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/ioctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -49,7 +49,9 @@ int ext2_ioctl (struct inode * inode, st
  		 *
  		 * This test looks nicer. Thanks to Pauline Middelink
@@ -2183,9 +2183,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/ioctl.c linux-2.6.9-rc2-vs1.9.2.27
  			if (!capable(CAP_LINUX_IMMUTABLE))
  				return -EPERM;
  		}
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/super.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/super.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/super.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/super.c
 --- linux-2.6.9-rc2/fs/ext2/super.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/super.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/super.c	2004-09-13 18:51:02.000000000 +0200
 @@ -249,7 +249,7 @@ enum {
  	Opt_bsd_df, Opt_minix_df, Opt_grpid, Opt_nogrpid,
  	Opt_resgid, Opt_resuid, Opt_sb, Opt_err_cont, Opt_err_panic, Opt_err_ro,
@@ -2224,9 +2224,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/super.c linux-2.6.9-rc2-vs1.9.2.27
  	sb->s_flags = (sb->s_flags & ~MS_POSIXACL) |
  		((EXT2_SB(sb)->s_mount_opt & EXT2_MOUNT_POSIX_ACL) ?
  		 MS_POSIXACL : 0);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/xattr.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/xattr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/xattr.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/xattr.c
 --- linux-2.6.9-rc2/fs/ext2/xattr.c	2004-09-13 18:40:38.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext2/xattr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext2/xattr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -57,6 +57,7 @@
  #include <linux/mbcache.h>
  #include <linux/quotaops.h>
@@ -2264,9 +2264,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext2/xattr.c linux-2.6.9-rc2-vs1.9.2.27
  		DQUOT_FREE_BLOCK(inode, 1);
  	}
  	ea_bdebug(bh, "refcount now=%d", le32_to_cpu(HDR(bh)->h_refcount) - 1);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/balloc.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/balloc.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/balloc.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/balloc.c
 --- linux-2.6.9-rc2/fs/ext3/balloc.c	2004-08-14 12:54:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/balloc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/balloc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -19,6 +19,8 @@
  #include <linux/ext3_jbd.h>
  #include <linux/quotaops.h>
@@ -2363,9 +2363,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/balloc.c linux-2.6.9-rc2-vs1.9.2.2
  	if (fatal) {
  		*errp = fatal;
  		ext3_std_error(sb, fatal);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ialloc.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/ialloc.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ialloc.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/ialloc.c
 --- linux-2.6.9-rc2/fs/ext3/ialloc.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/ialloc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/ialloc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -22,6 +22,7 @@
  #include <linux/quotaops.h>
  #include <linux/buffer_head.h>
@@ -2425,9 +2425,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ialloc.c linux-2.6.9-rc2-vs1.9.2.2
  	inode->i_flags |= S_NOQUOTA;
  	inode->i_nlink = 0;
  	iput(inode);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/inode.c
 --- linux-2.6.9-rc2/fs/ext3/inode.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -36,6 +36,7 @@
  #include <linux/writeback.h>
  #include <linux/mpage.h>
@@ -2655,9 +2655,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/inode.c linux-2.6.9-rc2-vs1.9.2.27
  	rc = inode_setattr(inode, attr);
  
  	/* If inode_setattr's call to ext3_truncate failed to get a
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/ioctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ioctl.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/ioctl.c
 --- linux-2.6.9-rc2/fs/ext3/ioctl.c	2004-08-14 12:55:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/ioctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/ioctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -12,6 +12,7 @@
  #include <linux/ext3_fs.h>
  #include <linux/ext3_jbd.h>
@@ -2716,9 +2716,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/ioctl.c linux-2.6.9-rc2-vs1.9.2.27
  	default:
  		return -ENOTTY;
  	}
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/super.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/super.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/super.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/super.c
 --- linux-2.6.9-rc2/fs/ext3/super.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/super.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/super.c	2004-09-13 18:51:02.000000000 +0200
 @@ -584,7 +584,7 @@ enum {
  	Opt_abort, Opt_data_journal, Opt_data_ordered, Opt_data_writeback,
  	Opt_usrjquota, Opt_grpjquota, Opt_offusrjquota, Opt_offgrpjquota,
@@ -2762,9 +2762,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/super.c linux-2.6.9-rc2-vs1.9.2.27
  	sb->s_flags |= MS_ONE_SECOND;
  	sb->s_flags = (sb->s_flags & ~MS_POSIXACL) |
  		((sbi->s_mount_opt & EXT3_MOUNT_POSIX_ACL) ? MS_POSIXACL : 0);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/xattr.c linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/xattr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/xattr.c linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/xattr.c
 --- linux-2.6.9-rc2/fs/ext3/xattr.c	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ext3/xattr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ext3/xattr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -59,6 +59,7 @@
  #include <linux/mbcache.h>
  #include <linux/quotaops.h>
@@ -2802,9 +2802,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ext3/xattr.c linux-2.6.9-rc2-vs1.9.2.27
  		DQUOT_FREE_BLOCK(inode, 1);
  	}
  	ea_bdebug(bh, "refcount now=%d", le32_to_cpu(HDR(bh)->h_refcount) - 1);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/fcntl.c linux-2.6.9-rc2-vs1.9.2.27/fs/fcntl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/fcntl.c linux-2.6.9-rc2-vs1.9.2.28/fs/fcntl.c
 --- linux-2.6.9-rc2/fs/fcntl.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/fcntl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/fcntl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -14,6 +14,7 @@
  #include <linux/module.h>
  #include <linux/security.h>
@@ -2838,9 +2838,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/fcntl.c linux-2.6.9-rc2-vs1.9.2.27/fs/f
  
  	if (tofree)
  		filp_close(tofree, files);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/file_table.c linux-2.6.9-rc2-vs1.9.2.27/fs/file_table.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/file_table.c linux-2.6.9-rc2-vs1.9.2.28/fs/file_table.c
 --- linux-2.6.9-rc2/fs/file_table.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/file_table.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/file_table.c	2004-09-16 01:41:37.000000000 +0200
 @@ -16,6 +16,8 @@
  #include <linux/eventpoll.h>
  #include <linux/mount.h>
@@ -2850,7 +2850,15 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/file_table.c linux-2.6.9-rc2-vs1.9.2.27
  
  /* sysctl tunables... */
  struct files_stat_struct files_stat = {
-@@ -87,6 +89,8 @@ static int old_max;
+@@ -56,6 +58,7 @@ void filp_dtor(void * objp, struct kmem_
+ 
+ static inline void file_free(struct file *f)
+ {
++	// printk("··· file_free(%p)\n", f);
+ 	kmem_cache_free(filp_cachep, f);
+ }
+ 
+@@ -87,6 +90,8 @@ static int old_max;
  			f->f_owner.lock = RW_LOCK_UNLOCKED;
  			/* f->f_version: 0 */
  			INIT_LIST_HEAD(&f->f_list);
@@ -2859,7 +2867,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/file_table.c linux-2.6.9-rc2-vs1.9.2.27
  			return f;
  		}
  	}
-@@ -139,6 +143,8 @@ void fastcall __fput(struct file *file)
+@@ -139,6 +144,8 @@ void fastcall __fput(struct file *file)
  	fops_put(file->f_op);
  	if (file->f_mode & FMODE_WRITE)
  		put_write_access(inode);
@@ -2868,9 +2876,18 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/file_table.c linux-2.6.9-rc2-vs1.9.2.27
  	file_kill(file);
  	file->f_dentry = NULL;
  	file->f_vfsmnt = NULL;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/inode.c
+@@ -194,6 +201,8 @@ void put_filp(struct file *file)
+ {
+ 	if (atomic_dec_and_test(&file->f_count)) {
+ 		security_file_free(file);
++		vx_files_dec(file);
++		clr_vx_info(&file->f_vx_info);
+ 		file_kill(file);
+ 		file_free(file);
+ 	}
+diff -NurpP --minimal linux-2.6.9-rc2/fs/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/inode.c
 --- linux-2.6.9-rc2/fs/inode.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -21,6 +21,7 @@
  #include <linux/pagemap.h>
  #include <linux/cdev.h>
@@ -2890,9 +2907,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/i
  		inode->i_blkbits = sb->s_blocksize_bits;
  		inode->i_flags = 0;
  		atomic_set(&inode->i_count, 1);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/ioctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/ioctl.c linux-2.6.9-rc2-vs1.9.2.28/fs/ioctl.c
 --- linux-2.6.9-rc2/fs/ioctl.c	2004-08-14 12:54:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/ioctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/ioctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -11,10 +11,18 @@
  #include <linux/fs.h>
  #include <linux/security.h>
@@ -2961,9 +2978,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/i
  		default:
  			error = -ENOTTY;
  			if (S_ISREG(filp->f_dentry->d_inode->i_mode))
-diff -NurpP --minimal linux-2.6.9-rc2/fs/jfs/jfs_imap.c linux-2.6.9-rc2-vs1.9.2.27/fs/jfs/jfs_imap.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/jfs/jfs_imap.c linux-2.6.9-rc2-vs1.9.2.28/fs/jfs/jfs_imap.c
 --- linux-2.6.9-rc2/fs/jfs/jfs_imap.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/jfs/jfs_imap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/jfs/jfs_imap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -45,6 +45,7 @@
  #include <linux/buffer_head.h>
  #include <linux/pagemap.h>
@@ -3019,9 +3036,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/jfs/jfs_imap.c linux-2.6.9-rc2-vs1.9.2.
  	/*
  	 * mode2 is only needed for storing the higher order bits.
  	 * Trust i_mode for the lower order ones
-diff -NurpP --minimal linux-2.6.9-rc2/fs/namei.c linux-2.6.9-rc2-vs1.9.2.27/fs/namei.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/namei.c linux-2.6.9-rc2-vs1.9.2.28/fs/namei.c
 --- linux-2.6.9-rc2/fs/namei.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/namei.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/namei.c	2004-09-13 18:51:02.000000000 +0200
 @@ -27,6 +27,8 @@
  #include <linux/security.h>
  #include <linux/mount.h>
@@ -3079,9 +3096,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namei.c linux-2.6.9-rc2-vs1.9.2.27/fs/n
  		return -EPERM;
  	if (!dir->i_op || !dir->i_op->link)
  		return -EPERM;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/fs/namespace.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.28/fs/namespace.c
 --- linux-2.6.9-rc2/fs/namespace.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/namespace.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/namespace.c	2004-09-16 02:54:08.000000000 +0200
 @@ -21,6 +21,8 @@
  #include <linux/namei.h>
  #include <linux/security.h>
@@ -3099,17 +3116,19 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  		{ 0, NULL }
  	};
  	static struct proc_fs_info mnt_info[] = {
-@@ -239,6 +242,9 @@ static int show_vfsmnt(struct seq_file *
+@@ -239,6 +242,11 @@ static int show_vfsmnt(struct seq_file *
  	};
  	struct proc_fs_info *fs_infop;
  
 +	if (vx_flags(VXF_HIDE_MOUNT, 0))
 +		return 0;
++	if (!vx_check_vfsmount(current->vx_info, mnt))
++		return 0;
 +
  	mangle(m, mnt->mnt_devname ? mnt->mnt_devname : "none");
  	seq_putc(m, ' ');
  	seq_path(m, mnt, mnt->mnt_root, " \t\n\\");
-@@ -338,18 +344,10 @@ int may_umount(struct vfsmount *mnt)
+@@ -338,18 +346,10 @@ int may_umount(struct vfsmount *mnt)
  
  EXPORT_SYMBOL(may_umount);
  
@@ -3131,7 +3150,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  		list_del_init(&mnt->mnt_list);
  		list_del_init(&mnt->mnt_fslink);
  		if (mnt->mnt_parent == mnt) {
-@@ -365,6 +363,32 @@ void umount_tree(struct vfsmount *mnt)
+@@ -365,6 +365,32 @@ void umount_tree(struct vfsmount *mnt)
  	}
  }
  
@@ -3164,7 +3183,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  static int do_umount(struct vfsmount *mnt, int flags)
  {
  	struct super_block * sb = mnt->mnt_sb;
-@@ -480,7 +504,7 @@ asmlinkage long sys_umount(char __user *
+@@ -480,7 +506,7 @@ asmlinkage long sys_umount(char __user *
  		goto dput_and_out;
  
  	retval = -EPERM;
@@ -3173,7 +3192,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  		goto dput_and_out;
  
  	retval = do_umount(nd.mnt, flags);
-@@ -507,6 +531,8 @@ static int mount_is_safe(struct nameidat
+@@ -507,6 +533,8 @@ static int mount_is_safe(struct nameidat
  {
  	if (capable(CAP_SYS_ADMIN))
  		return 0;
@@ -3182,7 +3201,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  	return -EPERM;
  #ifdef notyet
  	if (S_ISLNK(nd->dentry->d_inode->i_mode))
-@@ -769,7 +795,7 @@ static int do_new_mount(struct nameidata
+@@ -769,7 +797,7 @@ static int do_new_mount(struct nameidata
  		return -EINVAL;
  
  	/* we need capabilities... */
@@ -3191,7 +3210,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  		return -EPERM;
  
  	mnt = do_kern_mount(type, flags, name, data);
-@@ -1035,6 +1061,9 @@ long do_mount(char * dev_name, char * di
+@@ -1035,6 +1063,9 @@ long do_mount(char * dev_name, char * di
  		mnt_flags |= MNT_NOEXEC;
  	flags &= ~(MS_NOSUID|MS_NOEXEC|MS_NODEV|MS_ACTIVE);
  
@@ -3201,9 +3220,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/namespace.c linux-2.6.9-rc2-vs1.9.2.27/
  	/* ... and get the mountpoint */
  	retval = path_lookup(dir_name, LOOKUP_FOLLOW, &nd);
  	if (retval)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/inode.c
 --- linux-2.6.9-rc2/fs/nfs/inode.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -35,6 +35,7 @@
  #include <linux/mount.h>
  #include <linux/nfs_idmap.h>
@@ -3349,9 +3368,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/inode.c linux-2.6.9-rc2-vs1.9.2.27/
  
  	if (fattr->valid & (NFS_ATTR_FATTR_V3 | NFS_ATTR_FATTR_V4)) {
  		/*
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/nfs3xdr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/nfs3xdr.c
 --- linux-2.6.9-rc2/fs/nfs/nfs3xdr.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/nfs3xdr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/nfs3xdr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -21,6 +21,7 @@
  #include <linux/nfs.h>
  #include <linux/nfs3.h>
@@ -3441,9 +3460,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.2
  	if (args->type == NF3CHR || args->type == NF3BLK) {
  		*p++ = htonl(MAJOR(args->rdev));
  		*p++ = htonl(MINOR(args->rdev));
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfsroot.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/nfsroot.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfsroot.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/nfsroot.c
 --- linux-2.6.9-rc2/fs/nfs/nfsroot.c	2004-08-14 12:55:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfs/nfsroot.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfs/nfsroot.c	2004-09-13 18:51:02.000000000 +0200
 @@ -87,6 +87,7 @@
  #include <linux/root_dev.h>
  #include <net/ipconfig.h>
@@ -3488,9 +3507,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfs/nfsroot.c linux-2.6.9-rc2-vs1.9.2.2
  	if (strlen(buf) + strlen(cp) > NFS_MAXPATHLEN) {
  		printk(KERN_ERR "Root-NFS: Pathname for remote directory too long.\n");
  		return -1;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/auth.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/auth.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/auth.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/auth.c
 --- linux-2.6.9-rc2/fs/nfsd/auth.c	2004-08-14 12:56:14.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/auth.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/auth.c	2004-09-13 18:51:02.000000000 +0200
 @@ -9,6 +9,7 @@
  #include <linux/sunrpc/svc.h>
  #include <linux/sunrpc/svcauth.h>
@@ -3523,9 +3542,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/auth.c linux-2.6.9-rc2-vs1.9.2.27/
  		cap_t(current->cap_effective) &= ~CAP_NFSD_MASK;
  	} else {
  		cap_t(current->cap_effective) |= (CAP_NFSD_MASK &
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfs3xdr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfs3xdr.c
 --- linux-2.6.9-rc2/fs/nfsd/nfs3xdr.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfs3xdr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfs3xdr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -21,6 +21,7 @@
  #include <linux/sunrpc/svc.h>
  #include <linux/nfsd/nfsd.h>
@@ -3574,9 +3593,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs3xdr.c linux-2.6.9-rc2-vs1.9.2.
  	if (S_ISLNK(stat.mode) && stat.size > NFS3_MAXPATHLEN) {
  		p = xdr_encode_hyper(p, (u64) NFS3_MAXPATHLEN);
  	} else {
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs4xdr.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfs4xdr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs4xdr.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfs4xdr.c
 --- linux-2.6.9-rc2/fs/nfsd/nfs4xdr.c	2004-09-13 18:40:39.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfs4xdr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfs4xdr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -57,6 +57,7 @@
  #include <linux/nfsd_idmap.h>
  #include <linux/nfs4.h>
@@ -3606,9 +3625,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfs4xdr.c linux-2.6.9-rc2-vs1.9.2.
  		if (status == nfserr_resource)
  			goto out_resource;
  		if (status)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfsxdr.c linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfsxdr.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfsxdr.c linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfsxdr.c
 --- linux-2.6.9-rc2/fs/nfsd/nfsxdr.c	2004-08-14 12:54:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/nfsd/nfsxdr.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/nfsd/nfsxdr.c	2004-09-13 18:51:02.000000000 +0200
 @@ -15,6 +15,7 @@
  #include <linux/nfsd/nfsd.h>
  #include <linux/nfsd/xdr.h>
@@ -3657,9 +3676,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/nfsd/nfsxdr.c linux-2.6.9-rc2-vs1.9.2.2
  
  	if (S_ISLNK(type) && stat.size > NFS_MAXPATHLEN) {
  		*p++ = htonl(NFS_MAXPATHLEN);
-diff -NurpP --minimal linux-2.6.9-rc2/fs/open.c linux-2.6.9-rc2-vs1.9.2.27/fs/open.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/open.c linux-2.6.9-rc2-vs1.9.2.28/fs/open.c
 --- linux-2.6.9-rc2/fs/open.c	2004-08-14 12:54:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/open.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/open.c	2004-09-13 18:51:02.000000000 +0200
 @@ -22,6 +22,10 @@
  #include <asm/uaccess.h>
  #include <linux/fs.h>
@@ -3714,9 +3733,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/open.c linux-2.6.9-rc2-vs1.9.2.27/fs/op
  }
  
  void fastcall put_unused_fd(unsigned int fd)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/array.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/array.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/array.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/array.c
 --- linux-2.6.9-rc2/fs/proc/array.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/array.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/array.c	2004-09-13 18:51:02.000000000 +0200
 @@ -73,6 +73,10 @@
  #include <linux/highmem.h>
  #include <linux/file.h>
@@ -3875,9 +3894,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/array.c linux-2.6.9-rc2-vs1.9.2.27
  		tcomm,
  		state,
  		ppid,
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/base.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/base.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/base.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/base.c
 --- linux-2.6.9-rc2/fs/proc/base.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/base.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/base.c	2004-09-13 18:51:02.000000000 +0200
 @@ -32,6 +32,8 @@
  #include <linux/mount.h>
  #include <linux/security.h>
@@ -4075,9 +4094,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/base.c linux-2.6.9-rc2-vs1.9.2.27/
  		goto out;
  	retval = 0;
  
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/generic.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/generic.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/generic.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/generic.c
 --- linux-2.6.9-rc2/fs/proc/generic.c	2004-08-14 12:56:24.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/generic.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/generic.c	2004-09-13 18:51:02.000000000 +0200
 @@ -18,6 +18,8 @@
  #include <linux/init.h>
  #include <linux/idr.h>
@@ -4149,9 +4168,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/generic.c linux-2.6.9-rc2-vs1.9.2.
  		} else {
  			kfree(ent);
  			ent = NULL;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/inode.c
 --- linux-2.6.9-rc2/fs/proc/inode.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -211,6 +211,8 @@ struct inode *proc_get_inode(struct supe
  			inode->i_uid = de->uid;
  			inode->i_gid = de->gid;
@@ -4161,9 +4180,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/inode.c linux-2.6.9-rc2-vs1.9.2.27
  		if (de->size)
  			inode->i_size = de->size;
  		if (de->nlink)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/proc_misc.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/proc_misc.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/proc_misc.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/proc_misc.c
 --- linux-2.6.9-rc2/fs/proc/proc_misc.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/proc_misc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/proc_misc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -44,6 +44,9 @@
  #include <linux/jiffies.h>
  #include <linux/sysrq.h>
@@ -4222,9 +4241,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/proc_misc.c linux-2.6.9-rc2-vs1.9.
  	len = sprintf(page,"%lu.%02lu %lu.%02lu\n",
  			(unsigned long) uptime.tv_sec,
  			(uptime.tv_nsec / (NSEC_PER_SEC / 100)),
-diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/root.c linux-2.6.9-rc2-vs1.9.2.27/fs/proc/root.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/root.c linux-2.6.9-rc2-vs1.9.2.28/fs/proc/root.c
 --- linux-2.6.9-rc2/fs/proc/root.c	2004-08-14 12:55:59.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/proc/root.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/proc/root.c	2004-09-13 18:51:02.000000000 +0200
 @@ -23,6 +23,9 @@ struct proc_dir_entry *proc_net, *proc_b
  #ifdef CONFIG_SYSCTL
  struct proc_dir_entry *proc_sys_root;
@@ -4243,9 +4262,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/proc/root.c linux-2.6.9-rc2-vs1.9.2.27/
  }
  
  static struct dentry *proc_root_lookup(struct inode * dir, struct dentry * dentry, struct nameidata *nd)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/inode.c linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/inode.c linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/inode.c
 --- linux-2.6.9-rc2/fs/reiserfs/inode.c	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -17,6 +17,7 @@
  #include <linux/mpage.h>
  #include <linux/writeback.h>
@@ -4391,9 +4410,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/inode.c linux-2.6.9-rc2-vs1.9.
      if (!error) {
  	if ((ia_valid & ATTR_UID && attr->ia_uid != inode->i_uid) ||
  	    (ia_valid & ATTR_GID && attr->ia_gid != inode->i_gid)) {
-diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/ioctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/ioctl.c linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/ioctl.c
 --- linux-2.6.9-rc2/fs/reiserfs/ioctl.c	2004-08-14 12:55:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/ioctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/ioctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -20,7 +20,7 @@
  int reiserfs_ioctl (struct inode * inode, struct file * filp, unsigned int cmd,
  		unsigned long arg)
@@ -4436,9 +4455,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/ioctl.c linux-2.6.9-rc2-vs1.9.
  		sd_attrs_to_i_attrs( flags, inode );
  		REISERFS_I(inode) -> i_attrs = flags;
  		inode->i_ctime = CURRENT_TIME;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/super.c linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/super.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/super.c linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/super.c
 --- linux-2.6.9-rc2/fs/reiserfs/super.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/reiserfs/super.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/reiserfs/super.c	2004-09-13 18:51:02.000000000 +0200
 @@ -710,6 +710,7 @@ static int reiserfs_parse_options (struc
  	{"noattrs",	.clrmask = 1<<REISERFS_ATTRS},
  	{"user_xattr",	.setmask = 1<<REISERFS_XATTRS_USER},
@@ -4447,9 +4466,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/reiserfs/super.c linux-2.6.9-rc2-vs1.9.
  #ifdef CONFIG_REISERFS_FS_POSIX_ACL
  	{"acl",		.setmask = 1<<REISERFS_POSIXACL},
  	{"noacl",	.clrmask = 1<<REISERFS_POSIXACL},
-diff -NurpP --minimal linux-2.6.9-rc2/fs/stat.c linux-2.6.9-rc2-vs1.9.2.27/fs/stat.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/stat.c linux-2.6.9-rc2-vs1.9.2.28/fs/stat.c
 --- linux-2.6.9-rc2/fs/stat.c	2004-08-14 12:54:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/stat.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/stat.c	2004-09-13 18:51:02.000000000 +0200
 @@ -26,6 +26,7 @@ void generic_fillattr(struct inode *inod
  	stat->nlink = inode->i_nlink;
  	stat->uid = inode->i_uid;
@@ -4458,9 +4477,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/stat.c linux-2.6.9-rc2-vs1.9.2.27/fs/st
  	stat->rdev = inode->i_rdev;
  	stat->atime = inode->i_atime;
  	stat->mtime = inode->i_mtime;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/super.c linux-2.6.9-rc2-vs1.9.2.27/fs/super.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/super.c linux-2.6.9-rc2-vs1.9.2.28/fs/super.c
 --- linux-2.6.9-rc2/fs/super.c	2004-08-14 12:55:22.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/super.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/super.c	2004-09-13 18:51:02.000000000 +0200
 @@ -35,6 +35,8 @@
  #include <linux/vfs.h>
  #include <linux/writeback.h>		/* for the emergency remount stuff */
@@ -4484,9 +4503,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/super.c linux-2.6.9-rc2-vs1.9.2.27/fs/s
   	error = security_sb_kern_mount(sb, secdata);
   	if (error)
   		goto out_sb;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/sysfs/mount.c linux-2.6.9-rc2-vs1.9.2.27/fs/sysfs/mount.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/sysfs/mount.c linux-2.6.9-rc2-vs1.9.2.28/fs/sysfs/mount.c
 --- linux-2.6.9-rc2/fs/sysfs/mount.c	2004-08-14 12:56:00.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/sysfs/mount.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/sysfs/mount.c	2004-09-13 18:51:02.000000000 +0200
 @@ -11,8 +11,6 @@
  
  #include "sysfs.h"
@@ -4505,9 +4524,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/sysfs/mount.c linux-2.6.9-rc2-vs1.9.2.2
  	sb->s_op = &sysfs_ops;
  	sysfs_sb = sb;
  
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_ioctl.c linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_ioctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_ioctl.c linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_ioctl.c
 --- linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_ioctl.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_ioctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_ioctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -1006,6 +1006,8 @@ xfs_ioc_fsgeometry(
  #define LINUX_XFLAG_APPEND	0x00000020 /* writes to file may only append */
  #define LINUX_XFLAG_NODUMP	0x00000040 /* do not dump file */
@@ -4528,9 +4547,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_ioctl.c linux-2.6.9-r
  	if (di_flags & XFS_DIFLAG_APPEND)
  		flags |= LINUX_XFLAG_APPEND;
  	if (di_flags & XFS_DIFLAG_SYNC)
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_iops.c linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_iops.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_iops.c linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_iops.c
 --- linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_iops.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_iops.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_iops.c	2004-09-13 18:51:02.000000000 +0200
 @@ -499,6 +499,28 @@ linvfs_getattr(
  }
  
@@ -4572,9 +4591,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_iops.c linux-2.6.9-rc
  	VOP_SETATTR(vp, &vattr, flags, NULL, error);
  	if (error)
  		return -error;
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_super.c linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_super.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_super.c linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_super.c
 --- linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_super.c	2004-09-13 18:40:40.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_super.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_super.c	2004-09-13 18:51:02.000000000 +0200
 @@ -192,6 +192,14 @@ xfs_revalidate_inode(
  		inode->i_flags |= S_IMMUTABLE;
  	else
@@ -4590,9 +4609,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_super.c linux-2.6.9-r
  	if (ip->i_d.di_flags & XFS_DIFLAG_APPEND)
  		inode->i_flags |= S_APPEND;
  	else
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_vnode.c linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_vnode.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_vnode.c linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_vnode.c
 --- linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_vnode.c	2004-09-13 18:40:41.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/linux-2.6/xfs_vnode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/linux-2.6/xfs_vnode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -212,6 +212,14 @@ vn_revalidate_core(
  		inode->i_flags |= S_IMMUTABLE;
  	else
@@ -4608,9 +4627,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/linux-2.6/xfs_vnode.c linux-2.6.9-r
  	if (vap->va_xflags & XFS_XFLAG_APPEND)
  		inode->i_flags |= S_APPEND;
  	else
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_dinode.h linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_dinode.h
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_dinode.h linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_dinode.h
 --- linux-2.6.9-rc2/fs/xfs/xfs_dinode.h	2004-09-13 18:40:42.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_dinode.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_dinode.h	2004-09-13 18:51:02.000000000 +0200
 @@ -457,6 +457,9 @@ xfs_dinode_t *xfs_buf_to_dinode(struct x
  #define XFS_DIFLAG_NOATIME_BIT   6	/* do not update atime */
  #define XFS_DIFLAG_NODUMP_BIT    7	/* do not dump */
@@ -4631,9 +4650,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_dinode.h linux-2.6.9-rc2-vs1.9.
  
  #define XFS_DIFLAG_ANY \
  	(XFS_DIFLAG_REALTIME | XFS_DIFLAG_PREALLOC | XFS_DIFLAG_NEWRTBM | \
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_fs.h linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_fs.h linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_fs.h
 --- linux-2.6.9-rc2/fs/xfs/xfs_fs.h	2004-09-13 18:40:42.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -77,6 +77,8 @@ struct fsxattr {
  #define XFS_XFLAG_NOATIME	0x00000040	/* do not update access time */
  #define XFS_XFLAG_NODUMP	0x00000080	/* do not include in backups */
@@ -4643,9 +4662,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_fs.h linux-2.6.9-rc2-vs1.9.2.27
  #define XFS_XFLAG_HASATTR	0x80000000	/* no DIFLAG for this	*/
  
  /*
-diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_vnodeops.c linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_vnodeops.c
+diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_vnodeops.c linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_vnodeops.c
 --- linux-2.6.9-rc2/fs/xfs/xfs_vnodeops.c	2004-09-13 18:40:43.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/fs/xfs/xfs_vnodeops.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/fs/xfs/xfs_vnodeops.c	2004-09-13 18:51:02.000000000 +0200
 @@ -838,6 +838,10 @@ xfs_setattr(
  			}
  			if (vap->va_xflags & XFS_XFLAG_IMMUTABLE)
@@ -4657,9 +4676,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/fs/xfs/xfs_vnodeops.c linux-2.6.9-rc2-vs1.
  			if (vap->va_xflags & XFS_XFLAG_APPEND)
  				ip->i_d.di_flags |= XFS_DIFLAG_APPEND;
  			if (vap->va_xflags & XFS_XFLAG_SYNC)
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-alpha/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-alpha/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-alpha/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-alpha/unistd.h
 --- linux-2.6.9-rc2/include/asm-alpha/unistd.h	2004-08-14 12:55:19.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-alpha/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-alpha/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -233,6 +233,7 @@
  #define __NR_osf_memcntl	260	/* not implemented */
  #define __NR_osf_fdatasync	261	/* not implemented */
@@ -4668,9 +4687,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-alpha/unistd.h linux-2.6.9-rc2
  
  /*
   * Linux-specific system calls begin at 300
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm/tlb.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-arm/tlb.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm/tlb.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-arm/tlb.h
 --- linux-2.6.9-rc2/include/asm-arm/tlb.h	2004-08-14 12:54:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-arm/tlb.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-arm/tlb.h	2004-09-13 18:51:02.000000000 +0200
 @@ -58,7 +58,8 @@ tlb_finish_mmu(struct mmu_gather *tlb, u
  
  	if (rss < freed)
@@ -4681,9 +4700,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm/tlb.h linux-2.6.9-rc2-vs1.
  
  	if (freed) {
  		flush_tlb_mm(mm);
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm26/tlb.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-arm26/tlb.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm26/tlb.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-arm26/tlb.h
 --- linux-2.6.9-rc2/include/asm-arm26/tlb.h	2004-08-14 12:56:23.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-arm26/tlb.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-arm26/tlb.h	2004-09-13 18:51:02.000000000 +0200
 @@ -39,7 +39,8 @@ tlb_finish_mmu(struct mmu_gather *tlb, u
  
          if (rss < freed)
@@ -4694,9 +4713,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-arm26/tlb.h linux-2.6.9-rc2-vs
  
          if (freed) {
                  flush_tlb_mm(mm);
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-generic/tlb.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-generic/tlb.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-generic/tlb.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-generic/tlb.h
 --- linux-2.6.9-rc2/include/asm-generic/tlb.h	2004-08-14 12:54:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-generic/tlb.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-generic/tlb.h	2004-09-13 18:51:02.000000000 +0200
 @@ -15,6 +15,7 @@
  
  #include <linux/config.h>
@@ -4715,9 +4734,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-generic/tlb.h linux-2.6.9-rc2-
  	tlb_flush_mmu(tlb, start, end);
  
  	/* keep the page table cache within bounds */
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ia64/tlb.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-ia64/tlb.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ia64/tlb.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-ia64/tlb.h
 --- linux-2.6.9-rc2/include/asm-ia64/tlb.h	2004-09-13 18:40:44.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-ia64/tlb.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-ia64/tlb.h	2004-09-13 18:51:02.000000000 +0200
 @@ -165,7 +165,8 @@ tlb_finish_mmu (struct mmu_gather *tlb, 
  
  	if (rss < freed)
@@ -4728,9 +4747,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ia64/tlb.h linux-2.6.9-rc2-vs1
  	/*
  	 * Note: tlb->nr may be 0 at this point, so we can't rely on tlb->start_addr and
  	 * tlb->end_addr.
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68k/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-m68k/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68k/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-m68k/unistd.h
 --- linux-2.6.9-rc2/include/asm-m68k/unistd.h	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-m68k/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-m68k/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -239,7 +239,9 @@
  #define __NR_fremovexattr	234
  #define __NR_futex		235
@@ -4742,9 +4761,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68k/unistd.h linux-2.6.9-rc2-
  
  /* user-visible error numbers are in the range -1 - -124: see
     <asm-m68k/errno.h> */
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68knommu/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-m68knommu/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68knommu/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-m68knommu/unistd.h
 --- linux-2.6.9-rc2/include/asm-m68knommu/unistd.h	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-m68knommu/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-m68knommu/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -221,7 +221,9 @@
  #define __NR_setfsuid32		215
  #define __NR_setfsgid32		216
@@ -4756,9 +4775,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-m68knommu/unistd.h linux-2.6.9
  
  /* user-visible error numbers are in the range -1 - -122: see
     <asm-m68k/errno.h> */
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-parisc/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-parisc/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-parisc/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-parisc/unistd.h
 --- linux-2.6.9-rc2/include/asm-parisc/unistd.h	2004-08-14 12:54:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-parisc/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-parisc/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -728,7 +728,9 @@
  #define __NR_mq_notify          (__NR_Linux + 233)
  #define __NR_mq_getsetattr      (__NR_Linux + 234)
@@ -4770,9 +4789,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-parisc/unistd.h linux-2.6.9-rc
  
  #define HPUX_GATEWAY_ADDR       0xC0000004
  #define LINUX_GATEWAY_ADDR      0x100
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-ppc/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-ppc/unistd.h
 --- linux-2.6.9-rc2/include/asm-ppc/unistd.h	2004-08-14 12:54:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-ppc/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-ppc/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -261,7 +261,7 @@
  #define __NR_fadvise64_64	254
  #define __NR_rtas		255
@@ -4782,9 +4801,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc/unistd.h linux-2.6.9-rc2-v
  /* Number 258 is reserved for new sys_remap_file_pages */
  /* Number 259 is reserved for new sys_mbind */
  /* Number 260 is reserved for new sys_get_mempolicy */
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc64/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-ppc64/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc64/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-ppc64/unistd.h
 --- linux-2.6.9-rc2/include/asm-ppc64/unistd.h	2004-08-14 12:54:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-ppc64/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-ppc64/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -267,7 +267,7 @@
  #define __NR_fadvise64_64	254
  #define __NR_rtas		255
@@ -4794,9 +4813,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-ppc64/unistd.h linux-2.6.9-rc2
  /* Number 258 is reserved for new sys_remap_file_pages */
  /* Number 259 is reserved for new sys_mbind */
  /* Number 260 is reserved for new sys_get_mempolicy */
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-s390/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-s390/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-s390/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-s390/unistd.h
 --- linux-2.6.9-rc2/include/asm-s390/unistd.h	2004-08-14 12:56:24.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-s390/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-s390/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -255,7 +255,7 @@
  #define __NR_clock_gettime	(__NR_timer_create+6)
  #define __NR_clock_getres	(__NR_timer_create+7)
@@ -4806,9 +4825,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-s390/unistd.h linux-2.6.9-rc2-
  #define __NR_fadvise64_64	264
  #define __NR_statfs64		265
  #define __NR_fstatfs64		266
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-sparc/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-sparc/unistd.h
 --- linux-2.6.9-rc2/include/asm-sparc/unistd.h	2004-09-13 18:40:45.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-sparc/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-sparc/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -283,7 +283,7 @@
  #define __NR_timer_getoverrun	264
  #define __NR_timer_delete	265
@@ -4818,9 +4837,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc/unistd.h linux-2.6.9-rc2
  #define __NR_io_setup		268
  #define __NR_io_destroy		269
  #define __NR_io_submit		270
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc64/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-sparc64/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc64/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-sparc64/unistd.h
 --- linux-2.6.9-rc2/include/asm-sparc64/unistd.h	2004-09-13 18:40:45.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-sparc64/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-sparc64/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -285,7 +285,7 @@
  #define __NR_timer_getoverrun	264
  #define __NR_timer_delete	265
@@ -4830,9 +4849,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-sparc64/unistd.h linux-2.6.9-r
  #define __NR_io_setup		268
  #define __NR_io_destroy		269
  #define __NR_io_submit		270
-diff -NurpP --minimal linux-2.6.9-rc2/include/asm-x86_64/unistd.h linux-2.6.9-rc2-vs1.9.2.27/include/asm-x86_64/unistd.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/asm-x86_64/unistd.h linux-2.6.9-rc2-vs1.9.2.28/include/asm-x86_64/unistd.h
 --- linux-2.6.9-rc2/include/asm-x86_64/unistd.h	2004-09-13 18:40:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/asm-x86_64/unistd.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/asm-x86_64/unistd.h	2004-09-13 18:51:02.000000000 +0200
 @@ -531,9 +531,7 @@ __SYSCALL(__NR_tgkill, sys_tgkill)
  #define __NR_utimes		235
  __SYSCALL(__NR_utimes, sys_utimes)
@@ -4844,9 +4863,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/asm-x86_64/unistd.h linux-2.6.9-rc
  #define __NR_mbind 		237
  __SYSCALL(__NR_mbind, sys_mbind)
  #define __NR_set_mempolicy 	238
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/capability.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/capability.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/capability.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/capability.h
 --- linux-2.6.9-rc2/include/linux/capability.h	2004-08-14 12:55:09.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/capability.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/capability.h	2004-09-13 18:51:02.000000000 +0200
 @@ -235,6 +235,7 @@ typedef __u32 kernel_cap_t;
  /* Allow enabling/disabling tagged queuing on SCSI controllers and sending
     arbitrary SCSI commands */
@@ -4867,9 +4886,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/capability.h linux-2.6.9-rc2
  #ifdef __KERNEL__
  /* 
   * Bounding set
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/devpts_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/devpts_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/devpts_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/devpts_fs.h
 --- linux-2.6.9-rc2/include/linux/devpts_fs.h	2004-08-14 12:55:59.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/devpts_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/devpts_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -30,5 +30,7 @@ static inline void devpts_pty_kill(int n
  
  #endif
@@ -4878,9 +4897,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/devpts_fs.h linux-2.6.9-rc2-
 +
  
  #endif /* _LINUX_DEVPTS_FS_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext2_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/ext2_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext2_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/ext2_fs.h
 --- linux-2.6.9-rc2/include/linux/ext2_fs.h	2004-09-13 18:40:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/ext2_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/ext2_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -192,6 +192,8 @@ struct ext2_group_desc
  #define EXT2_NOTAIL_FL			0x00008000 /* file tail should not be merged */
  #define EXT2_DIRSYNC_FL			0x00010000 /* dirsync behaviour (directories only) */
@@ -4915,9 +4934,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext2_fs.h linux-2.6.9-rc2-vs
  
  #define clear_opt(o, opt)		o &= ~EXT2_MOUNT_##opt
  #define set_opt(o, opt)			o |= EXT2_MOUNT_##opt
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext3_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/ext3_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext3_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/ext3_fs.h
 --- linux-2.6.9-rc2/include/linux/ext3_fs.h	2004-09-13 18:40:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/ext3_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/ext3_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -185,6 +185,8 @@ struct ext3_group_desc
  #define EXT3_NOTAIL_FL			0x00008000 /* file tail should not be merged */
  #define EXT3_DIRSYNC_FL			0x00010000 /* dirsync behaviour (directories only) */
@@ -4962,9 +4981,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ext3_fs.h linux-2.6.9-rc2-vs
  
  /* Compatibility, for having both ext2_fs.h and ext3_fs.h included at once */
  #ifndef _LINUX_EXT2_FS_H
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/fs.h
 --- linux-2.6.9-rc2/include/linux/fs.h	2004-09-13 18:40:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/fs.h	2004-09-15 18:26:10.000000000 +0200
 @@ -120,6 +120,7 @@ extern int leases_enable, dir_notify_ena
  #define MS_VERBOSE	32768
  #define MS_POSIXACL	(1<<16)	/* VFS does not apply the umask */
@@ -5031,17 +5050,19 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/fs.h linux-2.6.9-rc2-vs1.9.2
  	dev_t			i_rdev;
  	loff_t			i_size;
  	struct timespec		i_atime;
-@@ -576,6 +588,7 @@ struct file {
- 	struct fown_struct	f_owner;
+@@ -577,6 +589,9 @@ struct file {
  	unsigned int		f_uid, f_gid;
  	struct file_ra_state	f_ra;
-+	struct vx_info		*f_vx_info;
  
++	struct vx_info		*f_vx_info;
++	struct list_head	f_vx_list;
++
  	unsigned long		f_version;
  	void			*f_security;
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/init_task.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/init_task.h
+ 
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/init_task.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/init_task.h
 --- linux-2.6.9-rc2/include/linux/init_task.h	2004-08-14 12:54:49.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/init_task.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/init_task.h	2004-09-13 18:51:02.000000000 +0200
 @@ -112,6 +112,10 @@ extern struct group_info init_groups;
  	.proc_lock	= SPIN_LOCK_UNLOCKED,				\
  	.switch_lock	= SPIN_LOCK_UNLOCKED,				\
@@ -5053,9 +5074,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/init_task.h linux-2.6.9-rc2-
  }
  
  
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ip.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/ip.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ip.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/ip.h
 --- linux-2.6.9-rc2/include/linux/ip.h	2004-08-14 12:55:09.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/ip.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/ip.h	2004-09-13 18:51:02.000000000 +0200
 @@ -111,6 +111,7 @@ struct inet_opt {
  	/* Socket demultiplex comparisons on incoming packets. */
  	__u32			daddr;		/* Foreign IPv4 addr */
@@ -5064,9 +5085,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ip.h linux-2.6.9-rc2-vs1.9.2
  	__u16			dport;		/* Destination port */
  	__u16			num;		/* Local port */
  	__u32			saddr;		/* Sending source */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ipc.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/ipc.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ipc.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/ipc.h
 --- linux-2.6.9-rc2/include/linux/ipc.h	2004-08-14 12:54:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/ipc.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/ipc.h	2004-09-13 18:51:02.000000000 +0200
 @@ -66,6 +66,7 @@ struct kern_ipc_perm
  	mode_t		mode; 
  	unsigned long	seq;
@@ -5075,9 +5096,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ipc.h linux-2.6.9-rc2-vs1.9.
  };
  
  #endif /* __KERNEL__ */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/namespace.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/namespace.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/namespace.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/namespace.h
 --- linux-2.6.9-rc2/include/linux/namespace.h	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/namespace.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/namespace.h	2004-09-13 18:51:02.000000000 +0200
 @@ -13,6 +13,7 @@ struct namespace {
  };
  
@@ -5086,9 +5107,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/namespace.h linux-2.6.9-rc2-
  extern int copy_namespace(int, struct task_struct *);
  extern void __put_namespace(struct namespace *namespace);
  
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/net.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/net.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/net.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/net.h
 --- linux-2.6.9-rc2/include/linux/net.h	2004-09-13 18:40:46.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/net.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/net.h	2004-09-13 18:51:02.000000000 +0200
 @@ -60,6 +60,8 @@ typedef enum {
  #define SOCK_ASYNC_NOSPACE	0
  #define SOCK_ASYNC_WAITDATA	1
@@ -5106,9 +5127,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/net.h linux-2.6.9-rc2-vs1.9.
  };
  
  struct vm_area_struct;
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/nfs_mount.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/nfs_mount.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/nfs_mount.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/nfs_mount.h
 --- linux-2.6.9-rc2/include/linux/nfs_mount.h	2004-08-14 12:54:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/nfs_mount.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/nfs_mount.h	2004-09-13 18:51:02.000000000 +0200
 @@ -60,6 +60,7 @@ struct nfs_mount_data {
  #define NFS_MOUNT_BROKEN_SUID	0x0400	/* 4 */
  #define NFS_MOUNT_STRICTLOCK	0x1000	/* reserved for NFSv4 */
@@ -5117,9 +5138,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/nfs_mount.h linux-2.6.9-rc2-
  #define NFS_MOUNT_FLAGMASK	0xFFFF
  
  #endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/proc_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/proc_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/proc_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/proc_fs.h
 --- linux-2.6.9-rc2/include/linux/proc_fs.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/proc_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/proc_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -55,6 +55,7 @@ struct proc_dir_entry {
  	nlink_t nlink;
  	uid_t uid;
@@ -5140,9 +5161,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/proc_fs.h linux-2.6.9-rc2-vs
  	} op;
  	struct proc_dir_entry *pde;
  	struct inode vfs_inode;
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ptrace.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/ptrace.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ptrace.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/ptrace.h
 --- linux-2.6.9-rc2/include/linux/ptrace.h	2004-08-14 12:54:49.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/ptrace.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/ptrace.h	2004-09-13 18:51:02.000000000 +0200
 @@ -74,6 +74,8 @@
  
  #include <linux/compiler.h>		/* For unlikely.  */
@@ -5152,9 +5173,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/ptrace.h linux-2.6.9-rc2-vs1
  
  extern int ptrace_readdata(struct task_struct *tsk, unsigned long src, char __user *dst, int len);
  extern int ptrace_writedata(struct task_struct *tsk, char __user *src, unsigned long dst, int len);
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/reiserfs_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/reiserfs_fs.h
 --- linux-2.6.9-rc2/include/linux/reiserfs_fs.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/reiserfs_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/reiserfs_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -888,6 +888,13 @@ struct stat_data_v1
  #define REISERFS_COMPR_FL     EXT2_COMPR_FL
  #define REISERFS_NOTAIL_FL    EXT2_NOTAIL_FL
@@ -5169,9 +5190,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs.h linux-2.6.9-rc
  /* persistent flags that file inherits from the parent directory */
  #define REISERFS_INHERIT_MASK ( REISERFS_IMMUTABLE_FL |	\
  				REISERFS_SYNC_FL |	\
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs_sb.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/reiserfs_fs_sb.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs_sb.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/reiserfs_fs_sb.h
 --- linux-2.6.9-rc2/include/linux/reiserfs_fs_sb.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/reiserfs_fs_sb.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/reiserfs_fs_sb.h	2004-09-13 18:51:02.000000000 +0200
 @@ -446,6 +446,7 @@ enum reiserfs_mount_options {
      REISERFS_POSIXACL,
      REISERFS_BARRIER_NONE,
@@ -5180,9 +5201,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/reiserfs_fs_sb.h linux-2.6.9
  
      REISERFS_TEST1,
      REISERFS_TEST2,
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sched.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/sched.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sched.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/sched.h
 --- linux-2.6.9-rc2/include/linux/sched.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/sched.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/sched.h	2004-09-13 18:51:02.000000000 +0200
 @@ -101,6 +101,7 @@ extern unsigned long nr_iowait(void);
  #include <linux/timer.h>
  
@@ -5243,9 +5264,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sched.h linux-2.6.9-rc2-vs1.
  static inline struct user_struct *get_uid(struct user_struct *u)
  {
  	atomic_inc(&u->__count);
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/shmem_fs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/shmem_fs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/shmem_fs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/shmem_fs.h
 --- linux-2.6.9-rc2/include/linux/shmem_fs.h	2004-08-14 12:56:00.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/shmem_fs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/shmem_fs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -8,6 +8,9 @@
  
  #define SHMEM_NR_DIRECT 16
@@ -5256,9 +5277,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/shmem_fs.h linux-2.6.9-rc2-v
  struct shmem_inode_info {
  	spinlock_t		lock;
  	unsigned long		next_index;
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/stat.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/stat.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/stat.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/stat.h
 --- linux-2.6.9-rc2/include/linux/stat.h	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/stat.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/stat.h	2004-09-13 18:51:02.000000000 +0200
 @@ -63,6 +63,7 @@ struct kstat {
  	unsigned int	nlink;
  	uid_t		uid;
@@ -5267,9 +5288,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/stat.h linux-2.6.9-rc2-vs1.9
  	dev_t		rdev;
  	loff_t		size;
  	struct timespec  atime;
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/auth.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/sunrpc/auth.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/auth.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/sunrpc/auth.h
 --- linux-2.6.9-rc2/include/linux/sunrpc/auth.h	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/sunrpc/auth.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/sunrpc/auth.h	2004-09-13 18:51:02.000000000 +0200
 @@ -28,6 +28,7 @@
  struct auth_cred {
  	uid_t	uid;
@@ -5278,9 +5299,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/auth.h linux-2.6.9-rc
  	struct group_info *group_info;
  };
  
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/clnt.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/sunrpc/clnt.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/clnt.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/sunrpc/clnt.h
 --- linux-2.6.9-rc2/include/linux/sunrpc/clnt.h	2004-08-14 12:55:34.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/sunrpc/clnt.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/sunrpc/clnt.h	2004-09-13 18:51:02.000000000 +0200
 @@ -53,7 +53,8 @@ struct rpc_clnt {
  				cl_autobind : 1,/* use getport() */
  				cl_droppriv : 1,/* enable NFS suid hack */
@@ -5291,9 +5312,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sunrpc/clnt.h linux-2.6.9-rc
  
  	struct rpc_rtt *	cl_rtt;		/* RTO estimator data */
  	struct rpc_portmap *	cl_pmap;	/* port mapping */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysctl.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/sysctl.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysctl.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/sysctl.h
 --- linux-2.6.9-rc2/include/linux/sysctl.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/sysctl.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/sysctl.h	2004-09-13 18:51:02.000000000 +0200
 @@ -134,6 +134,7 @@ enum
  	KERN_SPARC_SCONS_PWROFF=64, /* int: serial console power-off halt */
  	KERN_HZ_TIMER=65,	/* int: hz timer on or off */
@@ -5302,9 +5323,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysctl.h linux-2.6.9-rc2-vs1
  };
  
  
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysfs.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/sysfs.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysfs.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/sysfs.h
 --- linux-2.6.9-rc2/include/linux/sysfs.h	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/sysfs.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/sysfs.h	2004-09-13 18:51:02.000000000 +0200
 @@ -9,6 +9,8 @@
  #ifndef _SYSFS_H_
  #define _SYSFS_H_
@@ -5314,9 +5335,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/sysfs.h linux-2.6.9-rc2-vs1.
  struct kobject;
  struct module;
  
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/types.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/types.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/types.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/types.h
 --- linux-2.6.9-rc2/include/linux/types.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/types.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/types.h	2004-09-13 18:51:02.000000000 +0200
 @@ -36,6 +36,8 @@ typedef __kernel_uid32_t	uid_t;
  typedef __kernel_gid32_t	gid_t;
  typedef __kernel_uid16_t        uid16_t;
@@ -5326,9 +5347,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/types.h linux-2.6.9-rc2-vs1.
  
  #ifdef CONFIG_UID16
  /* This is defined by include/asm-{arch}/posix_types.h */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_base.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_base.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_base.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_base.h
 --- linux-2.6.9-rc2/include/linux/vs_base.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_base.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_base.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,90 @@
 +#ifndef _VX_VS_BASE_H
 +#define _VX_VS_BASE_H
@@ -5420,9 +5441,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_base.h linux-2.6.9-rc2-vs
 +
 +
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_context.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_context.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_context.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_context.h
 --- linux-2.6.9-rc2/include/linux/vs_context.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_context.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_context.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,122 @@
 +#ifndef _VX_VS_CONTEXT_H
 +#define _VX_VS_CONTEXT_H
@@ -5546,9 +5567,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_context.h linux-2.6.9-rc2
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_cvirt.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_cvirt.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_cvirt.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_cvirt.h
 --- linux-2.6.9-rc2/include/linux/vs_cvirt.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_cvirt.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_cvirt.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,90 @@
 +#ifndef _VX_VS_CVIRT_H
 +#define _VX_VS_CVIRT_H
@@ -5640,9 +5661,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_cvirt.h linux-2.6.9-rc2-v
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_dlimit.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_dlimit.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_dlimit.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_dlimit.h
 --- linux-2.6.9-rc2/include/linux/vs_dlimit.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_dlimit.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_dlimit.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,207 @@
 +#ifndef _VX_VS_DLIMIT_H
 +#define _VX_VS_DLIMIT_H
@@ -5851,10 +5872,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_dlimit.h linux-2.6.9-rc2-
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_limit.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_limit.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_limit.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_limit.h
 --- linux-2.6.9-rc2/include/linux/vs_limit.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_limit.h	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,109 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_limit.h	2004-09-16 04:01:13.000000000 +0200
+@@ -0,0 +1,98 @@
 +#ifndef _VX_VS_LIMIT_H
 +#define _VX_VS_LIMIT_H
 +
@@ -5893,27 +5914,16 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_limit.h linux-2.6.9-rc2-v
 +
 +#define vx_nproc_inc(p)	\
 +	vx_acc_cres((p)->vx_info, 1, (p), RLIMIT_NPROC)
++
 +#define vx_nproc_dec(p)	\
 +	vx_acc_cres((p)->vx_info,-1, (p), RLIMIT_NPROC)
 +
-+#define vx_files_inc(f)	\
++#define vx_files_inc(f) \
 +	vx_acc_cres((f)->f_vx_info, 1, (f), RLIMIT_NOFILE)
++
 +#define vx_files_dec(f)	\
 +	vx_acc_cres((f)->f_vx_info,-1, (f), RLIMIT_NOFILE)
 +
-+/*
-+#define vx_openfd_inc(f) do {					\
-+	vx_acc_cres(current->vx_info, 1, RLIMIT_OPENFD);	\
-+	printk("vx_openfd_inc: %d[#%d] in %s:%d\n",		\
-+		f, current->xid, __FILE__, __LINE__);		\
-+	} while (0)
-+
-+#define vx_openfd_dec(f) do {					\
-+	vx_acc_cres(current->vx_info,-1, RLIMIT_OPENFD);	\
-+	printk("vx_openfd_dec: %d[#%d] in %s:%d\n",		\
-+		f, current->xid, __FILE__, __LINE__);		\
-+	} while (0)
-+*/
 +
 +#define vx_cres_avail(v,n,r) \
 +        __vx_cres_avail((v), (r), (n), __FILE__, __LINE__)
@@ -5964,9 +5974,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_limit.h linux-2.6.9-rc2-v
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_memory.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_memory.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_memory.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_memory.h
 --- linux-2.6.9-rc2/include/linux/vs_memory.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_memory.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_memory.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,127 @@
 +#ifndef _VX_VS_MEMORY_H
 +#define _VX_VS_MEMORY_H
@@ -6095,9 +6105,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_memory.h linux-2.6.9-rc2-
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_network.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_network.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_network.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_network.h
 --- linux-2.6.9-rc2/include/linux/vs_network.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_network.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_network.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,164 @@
 +#ifndef _NX_VS_NETWORK_H
 +#define _NX_VS_NETWORK_H
@@ -6263,9 +6273,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_network.h linux-2.6.9-rc2
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_socket.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_socket.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_socket.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_socket.h
 --- linux-2.6.9-rc2/include/linux/vs_socket.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vs_socket.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vs_socket.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,66 @@
 +#ifndef _VX_VS_SOCKET_H
 +#define _VX_VS_SOCKET_H
@@ -6333,10 +6343,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vs_socket.h linux-2.6.9-rc2-
 +#else
 +#warning duplicate inclusion
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/context.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/context.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/context.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/context.h
 --- linux-2.6.9-rc2/include/linux/vserver/context.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/context.h	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,192 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/context.h	2004-09-15 22:59:51.000000000 +0200
+@@ -0,0 +1,195 @@
 +#ifndef _VX_CONTEXT_H
 +#define _VX_CONTEXT_H
 +
@@ -6375,6 +6385,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/context.h linux-2.6.
 +	uint64_t vx_ccaps;			/* context caps (vserver) */
 +
 +	pid_t vx_initpid;			/* PID of fake init process */
++
++	spinlock_t vx_lock;	
++	struct list_head vx_files;
 +
 +	struct _vx_limit limit;			/* vserver limits */
 +	struct _vx_sched sched;			/* vserver scheduler */
@@ -6529,9 +6542,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/context.h linux-2.6.
 +
 +
 +#endif	/* _VX_CONTEXT_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/cvirt.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/cvirt.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/cvirt.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/cvirt.h
 --- linux-2.6.9-rc2/include/linux/vserver/cvirt.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/cvirt.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/cvirt.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,194 @@
 +/* _VX_CVIRT_H defined below */
 +
@@ -6727,9 +6740,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/cvirt.h linux-2.6.9-
 +
 +#endif	/* _VX_CVIRT_H */
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/debug.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/debug.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/debug.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/debug.h
 --- linux-2.6.9-rc2/include/linux/vserver/debug.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/debug.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/debug.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,50 @@
 +#ifndef _VX_DEBUG_H
 +#define _VX_DEBUG_H
@@ -6781,9 +6794,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/debug.h linux-2.6.9-
 +
 +
 +#endif /* _VX_DEBUG_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/dlimit.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/dlimit.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/dlimit.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/dlimit.h
 --- linux-2.6.9-rc2/include/linux/vserver/dlimit.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/dlimit.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/dlimit.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,85 @@
 +#ifndef _VX_DLIMIT_H
 +#define _VX_DLIMIT_H
@@ -6870,9 +6883,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/dlimit.h linux-2.6.9
 +#endif	/* __KERNEL__ */
 +
 +#endif	/* _VX_DLIMIT_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/inode.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/inode.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/inode.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/inode.h
 --- linux-2.6.9-rc2/include/linux/vserver/inode.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/inode.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/inode.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,67 @@
 +#ifndef _VX_INODE_H
 +#define _VX_INODE_H
@@ -6941,9 +6954,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/inode.h linux-2.6.9-
 +#define FIOC_SETXFLG	_IOW('x', 6, long)
 +
 +#endif	/* _VX_INODE_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/legacy.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/legacy.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/legacy.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/legacy.h
 --- linux-2.6.9-rc2/include/linux/vserver/legacy.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/legacy.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/legacy.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,54 @@
 +#ifndef _VX_LEGACY_H
 +#define _VX_LEGACY_H
@@ -6999,10 +7012,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/legacy.h linux-2.6.9
 +
 +#endif	/* __KERNEL__ */
 +#endif	/* _VX_LEGACY_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/limit.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/limit.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/limit.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/limit.h
 --- linux-2.6.9-rc2/include/linux/vserver/limit.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/limit.h	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,143 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/limit.h	2004-09-16 04:02:19.000000000 +0200
+@@ -0,0 +1,144 @@
 +/* _VX_LIMIT_H defined below */
 +
 +#if	defined(__KERNEL__) && defined(_VX_INFO_DEF_)
@@ -7015,6 +7028,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/limit.h linux-2.6.9-
 +#define NUM_LIMITS	20
 +
 +#define VLIMIT_NSOCK	16
++
 +
 +extern const char *vlimit_name[NUM_LIMITS];
 +
@@ -7146,10 +7160,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/limit.h linux-2.6.9-
 +#endif
 +
 +
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/namespace.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/namespace.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/namespace.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/namespace.h
 --- linux-2.6.9-rc2/include/linux/vserver/namespace.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/namespace.h	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,55 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/namespace.h	2004-09-16 02:55:29.000000000 +0200
+@@ -0,0 +1,58 @@
 +#ifndef _VX_NAMESPACE_H
 +#define _VX_NAMESPACE_H
 +
@@ -7196,6 +7210,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/namespace.h linux-2.
 +struct vx_info;
 +struct namespace;
 +struct fs_struct;
++struct vfsmount;
++
++extern int vx_check_vfsmount(struct vx_info *, struct vfsmount *);
 +
 +extern int vx_set_namespace(struct vx_info *, struct namespace *, struct fs_struct *);
 +
@@ -7205,9 +7222,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/namespace.h linux-2.
 +
 +#endif	/* __KERNEL__ */
 +#endif	/* _VX_NAMESPACE_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/network.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/network.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/network.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/network.h
 --- linux-2.6.9-rc2/include/linux/vserver/network.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/network.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/network.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,152 @@
 +#ifndef _VX_NETWORK_H
 +#define _VX_NETWORK_H
@@ -7361,9 +7378,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/network.h linux-2.6.
 +
 +
 +#endif	/* _VX_NETWORK_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/sched.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/sched.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/sched.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/sched.h
 --- linux-2.6.9-rc2/include/linux/vserver/sched.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/sched.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/sched.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,153 @@
 +/* _VX_SCHED_H defined below */
 +
@@ -7518,9 +7535,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/sched.h linux-2.6.9-
 +
 +#endif	/* _VX_SCHED_H */
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/signal.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/signal.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/signal.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/signal.h
 --- linux-2.6.9-rc2/include/linux/vserver/signal.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/signal.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/signal.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,19 @@
 +#ifndef _VX_SIGNAL_H
 +#define _VX_SIGNAL_H
@@ -7541,9 +7558,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/signal.h linux-2.6.9
 +
 +#endif	/* __KERNEL__ */
 +#endif	/* _VX_SIGNAL_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/switch.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/switch.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/switch.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/switch.h
 --- linux-2.6.9-rc2/include/linux/vserver/switch.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/switch.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/switch.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,96 @@
 +#ifndef _VX_SWITCH_H
 +#define _VX_SWITCH_H
@@ -7641,9 +7658,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/switch.h linux-2.6.9
 +#endif	/* __KERNEL__ */
 +
 +#endif	/* _VX_SWITCH_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/xid.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/xid.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/xid.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/xid.h
 --- linux-2.6.9-rc2/include/linux/vserver/xid.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver/xid.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver/xid.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,123 @@
 +#ifndef _VX_XID_H
 +#define _VX_XID_H
@@ -7768,9 +7785,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver/xid.h linux-2.6.9-rc
 +#endif
 +
 +#endif /* _VX_XID_H */
-diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver.h linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver.h linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver.h
 --- linux-2.6.9-rc2/include/linux/vserver.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/linux/vserver.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/linux/vserver.h	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,9 @@
 +#ifndef _LINUX_VSERVER_H
 +#define _LINUX_VSERVER_H
@@ -7781,9 +7798,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/linux/vserver.h linux-2.6.9-rc2-vs
 +extern long vs_reboot(unsigned int, void *);
 +
 +#endif
-diff -NurpP --minimal linux-2.6.9-rc2/include/net/af_unix.h linux-2.6.9-rc2-vs1.9.2.27/include/net/af_unix.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/net/af_unix.h linux-2.6.9-rc2-vs1.9.2.28/include/net/af_unix.h
 --- linux-2.6.9-rc2/include/net/af_unix.h	2004-08-14 12:55:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/net/af_unix.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/net/af_unix.h	2004-09-13 18:51:02.000000000 +0200
 @@ -1,5 +1,8 @@
  #ifndef __LINUX_NET_AFUNIX_H
  #define __LINUX_NET_AFUNIX_H
@@ -7835,9 +7852,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/net/af_unix.h linux-2.6.9-rc2-vs1.
  }
  
  #define forall_unix_sockets(i, s) \
-diff -NurpP --minimal linux-2.6.9-rc2/include/net/route.h linux-2.6.9-rc2-vs1.9.2.27/include/net/route.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/net/route.h linux-2.6.9-rc2-vs1.9.2.28/include/net/route.h
 --- linux-2.6.9-rc2/include/net/route.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/net/route.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/net/route.h	2004-09-13 18:51:02.000000000 +0200
 @@ -33,6 +33,9 @@
  #include <linux/route.h>
  #include <linux/ip.h>
@@ -7933,9 +7950,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/net/route.h linux-2.6.9-rc2-vs1.9.
  		err = __ip_route_output_key(rp, &fl);
  		if (err)
  			return err;
-diff -NurpP --minimal linux-2.6.9-rc2/include/net/scm.h linux-2.6.9-rc2-vs1.9.2.27/include/net/scm.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/net/scm.h linux-2.6.9-rc2-vs1.9.2.28/include/net/scm.h
 --- linux-2.6.9-rc2/include/net/scm.h	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/net/scm.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/net/scm.h	2004-09-13 18:51:02.000000000 +0200
 @@ -51,13 +51,13 @@ static __inline__ void scm_recv(struct s
  {
  	if (!msg->msg_control)
@@ -7952,9 +7969,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/net/scm.h linux-2.6.9-rc2-vs1.9.2.
  		put_cmsg(msg, SOL_SOCKET, SCM_CREDENTIALS, sizeof(scm->creds), &scm->creds);
  
  	if (!scm->fp)
-diff -NurpP --minimal linux-2.6.9-rc2/include/net/sock.h linux-2.6.9-rc2-vs1.9.2.27/include/net/sock.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/net/sock.h linux-2.6.9-rc2-vs1.9.2.28/include/net/sock.h
 --- linux-2.6.9-rc2/include/net/sock.h	2004-08-14 12:55:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/net/sock.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/net/sock.h	2004-09-13 18:51:02.000000000 +0200
 @@ -110,6 +110,10 @@ struct sock_common {
  	struct hlist_node	skc_node;
  	struct hlist_node	skc_bind_node;
@@ -7977,9 +7994,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/net/sock.h linux-2.6.9-rc2-vs1.9.2
  	volatile unsigned char	sk_zapped;
  	unsigned char		sk_shutdown;
  	unsigned char		sk_use_write_queue;
-diff -NurpP --minimal linux-2.6.9-rc2/include/net/tcp.h linux-2.6.9-rc2-vs1.9.2.27/include/net/tcp.h
+diff -NurpP --minimal linux-2.6.9-rc2/include/net/tcp.h linux-2.6.9-rc2-vs1.9.2.28/include/net/tcp.h
 --- linux-2.6.9-rc2/include/net/tcp.h	2004-09-13 18:40:47.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/include/net/tcp.h	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/include/net/tcp.h	2004-09-13 18:51:02.000000000 +0200
 @@ -196,6 +196,10 @@ struct tcp_tw_bucket {
  #define tw_node			__tw_common.skc_node
  #define tw_bind_node		__tw_common.skc_bind_node
@@ -7991,9 +8008,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/include/net/tcp.h linux-2.6.9-rc2-vs1.9.2.
  	volatile unsigned char	tw_substate;
  	unsigned char		tw_rcv_wscale;
  	__u16			tw_sport;
-diff -NurpP --minimal linux-2.6.9-rc2/ipc/msg.c linux-2.6.9-rc2-vs1.9.2.27/ipc/msg.c
+diff -NurpP --minimal linux-2.6.9-rc2/ipc/msg.c linux-2.6.9-rc2-vs1.9.2.28/ipc/msg.c
 --- linux-2.6.9-rc2/ipc/msg.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/ipc/msg.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/ipc/msg.c	2004-09-13 18:51:02.000000000 +0200
 @@ -24,6 +24,8 @@
  #include <linux/list.h>
  #include <linux/security.h>
@@ -8024,9 +8041,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/ipc/msg.c linux-2.6.9-rc2-vs1.9.2.27/ipc/m
  			len += sprintf(buffer + len, "%10d %10d  %4o  %10lu %10lu %5u %5u %5u %5u %5u %5u %10lu %10lu %10lu\n",
  				msq->q_perm.key,
  				msg_buildid(i,msq->q_perm.seq),
-diff -NurpP --minimal linux-2.6.9-rc2/ipc/sem.c linux-2.6.9-rc2-vs1.9.2.27/ipc/sem.c
+diff -NurpP --minimal linux-2.6.9-rc2/ipc/sem.c linux-2.6.9-rc2-vs1.9.2.28/ipc/sem.c
 --- linux-2.6.9-rc2/ipc/sem.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/ipc/sem.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/ipc/sem.c	2004-09-13 18:51:02.000000000 +0200
 @@ -71,6 +71,8 @@
  #include <linux/time.h>
  #include <linux/smp_lock.h>
@@ -8057,9 +8074,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/ipc/sem.c linux-2.6.9-rc2-vs1.9.2.27/ipc/s
  			len += sprintf(buffer + len, "%10d %10d  %4o %10lu %5u %5u %5u %5u %10lu %10lu\n",
  				sma->sem_perm.key,
  				sem_buildid(i,sma->sem_perm.seq),
-diff -NurpP --minimal linux-2.6.9-rc2/ipc/shm.c linux-2.6.9-rc2-vs1.9.2.27/ipc/shm.c
+diff -NurpP --minimal linux-2.6.9-rc2/ipc/shm.c linux-2.6.9-rc2-vs1.9.2.28/ipc/shm.c
 --- linux-2.6.9-rc2/ipc/shm.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/ipc/shm.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/ipc/shm.c	2004-09-13 18:51:02.000000000 +0200
 @@ -26,6 +26,8 @@
  #include <linux/proc_fs.h>
  #include <linux/shmem_fs.h>
@@ -8094,9 +8111,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/ipc/shm.c linux-2.6.9-rc2-vs1.9.2.27/ipc/s
  			if (sizeof(size_t) <= sizeof(int))
  				format = SMALL_STRING;
  			else
-diff -NurpP --minimal linux-2.6.9-rc2/ipc/util.c linux-2.6.9-rc2-vs1.9.2.27/ipc/util.c
+diff -NurpP --minimal linux-2.6.9-rc2/ipc/util.c linux-2.6.9-rc2-vs1.9.2.28/ipc/util.c
 --- linux-2.6.9-rc2/ipc/util.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/ipc/util.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/ipc/util.c	2004-09-13 18:51:02.000000000 +0200
 @@ -24,6 +24,7 @@
  #include <linux/security.h>
  #include <linux/rcupdate.h>
@@ -8126,9 +8143,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/ipc/util.c linux-2.6.9-rc2-vs1.9.2.27/ipc/
  	requested_mode = (flag >> 6) | (flag >> 3) | flag;
  	granted_mode = ipcp->mode;
  	if (current->euid == ipcp->cuid || current->euid == ipcp->uid)
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/Makefile linux-2.6.9-rc2-vs1.9.2.27/kernel/Makefile
+Files linux-2.6.9-rc2/kernel/.sched.c.swp and linux-2.6.9-rc2-vs1.9.2.28/kernel/.sched.c.swp differ
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/Makefile linux-2.6.9-rc2-vs1.9.2.28/kernel/Makefile
 --- linux-2.6.9-rc2/kernel/Makefile	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/Makefile	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/Makefile	2004-09-13 18:51:02.000000000 +0200
 @@ -9,6 +9,11 @@ obj-y     = sched.o fork.o exec_domain.o
  	    rcupdate.o intermodule.o extable.o params.o posix-timers.o \
  	    kthread.o
@@ -8141,9 +8159,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/Makefile linux-2.6.9-rc2-vs1.9.2.27
  obj-$(CONFIG_FUTEX) += futex.o
  obj-$(CONFIG_GENERIC_ISA_DMA) += dma.o
  obj-$(CONFIG_SMP) += cpu.o spinlock.o
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/exit.c linux-2.6.9-rc2-vs1.9.2.27/kernel/exit.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/exit.c linux-2.6.9-rc2-vs1.9.2.28/kernel/exit.c
 --- linux-2.6.9-rc2/kernel/exit.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/exit.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/exit.c	2004-09-13 18:51:02.000000000 +0200
 @@ -24,6 +24,7 @@
  #include <linux/mount.h>
  #include <linux/proc_fs.h>
@@ -8188,9 +8206,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/exit.c linux-2.6.9-rc2-vs1.9.2.27/k
  	do {
  		reaper = next_thread(reaper);
  		if (reaper == father) {
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/fork.c linux-2.6.9-rc2-vs1.9.2.27/kernel/fork.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/fork.c linux-2.6.9-rc2-vs1.9.2.28/kernel/fork.c
 --- linux-2.6.9-rc2/kernel/fork.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/fork.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/fork.c	2004-09-13 18:51:02.000000000 +0200
 @@ -38,6 +38,9 @@
  #include <linux/audit.h>
  #include <linux/profile.h>
@@ -8299,9 +8317,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/fork.c linux-2.6.9-rc2-vs1.9.2.27/k
  bad_fork_free:
  	free_task(p);
  	goto fork_out;
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/printk.c linux-2.6.9-rc2-vs1.9.2.27/kernel/printk.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/printk.c linux-2.6.9-rc2-vs1.9.2.28/kernel/printk.c
 --- linux-2.6.9-rc2/kernel/printk.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/printk.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/printk.c	2004-09-13 18:51:02.000000000 +0200
 @@ -30,6 +30,7 @@
  #include <linux/smp.h>
  #include <linux/security.h>
@@ -8345,9 +8363,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/printk.c linux-2.6.9-rc2-vs1.9.2.27
  
  	/* Emit the output into the temporary buffer */
  	printed_len = vscnprintf(printk_buf, sizeof(printk_buf), fmt, args);
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/sched.c linux-2.6.9-rc2-vs1.9.2.27/kernel/sched.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/sched.c linux-2.6.9-rc2-vs1.9.2.28/kernel/sched.c
 --- linux-2.6.9-rc2/kernel/sched.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/sched.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/sched.c	2004-09-13 18:51:02.000000000 +0200
 @@ -43,6 +43,10 @@
  #include <linux/kthread.h>
  #include <linux/seq_file.h>
@@ -8525,9 +8543,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/sched.c linux-2.6.9-rc2-vs1.9.2.27/
  		atomic_set(&rq->nr_iowait, 0);
  
  		for (j = 0; j < 2; j++) {
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/signal.c linux-2.6.9-rc2-vs1.9.2.27/kernel/signal.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/signal.c linux-2.6.9-rc2-vs1.9.2.28/kernel/signal.c
 --- linux-2.6.9-rc2/kernel/signal.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/signal.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/signal.c	2004-09-13 18:51:02.000000000 +0200
 @@ -1097,6 +1097,9 @@ int group_send_sig_info(int sig, struct 
  	unsigned long flags;
  	int ret;
@@ -8538,9 +8556,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/signal.c linux-2.6.9-rc2-vs1.9.2.27
  	ret = check_kill_permission(sig, info, p);
  	if (!ret && sig && p->sighand) {
  		spin_lock_irqsave(&p->sighand->siglock, flags);
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/sys.c linux-2.6.9-rc2-vs1.9.2.27/kernel/sys.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/sys.c linux-2.6.9-rc2-vs1.9.2.28/kernel/sys.c
 --- linux-2.6.9-rc2/kernel/sys.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/sys.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/sys.c	2004-09-13 18:51:02.000000000 +0200
 @@ -12,6 +12,7 @@
  #include <linux/mman.h>
  #include <linux/smp_lock.h>
@@ -8684,9 +8702,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/sys.c linux-2.6.9-rc2-vs1.9.2.27/ke
  		return -EPERM;
  	if (resource == RLIMIT_NOFILE) {
  		if (new_rlim.rlim_cur > NR_OPEN || new_rlim.rlim_max > NR_OPEN)
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/sysctl.c linux-2.6.9-rc2-vs1.9.2.27/kernel/sysctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/sysctl.c linux-2.6.9-rc2-vs1.9.2.28/kernel/sysctl.c
 --- linux-2.6.9-rc2/kernel/sysctl.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/sysctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/sysctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -84,6 +84,7 @@ extern char modprobe_path[];
  #ifdef CONFIG_HOTPLUG
  extern char hotplug_path[];
@@ -8711,9 +8729,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/sysctl.c linux-2.6.9-rc2-vs1.9.2.27
  #ifdef CONFIG_CHR_DEV_SG
  	{
  		.ctl_name	= KERN_SG_BIG_BUFF,
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/timer.c linux-2.6.9-rc2-vs1.9.2.27/kernel/timer.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/timer.c linux-2.6.9-rc2-vs1.9.2.28/kernel/timer.c
 --- linux-2.6.9-rc2/kernel/timer.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/timer.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/timer.c	2004-09-13 18:51:02.000000000 +0200
 @@ -31,6 +31,9 @@
  #include <linux/time.h>
  #include <linux/jiffies.h>
@@ -8761,9 +8779,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/timer.c linux-2.6.9-rc2-vs1.9.2.27/
  	si_meminfo(&val);
  	si_swapinfo(&val);
  
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/user.c linux-2.6.9-rc2-vs1.9.2.27/kernel/user.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/user.c linux-2.6.9-rc2-vs1.9.2.28/kernel/user.c
 --- linux-2.6.9-rc2/kernel/user.c	2004-09-13 18:40:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/user.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/user.c	2004-09-13 18:51:02.000000000 +0200
 @@ -20,8 +20,8 @@
  #define UIDHASH_BITS		8
  #define UIDHASH_SZ		(1 << UIDHASH_BITS)
@@ -8851,9 +8869,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/user.c linux-2.6.9-rc2-vs1.9.2.27/k
  	spin_unlock(&uidhash_lock);
  
  	return 0;
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Kconfig linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/Kconfig
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Kconfig linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/Kconfig
 --- linux-2.6.9-rc2/kernel/vserver/Kconfig	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/Kconfig	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/Kconfig	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,86 @@
 +#
 +# Linux VServer configuration
@@ -8941,9 +8959,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Kconfig linux-2.6.9-rc2-vs1
 +
 +endmenu
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Makefile linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/Makefile
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Makefile linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/Makefile
 --- linux-2.6.9-rc2/kernel/vserver/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/Makefile	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/Makefile	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,13 @@
 +#
 +# Makefile for the Linux vserver routines.
@@ -8958,10 +8976,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/Makefile linux-2.6.9-rc2-vs
 +vserver-$(CONFIG_VSERVER_DEBUG) += sysctl.o
 +vserver-$(CONFIG_VSERVER_LEGACY) += legacy.o
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/context.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/context.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/context.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/context.c
 --- linux-2.6.9-rc2/kernel/vserver/context.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/context.c	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,753 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/context.c	2004-09-16 01:50:35.000000000 +0200
+@@ -0,0 +1,756 @@
 +/*
 + *  linux/kernel/vserver/context.c
 + *
@@ -9024,6 +9042,8 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/context.c linux-2.6.9-rc2-v
 +	vx_info_init_cvirt(&new->cvirt);
 +	vx_info_init_cacct(&new->cacct);
 +
++	// new->vx_lock = SPIN_LOCK_UNLOCKED;
++
 +	new->vx_flags = VXF_STATE_SETUP|VXF_STATE_INIT;
 +	new->vx_bcaps = CAP_INIT_EFF_SET;
 +	new->vx_ccaps = 0;
@@ -9049,6 +9069,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/context.c linux-2.6.9-rc2-v
 +	vx_info_exit_sched(&vxi->sched);
 +	vx_info_exit_cvirt(&vxi->cvirt);
 +	vx_info_exit_cacct(&vxi->cacct);
++
 +	
 +	BUG_ON(atomic_read(&vxi->vx_usecnt));
 +	BUG_ON(atomic_read(&vxi->vx_refcnt));
@@ -9715,9 +9736,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/context.c linux-2.6.9-rc2-v
 +EXPORT_SYMBOL_GPL(vx_info_hash_lock);
 +EXPORT_SYMBOL_GPL(unhash_vx_info);
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/cvirt.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/cvirt.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/cvirt.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/cvirt.c
 --- linux-2.6.9-rc2/kernel/vserver/cvirt.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/cvirt.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/cvirt.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,85 @@
 +/*
 + *  linux/kernel/vserver/cvirt.c
@@ -9804,9 +9825,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/cvirt.c linux-2.6.9-rc2-vs1
 +
 +
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/dlimit.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/dlimit.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/dlimit.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/dlimit.c
 --- linux-2.6.9-rc2/kernel/vserver/dlimit.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/dlimit.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/dlimit.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,450 @@
 +/*
 + *  linux/kernel/vserver/dlimit.c
@@ -10258,9 +10279,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/dlimit.c linux-2.6.9-rc2-vs
 +// EXPORT_SYMBOL_GPL(dl_info_hash_lock);
 +// EXPORT_SYMBOL_GPL(unhash_dl_info);
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/helper.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/helper.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/helper.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/helper.c
 --- linux-2.6.9-rc2/kernel/vserver/helper.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/helper.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/helper.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,92 @@
 +/*
 + *  linux/kernel/vserver/helper.c
@@ -10354,9 +10375,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/helper.c linux-2.6.9-rc2-vs
 +	return 0;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/init.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/init.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/init.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/init.c
 --- linux-2.6.9-rc2/kernel/vserver/init.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/init.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/init.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,45 @@
 +/*
 + *  linux/kernel/init.c
@@ -10403,9 +10424,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/init.c linux-2.6.9-rc2-vs1.
 +module_init(init_vserver);
 +module_exit(exit_vserver);
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/inode.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/inode.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/inode.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/inode.c
 --- linux-2.6.9-rc2/kernel/vserver/inode.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/inode.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/inode.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,221 @@
 +/*
 + *  linux/kernel/vserver/inode.c
@@ -10628,9 +10649,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/inode.c linux-2.6.9-rc2-vs1
 +}
 +#endif
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/legacy.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/legacy.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/legacy.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/legacy.c
 --- linux-2.6.9-rc2/kernel/vserver/legacy.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/legacy.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/legacy.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,170 @@
 +/*
 + *  linux/kernel/vserver/legacy.c
@@ -10802,9 +10823,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/legacy.c linux-2.6.9-rc2-vs
 +}
 +
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/limit.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/limit.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/limit.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/limit.c
 --- linux-2.6.9-rc2/kernel/vserver/limit.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/limit.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/limit.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,164 @@
 +/*
 + *  linux/kernel/vserver/limit.c
@@ -10970,10 +10991,10 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/limit.c linux-2.6.9-rc2-vs1
 +	return;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/namespace.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/namespace.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/namespace.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/namespace.c
 --- linux-2.6.9-rc2/kernel/vserver/namespace.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/namespace.c	2004-09-13 18:51:02.000000000 +0200
-@@ -0,0 +1,194 @@
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/namespace.c	2004-09-16 02:59:10.000000000 +0200
+@@ -0,0 +1,238 @@
 +/*
 + *  linux/kernel/vserver/namespace.c
 + *
@@ -10993,9 +11014,53 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/namespace.c linux-2.6.9-rc2
 +#include <linux/vs_context.h>
 +#include <linux/namespace.h>
 +#include <linux/dcache.h>
++#include <linux/fs.h>
 +
 +#include <asm/errno.h>
 +#include <asm/uaccess.h>
++
++
++int vx_check_vfsmount(struct vx_info *vxi, struct vfsmount *mnt)
++{
++	struct vfsmount *root_mnt, *altroot_mnt;
++	struct dentry *root, *altroot, *point;
++	int ret = 0;
++
++	if (!vxi || !mnt)
++		return 1;
++	
++	spin_lock(&dcache_lock);
++	altroot_mnt = current->fs->rootmnt;
++	altroot = current->fs->root;
++	point = altroot;
++
++	if (vxi->vx_fs) {
++		root_mnt = vxi->vx_fs->rootmnt;
++		root = vxi->vx_fs->root;
++	} else {
++		root_mnt = altroot_mnt;
++		root = altroot;
++	}	
++
++#if 0
++	printk("mnt=%p, root_mnt=%p/%p, root=%p/%p\n",
++		mnt, root_mnt, altroot_mnt, root, altroot);
++#endif
++
++	while ((mnt != mnt->mnt_parent) &&
++		(mnt != root_mnt) && (mnt != altroot_mnt)) {
++		point = mnt->mnt_mountpoint;
++		mnt = mnt->mnt_parent;
++		// printk("··· step %p;%p\n", mnt, point);
++	}
++
++	ret = (((mnt == root_mnt) && is_subdir(point, root)) ||
++		((mnt == altroot_mnt) && is_subdir(point, altroot)));
++	// printk("··· final %p;%p = %d\n", mnt, point, ret);
++	spin_unlock(&dcache_lock);
++
++	return ret;
++}
 +
 +
 +/* virtual host info names */
@@ -11168,9 +11233,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/namespace.c linux-2.6.9-rc2
 +	return ret;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/network.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/network.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/network.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/network.c
 --- linux-2.6.9-rc2/kernel/vserver/network.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/network.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/network.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,702 @@
 +/*
 + *  linux/kernel/vserver/network.c
@@ -11874,9 +11939,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/network.c linux-2.6.9-rc2-v
 +EXPORT_SYMBOL_GPL(nx_info_hash_lock);
 +EXPORT_SYMBOL_GPL(unhash_nx_info);
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/proc.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/proc.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/proc.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/proc.c
 --- linux-2.6.9-rc2/kernel/vserver/proc.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/proc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/proc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,870 @@
 +/*
 + *  linux/kernel/vserver/proc.c
@@ -12748,9 +12813,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/proc.c linux-2.6.9-rc2-vs1.
 +	return buffer - orig;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sched.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/sched.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sched.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/sched.c
 --- linux-2.6.9-rc2/kernel/vserver/sched.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/sched.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/sched.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,163 @@
 +/*
 + *  linux/kernel/vserver/sched.c
@@ -12915,9 +12980,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sched.c linux-2.6.9-rc2-vs1
 +	return 0;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/signal.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/signal.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/signal.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/signal.c
 --- linux-2.6.9-rc2/kernel/vserver/signal.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/signal.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/signal.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,86 @@
 +/*
 + *  linux/kernel/vserver/signal.c
@@ -13005,9 +13070,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/signal.c linux-2.6.9-rc2-vs
 +}
 +
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/switch.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/switch.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/switch.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/switch.c
 --- linux-2.6.9-rc2/kernel/vserver/switch.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/switch.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/switch.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,178 @@
 +/*
 + *  linux/kernel/vserver/switch.c
@@ -13187,9 +13252,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/switch.c linux-2.6.9-rc2-vs
 +	return -ENOSYS;
 +}
 +
-diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sysctl.c linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/sysctl.c
+diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sysctl.c linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/sysctl.c
 --- linux-2.6.9-rc2/kernel/vserver/sysctl.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.9-rc2-vs1.9.2.27/kernel/vserver/sysctl.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/kernel/vserver/sysctl.c	2004-09-13 18:51:02.000000000 +0200
 @@ -0,0 +1,203 @@
 +/*
 + *  linux/kernel/sysctl.c
@@ -13394,9 +13459,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/kernel/vserver/sysctl.c linux-2.6.9-rc2-vs
 +
 +EXPORT_SYMBOL_GPL(vx_debug_dlim);
 +
-diff -NurpP --minimal linux-2.6.9-rc2/mm/fremap.c linux-2.6.9-rc2-vs1.9.2.27/mm/fremap.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/fremap.c linux-2.6.9-rc2-vs1.9.2.28/mm/fremap.c
 --- linux-2.6.9-rc2/mm/fremap.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/fremap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/fremap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -14,6 +14,7 @@
  #include <linux/swapops.h>
  #include <linux/rmap.h>
@@ -13435,9 +13500,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/fremap.c linux-2.6.9-rc2-vs1.9.2.27/mm/
  	flush_icache_page(vma, page);
  	set_pte(pte, mk_pte(page, prot));
  	page_add_file_rmap(page);
-diff -NurpP --minimal linux-2.6.9-rc2/mm/memory.c linux-2.6.9-rc2-vs1.9.2.27/mm/memory.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/memory.c linux-2.6.9-rc2-vs1.9.2.28/mm/memory.c
 --- linux-2.6.9-rc2/mm/memory.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/memory.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/memory.c	2004-09-13 18:51:02.000000000 +0200
 @@ -282,6 +282,10 @@ skip_copy_pte_range:
  				struct page *page;
  				unsigned long pfn;
@@ -13529,9 +13594,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/memory.c linux-2.6.9-rc2-vs1.9.2.27/mm/
  		flush_icache_page(vma, new_page);
  		entry = mk_pte(new_page, vma->vm_page_prot);
  		if (write_access)
-diff -NurpP --minimal linux-2.6.9-rc2/mm/mlock.c linux-2.6.9-rc2-vs1.9.2.27/mm/mlock.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/mlock.c linux-2.6.9-rc2-vs1.9.2.28/mm/mlock.c
 --- linux-2.6.9-rc2/mm/mlock.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/mlock.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/mlock.c	2004-09-13 18:51:02.000000000 +0200
 @@ -7,6 +7,7 @@
  
  #include <linux/mman.h>
@@ -13589,9 +13654,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/mlock.c linux-2.6.9-rc2-vs1.9.2.27/mm/m
  	if ((current->mm->total_vm <= lock_limit) || capable(CAP_IPC_LOCK))
  		ret = do_mlockall(flags);
  out:
-diff -NurpP --minimal linux-2.6.9-rc2/mm/mmap.c linux-2.6.9-rc2-vs1.9.2.27/mm/mmap.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/mmap.c linux-2.6.9-rc2-vs1.9.2.28/mm/mmap.c
 --- linux-2.6.9-rc2/mm/mmap.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/mmap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/mmap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -906,6 +906,10 @@ munmap_back:
  	    > current->rlim[RLIMIT_AS].rlim_cur)
  		return -ENOMEM;
@@ -13733,9 +13798,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/mmap.c linux-2.6.9-rc2-vs1.9.2.27/mm/mm
  
  	spin_unlock(&mm->page_table_lock);
  
-diff -NurpP --minimal linux-2.6.9-rc2/mm/mremap.c linux-2.6.9-rc2-vs1.9.2.27/mm/mremap.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/mremap.c linux-2.6.9-rc2-vs1.9.2.28/mm/mremap.c
 --- linux-2.6.9-rc2/mm/mremap.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/mremap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/mremap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -16,6 +16,7 @@
  #include <linux/fs.h>
  #include <linux/highmem.h>
@@ -13794,9 +13859,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/mremap.c linux-2.6.9-rc2-vs1.9.2.27/mm/
  				make_pages_present(addr + old_len,
  						   addr + new_len);
  			}
-diff -NurpP --minimal linux-2.6.9-rc2/mm/oom_kill.c linux-2.6.9-rc2-vs1.9.2.27/mm/oom_kill.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/oom_kill.c linux-2.6.9-rc2-vs1.9.2.28/mm/oom_kill.c
 --- linux-2.6.9-rc2/mm/oom_kill.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/oom_kill.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/oom_kill.c	2004-09-13 18:51:02.000000000 +0200
 @@ -54,6 +54,7 @@ static unsigned long badness(struct task
  	 * The memory size of the process is the basis for the badness.
  	 */
@@ -13805,9 +13870,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/oom_kill.c linux-2.6.9-rc2-vs1.9.2.27/m
  
  	/*
  	 * CPU time is in seconds and run time is in minutes. There is no
-diff -NurpP --minimal linux-2.6.9-rc2/mm/page_alloc.c linux-2.6.9-rc2-vs1.9.2.27/mm/page_alloc.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/page_alloc.c linux-2.6.9-rc2-vs1.9.2.28/mm/page_alloc.c
 --- linux-2.6.9-rc2/mm/page_alloc.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/page_alloc.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/page_alloc.c	2004-09-13 18:51:02.000000000 +0200
 @@ -31,6 +31,8 @@
  #include <linux/topology.h>
  #include <linux/sysctl.h>
@@ -13826,9 +13891,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/page_alloc.c linux-2.6.9-rc2-vs1.9.2.27
  }
  
  EXPORT_SYMBOL(si_meminfo);
-diff -NurpP --minimal linux-2.6.9-rc2/mm/rmap.c linux-2.6.9-rc2-vs1.9.2.27/mm/rmap.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/rmap.c linux-2.6.9-rc2-vs1.9.2.28/mm/rmap.c
 --- linux-2.6.9-rc2/mm/rmap.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/rmap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/rmap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -52,6 +52,7 @@
  #include <linux/init.h>
  #include <linux/rmap.h>
@@ -13857,9 +13922,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/rmap.c linux-2.6.9-rc2-vs1.9.2.27/mm/rm
  		(*mapcount)--;
  	}
  
-diff -NurpP --minimal linux-2.6.9-rc2/mm/shmem.c linux-2.6.9-rc2-vs1.9.2.27/mm/shmem.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/shmem.c linux-2.6.9-rc2-vs1.9.2.28/mm/shmem.c
 --- linux-2.6.9-rc2/mm/shmem.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/shmem.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/shmem.c	2004-09-13 18:51:02.000000000 +0200
 @@ -46,7 +46,6 @@
  #include <asm/pgtable.h>
  
@@ -13886,9 +13951,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/shmem.c linux-2.6.9-rc2-vs1.9.2.27/mm/s
  	sb->s_op = &shmem_ops;
  	inode = shmem_get_inode(sb, S_IFDIR | mode, 0);
  	if (!inode)
-diff -NurpP --minimal linux-2.6.9-rc2/mm/swapfile.c linux-2.6.9-rc2-vs1.9.2.27/mm/swapfile.c
+diff -NurpP --minimal linux-2.6.9-rc2/mm/swapfile.c linux-2.6.9-rc2-vs1.9.2.28/mm/swapfile.c
 --- linux-2.6.9-rc2/mm/swapfile.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/mm/swapfile.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/mm/swapfile.c	2004-09-13 18:51:02.000000000 +0200
 @@ -29,6 +29,8 @@
  #include <asm/pgtable.h>
  #include <asm/tlbflush.h>
@@ -13917,9 +13982,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/mm/swapfile.c linux-2.6.9-rc2-vs1.9.2.27/m
  }
  
  /*
-diff -NurpP --minimal linux-2.6.9-rc2/net/core/dev.c linux-2.6.9-rc2-vs1.9.2.27/net/core/dev.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/core/dev.c linux-2.6.9-rc2-vs1.9.2.28/net/core/dev.c
 --- linux-2.6.9-rc2/net/core/dev.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/core/dev.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/core/dev.c	2004-09-13 18:51:02.000000000 +0200
 @@ -113,6 +113,8 @@
  #include <net/iw_handler.h>
  #endif	/* CONFIG_NET_RADIO */
@@ -13950,9 +14015,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/core/dev.c linux-2.6.9-rc2-vs1.9.2.27/
  	if (dev->get_stats) {
  		struct net_device_stats *stats = dev->get_stats(dev);
  
-diff -NurpP --minimal linux-2.6.9-rc2/net/core/rtnetlink.c linux-2.6.9-rc2-vs1.9.2.27/net/core/rtnetlink.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/core/rtnetlink.c linux-2.6.9-rc2-vs1.9.2.28/net/core/rtnetlink.c
 --- linux-2.6.9-rc2/net/core/rtnetlink.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/core/rtnetlink.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/core/rtnetlink.c	2004-09-13 18:51:02.000000000 +0200
 @@ -251,6 +251,9 @@ int rtnetlink_dump_ifinfo(struct sk_buff
  	for (dev=dev_base, idx=0; dev; dev = dev->next, idx++) {
  		if (idx < s_idx)
@@ -13973,9 +14038,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/core/rtnetlink.c linux-2.6.9-rc2-vs1.9
  	skb = alloc_skb(size, GFP_KERNEL);
  	if (!skb)
  		return;
-diff -NurpP --minimal linux-2.6.9-rc2/net/core/sock.c linux-2.6.9-rc2-vs1.9.2.27/net/core/sock.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/core/sock.c linux-2.6.9-rc2-vs1.9.2.28/net/core/sock.c
 --- linux-2.6.9-rc2/net/core/sock.c	2004-08-14 12:55:48.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/core/sock.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/core/sock.c	2004-09-13 18:51:02.000000000 +0200
 @@ -122,6 +122,7 @@
  #include <linux/ipsec.h>
  
@@ -14035,9 +14100,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/core/sock.c linux-2.6.9-rc2-vs1.9.2.27
  	atomic_set(&sk->sk_refcnt, 1);
  }
  
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/af_inet.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/af_inet.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/af_inet.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/af_inet.c
 --- linux-2.6.9-rc2/net/ipv4/af_inet.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/af_inet.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/af_inet.c	2004-09-13 18:51:02.000000000 +0200
 @@ -112,6 +112,7 @@
  #ifdef CONFIG_IP_MROUTE
  #include <linux/mroute.h>
@@ -14169,9 +14234,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/af_inet.c linux-2.6.9-rc2-vs1.9.2
  	if (chk_addr_ret == RTN_MULTICAST || chk_addr_ret == RTN_BROADCAST)
  		inet->saddr = 0;  /* Use device */
  
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/devinet.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/devinet.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/devinet.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/devinet.c
 --- linux-2.6.9-rc2/net/ipv4/devinet.c	2004-09-13 18:40:51.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/devinet.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/devinet.c	2004-09-13 18:51:02.000000000 +0200
 @@ -490,6 +490,33 @@ static __inline__ int inet_abc_len(u32 a
    	return rc;
  }
@@ -14244,9 +14309,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/devinet.c linux-2.6.9-rc2-vs1.9.2
  			if (ip_idx < s_ip_idx)
  				continue;
  			if (inet_fill_ifaddr(skb, ifa, NETLINK_CB(cb->skb).pid,
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/fib_hash.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/fib_hash.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/fib_hash.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/fib_hash.c
 --- linux-2.6.9-rc2/net/ipv4/fib_hash.c	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/fib_hash.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/fib_hash.c	2004-09-13 18:51:02.000000000 +0200
 @@ -1010,6 +1010,8 @@ static unsigned fib_flag_trans(int type,
  	return flags;
  }
@@ -14266,9 +14331,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/fib_hash.c linux-2.6.9-rc2-vs1.9.
  		snprintf(bf, sizeof(bf),
  			 "%s\t%08X\t%08X\t%04X\t%d\t%u\t%d\t%08X\t%d\t%u\t%u",
  			 fi->fib_dev ? fi->fib_dev->name : "*", prefix,
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/raw.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/raw.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/raw.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/raw.c
 --- linux-2.6.9-rc2/net/ipv4/raw.c	2004-09-13 18:40:52.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/raw.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/raw.c	2004-09-13 18:51:02.000000000 +0200
 @@ -102,6 +102,27 @@ static void raw_v4_unhash(struct sock *s
  	write_unlock_bh(&raw_v4_lock);
  }
@@ -14351,9 +14416,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/raw.c linux-2.6.9-rc2-vs1.9.2.27/
  
  	if (!sk && ++state->bucket < RAWV4_HTABLE_SIZE) {
  		sk = sk_head(&raw_v4_htable[state->bucket]);
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/tcp_ipv4.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/tcp_ipv4.c
 --- linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c	2004-09-13 18:40:52.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/tcp_ipv4.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/tcp_ipv4.c	2004-09-16 17:29:34.000000000 +0200
 @@ -74,6 +74,7 @@
  #include <linux/stddef.h>
  #include <linux/proc_fs.h>
@@ -14434,19 +14499,20 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.
  		    !sk->sk_bound_dev_if)
  			goto sherry_cache;
  		sk = __tcp_v4_lookup_listener(head, daddr, hnum, dif);
-@@ -2165,6 +2183,11 @@ static void *listening_get_next(struct s
+@@ -2165,6 +2183,12 @@ static void *listening_get_next(struct s
  		req = req->dl_next;
  		while (1) {
  			while (req) {
 +				vxdprintk(VXD_CBIT(net, 6),
-+					"sk,req: %p [#%d] (from %d)",
-+					req->sk, req->sk->sk_xid, current->xid);
-+				if (!vx_check(req->sk->sk_xid, VX_IDENT|VX_WATCH))
++					"sk,req: %p [#%d] (from %d)", req->sk,
++					(req->sk)?req->sk->sk_xid:0, current->xid);
++				if (req->sk &&
++					!vx_check(req->sk->sk_xid, VX_IDENT|VX_WATCH))
 +					continue;
  				if (req->class->family == st->family) {
  					cur = req;
  					goto out;
-@@ -2183,6 +2206,10 @@ get_req:
+@@ -2183,6 +2207,10 @@ get_req:
  		sk = sk_next(sk);
  get_sk:
  	sk_for_each_from(sk, node) {
@@ -14457,7 +14523,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.
  		if (sk->sk_family == st->family) {
  			cur = sk;
  			goto out;
-@@ -2230,18 +2257,26 @@ static void *established_get_first(struc
+@@ -2230,18 +2258,26 @@ static void *established_get_first(struc
  	       
  		read_lock(&tcp_ehash[st->bucket].lock);
  		sk_for_each(sk, node, &tcp_ehash[st->bucket].chain) {
@@ -14488,7 +14554,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.
  			rc = tw;
  			goto out;
  		}
-@@ -2265,7 +2300,8 @@ static void *established_get_next(struct
+@@ -2265,7 +2301,8 @@ static void *established_get_next(struct
  		tw = cur;
  		tw = tw_next(tw);
  get_tw:
@@ -14498,7 +14564,7 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.
  			tw = tw_next(tw);
  		}
  		if (tw) {
-@@ -2285,6 +2321,11 @@ get_tw:
+@@ -2285,6 +2322,11 @@ get_tw:
  		sk = sk_next(sk);
  
  	sk_for_each_from(sk, node) {
@@ -14510,9 +14576,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_ipv4.c linux-2.6.9-rc2-vs1.9.
  		if (sk->sk_family == st->family)
  			goto found;
  	}
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_minisocks.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/tcp_minisocks.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_minisocks.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/tcp_minisocks.c
 --- linux-2.6.9-rc2/net/ipv4/tcp_minisocks.c	2004-09-13 18:40:52.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/tcp_minisocks.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/tcp_minisocks.c	2004-09-13 18:51:02.000000000 +0200
 @@ -25,6 +25,8 @@
  #include <linux/module.h>
  #include <linux/sysctl.h>
@@ -14556,9 +14622,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/tcp_minisocks.c linux-2.6.9-rc2-v
  #ifdef INET_REFCNT_DEBUG
  		atomic_inc(&inet_sock_nr);
  #endif
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/udp.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/udp.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/udp.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/udp.c
 --- linux-2.6.9-rc2/net/ipv4/udp.c	2004-08-14 12:54:50.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv4/udp.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv4/udp.c	2004-09-13 18:51:02.000000000 +0200
 @@ -174,14 +174,12 @@ gotit:
  			struct inet_opt *inet2 = inet_sk(sk2);
  
@@ -14655,9 +14721,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv4/udp.c linux-2.6.9-rc2-vs1.9.2.27/
  
  	if (!sk && ++state->bucket < UDP_HTABLE_SIZE) {
  		sk = sk_head(&udp_hash[state->bucket]);
-diff -NurpP --minimal linux-2.6.9-rc2/net/ipv6/addrconf.c linux-2.6.9-rc2-vs1.9.2.27/net/ipv6/addrconf.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/ipv6/addrconf.c linux-2.6.9-rc2-vs1.9.2.28/net/ipv6/addrconf.c
 --- linux-2.6.9-rc2/net/ipv6/addrconf.c	2004-09-13 18:40:52.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/ipv6/addrconf.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/ipv6/addrconf.c	2004-09-13 18:51:02.000000000 +0200
 @@ -2655,6 +2655,10 @@ static int inet6_dump_addr(struct sk_buf
  	struct ifmcaddr6 *ifmca;
  	struct ifacaddr6 *ifaca;
@@ -14680,9 +14746,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/ipv6/addrconf.c linux-2.6.9-rc2-vs1.9.
  	read_lock(&dev_base_lock);
  	for (dev=dev_base, idx=0; dev; dev = dev->next, idx++) {
  		if (idx < s_idx)
-diff -NurpP --minimal linux-2.6.9-rc2/net/netlink/af_netlink.c linux-2.6.9-rc2-vs1.9.2.27/net/netlink/af_netlink.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/netlink/af_netlink.c linux-2.6.9-rc2-vs1.9.2.28/net/netlink/af_netlink.c
 --- linux-2.6.9-rc2/net/netlink/af_netlink.c	2004-09-13 18:40:52.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/netlink/af_netlink.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/netlink/af_netlink.c	2004-09-13 18:51:02.000000000 +0200
 @@ -47,6 +47,10 @@
  #include <net/sock.h>
  #include <net/scm.h>
@@ -14720,9 +14786,24 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/netlink/af_netlink.c linux-2.6.9-rc2-v
  	sock_put(sk);
  	return 0;
  }
-diff -NurpP --minimal linux-2.6.9-rc2/net/socket.c linux-2.6.9-rc2-vs1.9.2.27/net/socket.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/sched/sch_generic.c linux-2.6.9-rc2-vs1.9.2.28/net/sched/sch_generic.c
+--- linux-2.6.9-rc2/net/sched/sch_generic.c	2004-09-13 18:40:53.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/sched/sch_generic.c	2004-09-15 15:51:20.000000000 +0200
+@@ -148,8 +148,10 @@ int qdisc_restart(struct net_device *dev
+ 					spin_lock(&dev->queue_lock);
+ 					return -1;
+ 				}
+-				if (ret == NETDEV_TX_LOCKED && nolock)
++				if (ret == NETDEV_TX_LOCKED && nolock) {
++					spin_lock(&dev->queue_lock);
+ 					goto collision; 
++				}
+ 			}
+ 
+ 			/* NETDEV_TX_BUSY - we need to requeue */
+diff -NurpP --minimal linux-2.6.9-rc2/net/socket.c linux-2.6.9-rc2-vs1.9.2.28/net/socket.c
 --- linux-2.6.9-rc2/net/socket.c	2004-08-14 12:55:10.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/socket.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/socket.c	2004-09-13 18:51:02.000000000 +0200
 @@ -93,6 +93,8 @@
  
  #include <net/sock.h>
@@ -14833,9 +14914,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/socket.c linux-2.6.9-rc2-vs1.9.2.27/ne
  
  	err = sock1->ops->socketpair(sock1, sock2);
  	if (err < 0) 
-diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth.c linux-2.6.9-rc2-vs1.9.2.27/net/sunrpc/auth.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth.c linux-2.6.9-rc2-vs1.9.2.28/net/sunrpc/auth.c
 --- linux-2.6.9-rc2/net/sunrpc/auth.c	2004-08-14 12:55:32.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/sunrpc/auth.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/sunrpc/auth.c	2004-09-13 18:51:02.000000000 +0200
 @@ -14,6 +14,7 @@
  #include <linux/socket.h>
  #include <linux/sunrpc/clnt.h>
@@ -14860,9 +14941,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth.c linux-2.6.9-rc2-vs1.9.2.
  	acred.group_info = current->group_info;
  
  	dprintk("RPC: %4d looking up %s cred\n",
-diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth_unix.c linux-2.6.9-rc2-vs1.9.2.27/net/sunrpc/auth_unix.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth_unix.c linux-2.6.9-rc2-vs1.9.2.28/net/sunrpc/auth_unix.c
 --- linux-2.6.9-rc2/net/sunrpc/auth_unix.c	2004-08-14 12:55:33.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/sunrpc/auth_unix.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/sunrpc/auth_unix.c	2004-09-13 18:51:02.000000000 +0200
 @@ -13,14 +13,17 @@
  #include <linux/in.h>
  #include <linux/sunrpc/clnt.h>
@@ -14945,9 +15026,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/sunrpc/auth_unix.c linux-2.6.9-rc2-vs1
  	}
  	hold = p++;
  	for (i = 0; i < 16 && cred->uc_gids[i] != (gid_t) NOGROUP; i++)
-diff -NurpP --minimal linux-2.6.9-rc2/net/unix/af_unix.c linux-2.6.9-rc2-vs1.9.2.27/net/unix/af_unix.c
+diff -NurpP --minimal linux-2.6.9-rc2/net/unix/af_unix.c linux-2.6.9-rc2-vs1.9.2.28/net/unix/af_unix.c
 --- linux-2.6.9-rc2/net/unix/af_unix.c	2004-08-14 12:55:35.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/net/unix/af_unix.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/net/unix/af_unix.c	2004-09-13 18:51:02.000000000 +0200
 @@ -118,6 +118,9 @@
  #include <linux/mount.h>
  #include <net/checksum.h>
@@ -15009,9 +15090,9 @@ diff -NurpP --minimal linux-2.6.9-rc2/net/unix/af_unix.c linux-2.6.9-rc2-vs1.9.2
  		goto out;
  
  	err = -EMSGSIZE;
-diff -NurpP --minimal linux-2.6.9-rc2/security/commoncap.c linux-2.6.9-rc2-vs1.9.2.27/security/commoncap.c
+diff -NurpP --minimal linux-2.6.9-rc2/security/commoncap.c linux-2.6.9-rc2-vs1.9.2.28/security/commoncap.c
 --- linux-2.6.9-rc2/security/commoncap.c	2004-09-13 18:40:53.000000000 +0200
-+++ linux-2.6.9-rc2-vs1.9.2.27/security/commoncap.c	2004-09-13 18:51:02.000000000 +0200
++++ linux-2.6.9-rc2-vs1.9.2.28/security/commoncap.c	2004-09-13 18:51:02.000000000 +0200
 @@ -120,7 +120,7 @@ void cap_bprm_apply_creds (struct linux_
  	/* Derived from fs/exec.c:compute_creds. */
  	kernel_cap_t new_permitted, working;
